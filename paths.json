@@ -1,0 +1,10 @@
+{
+  "mappings": [
+    "/content/eds-events-gehealthcare/:/",
+    "/content/eds-events-gehealthcare/configuration:/.helix/config.json",
+    "/content/eds-events-gehealthcare/metadata:/metadata.json"
+  ],
+  "includes": [
+    "/content/eds-events-gehealthcare/"
+  ]
+}
