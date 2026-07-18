@@ -17,6 +17,7 @@
       "columns",
       "fragment",
       "quote",
+      "splitHero",
       "footer"
     ]
   },
