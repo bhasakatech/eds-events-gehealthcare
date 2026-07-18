@@ -204,16 +204,9 @@
         "value": ""
       },
       {
-        "component": "text",
-        "name": "copyright",
-        "label": "Copyright",
-        "valueType": "string",
-        "value": ""
-      },
-      {
         "component": "richtext",
-        "name": "links",
-        "label": "Footer Links",
+        "name": "legal",
+        "label": "Legal",
         "valueType": "string",
         "value": ""
       }
