@@ -1,0 +1,18 @@
+.hero-text.hero-text-inner {
+  background: var(--purple, #5c2d91);
+  color: var(--background-color, #fff);
+  padding: 40px 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.hero-text.hero-text-inner h1,
+.hero-text.hero-text-inner h2 {
+  color: inherit;
+  margin: 0 0 16px;
+}
+
+.hero-text.hero-text-inner p {
+  margin: 0;
+}
