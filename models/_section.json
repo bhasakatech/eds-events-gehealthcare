@@ -52,7 +52,7 @@
         "columns",
         "fragment",
         "quote",
-        "splitHero",
+        "header",
         "footer"
       ]
     }

@@ -223,6 +223,39 @@
     ]
   },
   {
+    "id": "header",
+    "fields": [
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "nav",
+        "label": "Nav Path",
+        "value": "/nav"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "announcement",
+        "label": "Announcement Banner",
+        "value": ""
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "ctaLabel",
+        "label": "CTA Button Label",
+        "value": "Contact us"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "ctaUrl",
+        "label": "CTA Button URL",
+        "value": "/contact"
+      }
+    ]
+  },
+  {
     "id": "hero",
     "fields": [
       {
