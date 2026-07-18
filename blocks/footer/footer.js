@@ -1,20 +1,66 @@
-import { getMetadata } from '../../scripts/aem.js';
-import { loadFragment } from '../fragment/fragment.js';
+export default function decorate(block) {
+  const rows = [...block.children];
 
-/**
- * loads and decorates the footer
- * @param {Element} block The footer block element
- */
-export default async function decorate(block) {
-  // load footer as fragment
-  const footerMeta = getMetadata('footer');
-  const footerPath = footerMeta ? new URL(footerMeta, window.location).pathname : '/footer';
-  const fragment = await loadFragment(footerPath);
+  if (rows.length < 4) {
+    return;
+  }
 
-  // decorate footer DOM
-  block.textContent = '';
+  const [
+    countryRow,
+    logoRow,
+    infoRow,
+    copyrightRow,
+  ] = rows;
+
   const footer = document.createElement('div');
-  while (fragment.firstElementChild) footer.append(fragment.firstElementChild);
+  footer.className = 'footer-content';
 
-  block.append(footer);
+  /* ---------- Top ---------- */
+
+  const top = document.createElement('div');
+  top.className = 'footer-top';
+
+  const message = document.createElement('div');
+  message.className = 'footer-message';
+  message.append(...countryRow.firstElementChild.childNodes);
+
+  const contact = document.createElement('div');
+  contact.className = 'footer-contact';
+
+  const contactButton = block.closest('.section')
+    .querySelector('.default-content-wrapper a');
+
+  if (contactButton) {
+    contact.append(contactButton.cloneNode(true));
+  }
+
+  top.append(message, contact);
+
+  /* ---------- Bottom ---------- */
+
+  const bottom = document.createElement('div');
+  bottom.className = 'footer-bottom';
+
+  const left = document.createElement('div');
+  left.className = 'footer-left';
+
+  const logo = document.createElement('div');
+  logo.className = 'footer-logo';
+  logo.append(...logoRow.firstElementChild.childNodes);
+
+  const info = document.createElement('div');
+  info.className = 'footer-info';
+  info.append(...infoRow.firstElementChild.childNodes);
+
+  left.append(logo, info);
+
+  const right = document.createElement('div');
+  right.className = 'footer-right';
+  right.append(...copyrightRow.firstElementChild.childNodes);
+
+  bottom.append(left, right);
+
+  footer.append(top, bottom);
+
+  block.replaceChildren(footer);
 }

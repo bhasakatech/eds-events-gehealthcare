@@ -1,0 +1,55 @@
+{
+  "definitions": [
+    {
+      "title": "Footer",
+      "id": "footer",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block",
+            "template": {
+              "name": "Footer",
+              "model": "footer"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "models": [
+   {
+  "id": "footer",
+  "fields": [
+    {
+      "component": "text",
+      "name": "countryMessage",
+      "label": "Country Message",
+      "valueType": "string",
+      "value": ""
+    },
+    {
+      "component": "reference",
+      "name": "logo",
+      "label": "Logo",
+      "valueType": "string",
+      "multi": false
+    },
+    {
+      "component": "richtext",
+      "name": "info",
+      "label": "Information",
+      "valueType": "string",
+      "value": ""
+    },
+    {
+      "component": "richtext",
+      "name": "legal",
+      "label": "Legal",
+      "valueType": "string",
+      "value": ""
+    }
+  ]
+}
+  ],
+  "filters": []
+}

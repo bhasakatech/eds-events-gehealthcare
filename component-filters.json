@@ -17,7 +17,8 @@
       "columns",
       "fragment",
       "quote",
-      "header"
+      "header",
+      "footer"
     ]
   },
   {
