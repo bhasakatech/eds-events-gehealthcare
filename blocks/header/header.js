@@ -1,13 +1,39 @@
-import { getMetadata } from '../../scripts/aem.js';
-
 /*
- * GE HealthCare Header Block
+ * Header Block – GE HealthCare
  *
- * Expected /nav document row order:
- *   Row 0 – Logo image
- *   Row 1 – Nav links as a bullet list
- *   Row 2 – CTA link ("Contact us")
- *   Row 3 – Announcement banner text  (optional)
+ * DOM structure from Universal Editor (same row/cell pattern as Cards):
+ *
+ * <div class="header block">
+ *   <!-- Row 0: parent block fields (7 columns) -->
+ *   <div>
+ *     <div>announcement text</div>
+ *     <div><picture>logo</picture></div>
+ *     <div>logoAlt</div>
+ *     <div>logoLink url</div>
+ *     <div>CTA label</div>
+ *     <div>CTA url</div>
+ *     <div><picture>hamburger icon</picture></div>  (optional)
+ *   </div>
+ *   <!-- Row 1..N: Nav Item child items (2 columns each) -->
+ *   <div>
+ *     <div>Nav Title</div>
+ *     <div>Nav URL</div>
+ *   </div>
+ *   ...
+ * </div>
+ *
+ * Authored fields (parent row, in order):
+ *   [0] announcement  – banner text
+ *   [1] logo          – logo image (reference)
+ *   [2] logoAlt       – logo alt text
+ *   [3] logoLink      – logo href
+ *   [4] ctaLabel      – CTA button label
+ *   [5] ctaLink       – CTA button URL
+ *   [6] hamburgerIcon – hamburger icon image (optional reference)
+ *
+ * Nav Item rows (each child after the first row):
+ *   [0] navTitle  – link label
+ *   [1] navLink   – link URL
  */
 
 const isDesktop = window.matchMedia('(min-width: 900px)');
@@ -40,110 +66,128 @@ function toggleMenu(nav, forceOpen = null) {
   }
 }
 
-export default async function decorate(block) {
-  // ── 1. Resolve nav path ────────────────────────────────────────────────
-  const navMeta = getMetadata('nav');
-  const navPath = navMeta ? new URL(navMeta, window.location).pathname : '/nav';
+export default function decorate(block) {
+  const rows = [...block.children];
+  if (!rows.length) return;
 
-  // ── 2. Fetch raw nav HTML (no decorateMain — keeps structure clean) ────
-  const resp = await fetch(`${navPath.replace(/(\.plain)?\.html$/, '')}.plain.html`);
-  if (!resp.ok) return;
+  // ── Parent row: block-level fields ────────────────────────────────────
+  const parentCells = [...(rows[0]?.children || [])];
+  const announcement = parentCells[0]?.innerHTML?.trim() || '';
+  const logoImg = parentCells[1]?.querySelector('img');
+  const logoAlt = parentCells[2]?.textContent?.trim() || 'GE HealthCare';
+  const logoHref = parentCells[3]?.textContent?.trim() || '/';
+  const ctaLabel = parentCells[4]?.textContent?.trim() || '';
+  const ctaHref = parentCells[5]?.textContent?.trim() || '#';
+  const hamburgerIconImg = parentCells[6]?.querySelector('img');
 
-  const tmp = document.createElement('div');
-  tmp.innerHTML = await resp.text();
+  // ── Nav Item rows: child items (rows 1..N) ────────────────────────────
+  const navItems = rows.slice(1).map((row) => {
+    const cells = [...row.children];
+    return {
+      title: cells[0]?.textContent?.trim() || '',
+      href: cells[1]?.textContent?.trim() || '#',
+    };
+  }).filter((item) => item.title);
 
-  // Each top-level <div> in the plain HTML is one authored row
-  const rows = [...tmp.querySelectorAll(':scope > div')];
-
-  // ── 3. Announcement banner (row 3) ────────────────────────────────────
-  const defaultBanner = 'Not all products and services may be available in your country or region.';
-  const bannerText = rows[3]?.textContent.trim() || defaultBanner;
+  // ── 1. Announcement Banner ─────────────────────────────────────────────
   const banner = document.createElement('div');
   banner.className = 'nav-banner';
-  banner.innerHTML = `<p>${bannerText}</p>`;
+  if (announcement) {
+    banner.innerHTML = `<p>${announcement}</p>`;
+  } else {
+    banner.hidden = true;
+  }
 
-  // ── 4. <nav> ──────────────────────────────────────────────────────────
+  // ── 2. Build <nav> ─────────────────────────────────────────────────────
   const nav = document.createElement('nav');
   nav.id = 'nav';
   nav.setAttribute('aria-label', 'Main navigation');
   nav.setAttribute('aria-expanded', 'false');
 
-  // ── 4a. Brand / Logo (row 0) ──────────────────────────────────────────
+  // ── 2a. Brand / Logo ──────────────────────────────────────────────────
   const brandDiv = document.createElement('div');
   brandDiv.className = 'nav-brand';
-  const img = rows[0]?.querySelector('img');
-  if (img) {
-    img.removeAttribute('loading');
-    const logoLink = document.createElement('a');
-    logoLink.href = '/';
-    logoLink.setAttribute('aria-label', 'GE HealthCare – go to homepage');
-    logoLink.append(img);
-    brandDiv.append(logoLink);
-  }
 
-  // ── 4b. Nav sections / links (row 1) ──────────────────────────────────
+  const logoLink = document.createElement('a');
+  logoLink.href = logoHref;
+  logoLink.setAttribute('aria-label', logoAlt);
+  if (logoImg) {
+    logoImg.removeAttribute('loading');
+    logoImg.alt = logoAlt;
+    logoLink.append(logoImg);
+  }
+  brandDiv.append(logoLink);
+
+  // ── 2b. Nav Links ─────────────────────────────────────────────────────
   const sectionsDiv = document.createElement('div');
   sectionsDiv.className = 'nav-sections';
-  const ul = rows[1]?.querySelector('ul');
-  if (ul) {
-    ul.querySelectorAll('li').forEach((li) => {
-      if (!li.querySelector('ul')) return;
-      li.classList.add('nav-drop');
-      li.setAttribute('aria-expanded', 'false');
-      li.setAttribute('role', 'button');
-      li.setAttribute('tabindex', '0');
-      li.addEventListener('click', () => {
-        if (!isDesktop.matches) return;
-        const exp = li.getAttribute('aria-expanded') === 'true';
-        ul.querySelectorAll('.nav-drop').forEach((d) => d.setAttribute('aria-expanded', 'false'));
-        li.setAttribute('aria-expanded', exp ? 'false' : 'true');
-      });
-      li.addEventListener('keydown', (e) => {
-        if (e.code === 'Enter' || e.code === 'Space') { e.preventDefault(); li.click(); }
-      });
+
+  if (navItems.length) {
+    const ul = document.createElement('ul');
+    navItems.forEach(({ title, href }) => {
+      const li = document.createElement('li');
+      const a = document.createElement('a');
+      a.href = href;
+      a.textContent = title;
+      li.append(a);
+      ul.append(li);
     });
     sectionsDiv.append(ul);
   }
 
-  // ── 4c. Tools / CTA (row 2) ───────────────────────────────────────────
+  // ── 2c. CTA Button ────────────────────────────────────────────────────
   const toolsDiv = document.createElement('div');
   toolsDiv.className = 'nav-tools';
-  const ctaLink = rows[2]?.querySelector('a');
-  if (ctaLink) {
-    ctaLink.className = 'nav-cta-btn';
-    toolsDiv.append(ctaLink);
+
+  if (ctaLabel) {
+    const ctaBtn = document.createElement('a');
+    ctaBtn.className = 'nav-cta-btn';
+    ctaBtn.href = ctaHref;
+    ctaBtn.textContent = ctaLabel;
+    toolsDiv.append(ctaBtn);
   }
 
-  // ── 4d. Hamburger ─────────────────────────────────────────────────────
+  // ── 2d. Hamburger ─────────────────────────────────────────────────────
   const hamburger = document.createElement('div');
   hamburger.className = 'nav-hamburger';
-  hamburger.innerHTML = `
-    <button type="button" aria-controls="nav" aria-label="Open navigation" aria-expanded="false">
-      <span class="nav-hamburger-icon"></span>
-      <span class="nav-hamburger-icon"></span>
-      <span class="nav-hamburger-icon"></span>
-    </button>`;
-  hamburger.querySelector('button').addEventListener('click', () => toggleMenu(nav));
 
-  // Close on outside click
+  const btn = document.createElement('button');
+  btn.type = 'button';
+  btn.setAttribute('aria-controls', 'nav');
+  btn.setAttribute('aria-label', 'Open navigation');
+  btn.setAttribute('aria-expanded', 'false');
+
+  if (hamburgerIconImg) {
+    hamburgerIconImg.removeAttribute('loading');
+    hamburgerIconImg.alt = '';
+    hamburgerIconImg.setAttribute('aria-hidden', 'true');
+    btn.append(hamburgerIconImg);
+  } else {
+    btn.innerHTML = `
+      <span class="nav-hamburger-icon"></span>
+      <span class="nav-hamburger-icon"></span>
+      <span class="nav-hamburger-icon"></span>`;
+  }
+
+  btn.addEventListener('click', () => toggleMenu(nav));
+  hamburger.append(btn);
+
   document.addEventListener('click', (e) => {
     if (nav.getAttribute('aria-expanded') === 'true' && !nav.contains(e.target)) {
       toggleMenu(nav, false);
     }
   });
 
-  // Collapse mobile menu when resizing to desktop
   isDesktop.addEventListener('change', () => {
     if (isDesktop.matches) toggleMenu(nav, false);
   });
 
-  // ── 5. Assemble ───────────────────────────────────────────────────────
+  // ── 3. Assemble ────────────────────────────────────────────────────────
   nav.append(brandDiv, sectionsDiv, toolsDiv, hamburger);
 
   const navWrapper = document.createElement('div');
   navWrapper.className = 'nav-wrapper';
   navWrapper.append(nav);
 
-  block.textContent = '';
-  block.append(banner, navWrapper);
+  block.replaceChildren(banner, navWrapper);
 }

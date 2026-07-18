@@ -1,26 +1,27 @@
 /*
- * GE HealthCare Header Block
+ * Header Block – GE HealthCare
+ * Reference: https://events.gehealthcare.com/
  *
- * DOM written by header.js:
+ * DOM produced by header.js (mirrors footer block pattern):
  *
- * <header>                      ← styles.css: height: var(--nav-height)
- *   <div class="header block">  ← .header
- *     <div class="nav-banner">
- *       <p>Not all products…</p>
+ * <header>
+ *   <div class="header block">
+ *     <div class="nav-banner">          ← top grey announcement bar
+ *       <p>…</p>
  *     </div>
  *     <div class="nav-wrapper">
  *       <nav id="nav">
- *         <div class="nav-brand">   <a><img/></a>  </div>
- *         <div class="nav-sections"><ul>…</ul>     </div>
- *         <div class="nav-tools">   <a.nav-cta-btn/> </div>
- *         <div class="nav-hamburger"><button>…</button></div>
+ *         <div class="nav-brand">       ← logo
+ *         <div class="nav-sections">    ← nav links <ul>
+ *         <div class="nav-tools">       ← CTA button
+ *         <div class="nav-hamburger">   ← mobile toggle
  *       </nav>
  *     </div>
  *   </div>
  * </header>
  */
 
-/* ── Make <header> fixed and tall enough for banner + nav ───── */
+/* ── Fix <header> to top of viewport ─────────────────────────── */
 header {
   position: fixed;
   top: 0;
@@ -30,12 +31,11 @@ header {
   height: auto;
 }
 
-/* Reserve space so page content isn't hidden under the fixed header */
 body {
   padding-top: 100px;
 }
 
-/* ── Block shell ─────────────────────────────────────────────── */
+/* ── Block variables & shell ─────────────────────────────────── */
 .header {
   --gehc-purple: #6f2282;
   --gehc-purple-hover: #5a1a6e;
@@ -48,7 +48,7 @@ body {
   background: var(--gehc-white);
 }
 
-/* ── Top announcement banner ─────────────────────────────────── */
+/* ── Announcement banner ─────────────────────────────────────── */
 .header .nav-banner {
   width: 100%;
   background-color: var(--gehc-banner-bg);
@@ -67,14 +67,14 @@ body {
   text-align: right;
 }
 
-/* ── White nav bar with purple bottom border ─────────────────── */
+/* ── White nav bar + purple bottom border ────────────────────── */
 .header .nav-wrapper {
   width: 100%;
   background-color: var(--gehc-white);
   border-bottom: 3px solid var(--gehc-purple);
 }
 
-/* ── Nav row layout ──────────────────────────────────────────── */
+/* ── Nav row ─────────────────────────────────────────────────── */
 .header #nav {
   display: flex;
   align-items: center;
@@ -85,12 +85,12 @@ body {
   box-sizing: border-box;
 }
 
-/* ── Brand / Logo ────────────────────────────────────────────── */
+/* ── Logo ────────────────────────────────────────────────────── */
 .header .nav-brand {
   display: flex;
   align-items: center;
   flex-shrink: 0;
-  margin-right: 24px;
+  margin-right: 28px;
 }
 
 .header .nav-brand a {
@@ -184,6 +184,7 @@ body {
   align-items: center;
   flex-shrink: 0;
   margin-left: auto;
+  gap: 12px;
 }
 
 .header .nav-tools .nav-cta-btn {
@@ -221,7 +222,7 @@ body {
 .header .nav-hamburger {
   display: none;
   align-items: center;
-  margin-left: 16px;
+  margin-left: 12px;
   flex-shrink: 0;
 }
 
@@ -267,7 +268,7 @@ body {
   transform: translateY(-7px) rotate(-45deg);
 }
 
-/* ── Mobile nav panel ────────────────────────────────────────── */
+/* ── Mobile (< 900px) ────────────────────────────────────────── */
 @media (width < 900px) {
   body {
     padding-top: 100px;
@@ -306,6 +307,7 @@ body {
     padding: 12px 0;
     font-size: 15px;
     border-bottom: 1px solid #ede0f4;
+    display: block;
   }
 
   .header .nav-sections .nav-drop > ul {
@@ -321,12 +323,16 @@ body {
 
   .header #nav[aria-expanded="true"] .nav-tools {
     display: flex;
+    flex-direction: column;
     margin-left: 0;
     padding: 16px 24px 0;
     position: fixed;
-    top: auto;
+    bottom: 0;
     width: 100%;
     box-sizing: border-box;
+    background: var(--gehc-white);
+    border-top: 1px solid #e0d0e8;
+    padding-bottom: 16px;
   }
 
   .header .nav-tools .nav-cta-btn {
@@ -335,19 +341,8 @@ body {
   }
 }
 
-/* ── Tablet ───────────────────────────────────────────────────── */
-@media (width >= 600px) and (width < 900px) {
-  .header .nav-banner {
-    padding: 6px 40px;
-  }
-}
-
-/* ── Desktop ─────────────────────────────────────────────────── */
+/* ── Desktop (≥ 900px) ───────────────────────────────────────── */
 @media (width >= 900px) {
-  body {
-    padding-top: 100px;
-  }
-
   .header .nav-hamburger {
     display: none;
   }

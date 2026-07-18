@@ -9,7 +9,22 @@
             "resourceType": "core/franklin/components/block/v1/block",
             "template": {
               "name": "Header",
-              "model": "header"
+              "filter": "header"
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Nav Item",
+      "id": "header-nav-item",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "name": "Nav Item",
+              "model": "header-nav-item"
             }
           }
         }
@@ -23,16 +38,31 @@
         {
           "component": "text",
           "valueType": "string",
-          "name": "nav",
-          "label": "Nav Path",
-          "value": "/nav"
+          "name": "announcement",
+          "label": "Announcement Banner Text",
+          "description": "Text shown in the top grey bar. Leave empty to hide the banner.",
+          "value": ""
+        },
+        {
+          "component": "reference",
+          "valueType": "string",
+          "name": "logo",
+          "label": "Logo Image",
+          "multi": false
         },
         {
           "component": "text",
           "valueType": "string",
-          "name": "announcement",
-          "label": "Announcement Banner",
-          "value": ""
+          "name": "logoAlt",
+          "label": "Logo Alt Text",
+          "value": "GE HealthCare"
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "logoLink",
+          "label": "Logo Link URL",
+          "value": "/"
         },
         {
           "component": "text",
@@ -44,12 +74,46 @@
         {
           "component": "text",
           "valueType": "string",
-          "name": "ctaUrl",
+          "name": "ctaLink",
           "label": "CTA Button URL",
           "value": "/contact"
+        },
+        {
+          "component": "reference",
+          "valueType": "string",
+          "name": "hamburgerIcon",
+          "label": "Hamburger Icon Image",
+          "description": "Custom icon for the mobile menu toggle. Leave empty to use the default 3-line icon.",
+          "multi": false
+        }
+      ]
+    },
+    {
+      "id": "header-nav-item",
+      "fields": [
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "navTitle",
+          "label": "Nav Link Title",
+          "value": ""
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "navLink",
+          "label": "Nav Link URL",
+          "value": ""
         }
       ]
     }
   ],
-  "filters": []
+  "filters": [
+    {
+      "id": "header",
+      "components": [
+        "header-nav-item"
+      ]
+    }
+  ]
 }

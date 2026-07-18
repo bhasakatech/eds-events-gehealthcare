@@ -42,5 +42,11 @@
       "button",
       "title"
     ]
+  },
+  {
+    "id": "header",
+    "components": [
+      "header-nav-item"
+    ]
   }
 ]
