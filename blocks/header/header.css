@@ -1,27 +1,33 @@
 /*
  * Header Block – GE HealthCare
- * Reference: https://events.gehealthcare.com/
  *
- * DOM produced by header.js (mirrors footer block pattern):
+ * Nav bar only. Announcement banner is in the announcement-bar block.
  *
+ * DOM:
  * <header>
  *   <div class="header block">
- *     <div class="nav-banner">          ← top grey announcement bar
- *       <p>…</p>
- *     </div>
  *     <div class="nav-wrapper">
  *       <nav id="nav">
- *         <div class="nav-brand">       ← logo
- *         <div class="nav-sections">    ← nav links <ul>
- *         <div class="nav-tools">       ← CTA button
- *         <div class="nav-hamburger">   ← mobile toggle
+ *         <div class="nav-brand">      logo
+ *         <div class="nav-sections">   nav links <ul>
+ *         <div class="nav-tools">      CTA button
+ *         <div class="nav-hamburger">  mobile toggle
  *       </nav>
  *     </div>
  *   </div>
  * </header>
  */
 
-/* ── Fix <header> to top of viewport ─────────────────────────── */
+/* ── Shared CSS variables ────────────────────────────────────── */
+:root {
+  --gehc-purple: #6f2282;
+  --gehc-purple-hover: #5a1a6e;
+  --gehc-white: #fff;
+  --gehc-nav-height: 64px;
+  --gehc-bar-height: 36px;
+}
+
+/* ── Fix <header> to top, sits below the announcement bar ───── */
 header {
   position: fixed;
   top: 0;
@@ -31,40 +37,15 @@ header {
   height: auto;
 }
 
+/* Reserve page body space for announcement-bar + nav bar */
 body {
-  padding-top: 100px;
+  padding-top: calc(var(--gehc-bar-height) + var(--gehc-nav-height));
 }
 
-/* ── Block variables & shell ─────────────────────────────────── */
+/* ── Block shell ─────────────────────────────────────────────── */
 .header {
-  --gehc-purple: #6f2282;
-  --gehc-purple-hover: #5a1a6e;
-  --gehc-white: #fff;
-  --gehc-banner-bg: #e8e8e8;
-  --gehc-banner-text: #444;
-  --gehc-nav-height: 64px;
-
   width: 100%;
   background: var(--gehc-white);
-}
-
-/* ── Announcement banner ─────────────────────────────────────── */
-.header .nav-banner {
-  width: 100%;
-  background-color: var(--gehc-banner-bg);
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  padding: 6px 40px;
-  box-sizing: border-box;
-}
-
-.header .nav-banner p {
-  margin: 0;
-  font-size: 12px;
-  color: var(--gehc-banner-text);
-  line-height: 1.4;
-  text-align: right;
 }
 
 /* ── White nav bar + purple bottom border ────────────────────── */
@@ -74,7 +55,7 @@ body {
   border-bottom: 3px solid var(--gehc-purple);
 }
 
-/* ── Nav row ─────────────────────────────────────────────────── */
+/* ── Nav row layout ──────────────────────────────────────────── */
 .header #nav {
   display: flex;
   align-items: center;
@@ -268,12 +249,8 @@ body {
   transform: translateY(-7px) rotate(-45deg);
 }
 
-/* ── Mobile (< 900px) ────────────────────────────────────────── */
+/* ── Mobile < 900px ──────────────────────────────────────────── */
 @media (width < 900px) {
-  body {
-    padding-top: 100px;
-  }
-
   .header .nav-hamburger {
     display: flex;
   }
@@ -281,7 +258,7 @@ body {
   .header .nav-sections {
     display: none;
     position: fixed;
-    top: 100px;
+    top: calc(var(--gehc-bar-height) + var(--gehc-nav-height));
     left: 0;
     width: 100%;
     background: var(--gehc-white);
@@ -325,14 +302,13 @@ body {
     display: flex;
     flex-direction: column;
     margin-left: 0;
-    padding: 16px 24px 0;
+    padding: 16px 24px;
     position: fixed;
     bottom: 0;
     width: 100%;
     box-sizing: border-box;
     background: var(--gehc-white);
     border-top: 1px solid #e0d0e8;
-    padding-bottom: 16px;
   }
 
   .header .nav-tools .nav-cta-btn {
@@ -341,7 +317,7 @@ body {
   }
 }
 
-/* ── Desktop (≥ 900px) ───────────────────────────────────────── */
+/* ── Desktop ≥ 900px ─────────────────────────────────────────── */
 @media (width >= 900px) {
   .header .nav-hamburger {
     display: none;

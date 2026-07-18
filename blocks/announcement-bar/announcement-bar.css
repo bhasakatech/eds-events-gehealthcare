@@ -1,0 +1,46 @@
+/*
+ * Announcement Bar Block – GE HealthCare
+ *
+ * Renders as a full-width grey strip fixed to the very top,
+ * above the header nav bar.
+ *
+ * DOM:
+ * <div class="announcement-bar block">
+ *   <div class="announcement-bar-inner">
+ *     <p>Not all products…</p>
+ *   </div>
+ * </div>
+ */
+
+.announcement-bar {
+  width: 100%;
+  background-color: #e8e8e8;
+}
+
+.announcement-bar-inner {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 6px 40px;
+  box-sizing: border-box;
+  max-width: 1440px;
+  margin: 0 auto;
+}
+
+.announcement-bar-inner p {
+  margin: 0;
+  font-size: 12px;
+  color: #444;
+  line-height: 1.4;
+  text-align: right;
+}
+
+@media (width < 600px) {
+  .announcement-bar-inner {
+    padding: 6px 16px;
+  }
+
+  .announcement-bar-inner p {
+    font-size: 11px;
+  }
+}

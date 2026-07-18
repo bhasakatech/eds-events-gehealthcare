@@ -142,6 +142,19 @@
     ]
   },
   {
+    "id": "announcement-bar",
+    "fields": [
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "announcement",
+        "label": "Announcement Text",
+        "description": "Text shown in the grey top bar. Leave empty to hide the bar.",
+        "value": ""
+      }
+    ]
+  },
+  {
     "id": "card",
     "fields": [
       {
@@ -226,14 +239,6 @@
     "id": "header",
     "fields": [
       {
-        "component": "text",
-        "valueType": "string",
-        "name": "announcement",
-        "label": "Announcement Banner Text",
-        "description": "Text shown in the top grey bar. Leave empty to hide the banner.",
-        "value": ""
-      },
-      {
         "component": "reference",
         "valueType": "string",
         "name": "logo",
@@ -241,39 +246,17 @@
         "multi": false
       },
       {
-        "component": "text",
+        "component": "aem-content",
         "valueType": "string",
-        "name": "logoAlt",
-        "label": "Logo Alt Text",
-        "value": "GE HealthCare"
-      },
-      {
-        "component": "text",
-        "valueType": "string",
-        "name": "logoLink",
-        "label": "Logo Link URL",
-        "value": "/"
-      },
-      {
-        "component": "text",
-        "valueType": "string",
-        "name": "ctaLabel",
-        "label": "CTA Button Label",
-        "value": "Contact us"
-      },
-      {
-        "component": "text",
-        "valueType": "string",
-        "name": "ctaLink",
-        "label": "CTA Button URL",
-        "value": "/contact"
+        "name": "ctaButton",
+        "label": "Contact Button"
       },
       {
         "component": "reference",
         "valueType": "string",
         "name": "hamburgerIcon",
-        "label": "Hamburger Icon Image",
-        "description": "Custom icon for the mobile menu toggle. Leave empty to use the default 3-line icon.",
+        "label": "Hamburger Menu Icon",
+        "description": "Custom icon for the mobile hamburger button. Leave empty to use the default 3-line icon.",
         "multi": false
       }
     ]
@@ -284,14 +267,14 @@
       {
         "component": "text",
         "valueType": "string",
-        "name": "navTitle",
-        "label": "Nav Link Title",
+        "name": "navLabel",
+        "label": "Nav Link Label",
         "value": ""
       },
       {
         "component": "text",
         "valueType": "string",
-        "name": "navLink",
+        "name": "navUrl",
         "label": "Nav Link URL",
         "value": ""
       }

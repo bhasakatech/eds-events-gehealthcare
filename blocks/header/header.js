@@ -1,39 +1,28 @@
 /*
  * Header Block – GE HealthCare
  *
- * DOM structure from Universal Editor (same row/cell pattern as Cards):
+ * _header.json model — exactly 4 cells (xwalk/max-cells limit):
  *
+ * Header model fields (parent row, 3 cells used + nav items via filter):
+ *   [0] logo          – reference  → logo image
+ *   [1] ctaButton     – aem-content → <a> link (label + URL from authored link)
+ *   [2] hamburgerIcon – reference  → custom hamburger icon image (optional)
+ *
+ * header-nav-item child rows (composite multifield, unlimited):
+ *   [0] navTitle – text → nav link label
+ *   [1] navUrl   – text → nav link URL
+ *
+ * DOM output:
  * <div class="header block">
- *   <!-- Row 0: parent block fields (7 columns) -->
- *   <div>
- *     <div>announcement text</div>
- *     <div><picture>logo</picture></div>
- *     <div>logoAlt</div>
- *     <div>logoLink url</div>
- *     <div>CTA label</div>
- *     <div>CTA url</div>
- *     <div><picture>hamburger icon</picture></div>  (optional)
+ *   <div class="nav-wrapper">
+ *     <nav id="nav">
+ *       <div class="nav-brand">      logo
+ *       <div class="nav-sections">   <ul> nav links </ul>
+ *       <div class="nav-tools">      CTA button
+ *       <div class="nav-hamburger">  mobile toggle
+ *     </nav>
  *   </div>
- *   <!-- Row 1..N: Nav Item child items (2 columns each) -->
- *   <div>
- *     <div>Nav Title</div>
- *     <div>Nav URL</div>
- *   </div>
- *   ...
  * </div>
- *
- * Authored fields (parent row, in order):
- *   [0] announcement  – banner text
- *   [1] logo          – logo image (reference)
- *   [2] logoAlt       – logo alt text
- *   [3] logoLink      – logo href
- *   [4] ctaLabel      – CTA button label
- *   [5] ctaLink       – CTA button URL
- *   [6] hamburgerIcon – hamburger icon image (optional reference)
- *
- * Nav Item rows (each child after the first row):
- *   [0] navTitle  – link label
- *   [1] navLink   – link URL
  */
 
 const isDesktop = window.matchMedia('(min-width: 900px)');
@@ -70,17 +59,23 @@ export default function decorate(block) {
   const rows = [...block.children];
   if (!rows.length) return;
 
-  // ── Parent row: block-level fields ────────────────────────────────────
+  // ── Parent row: 3 cells matching model field order ────────────────────
   const parentCells = [...(rows[0]?.children || [])];
-  const announcement = parentCells[0]?.innerHTML?.trim() || '';
-  const logoImg = parentCells[1]?.querySelector('img');
-  const logoAlt = parentCells[2]?.textContent?.trim() || 'GE HealthCare';
-  const logoHref = parentCells[3]?.textContent?.trim() || '/';
-  const ctaLabel = parentCells[4]?.textContent?.trim() || '';
-  const ctaHref = parentCells[5]?.textContent?.trim() || '#';
-  const hamburgerIconImg = parentCells[6]?.querySelector('img');
 
-  // ── Nav Item rows: child items (rows 1..N) ────────────────────────────
+  // [0] logo – reference field renders as <picture><img></picture>
+  const logoImg = parentCells[0]?.querySelector('img');
+  const logoAlt = logoImg?.alt || 'GE HealthCare';
+
+  // [1] ctaButton – aem-content field renders as <a href="...">Label</a>
+  const ctaLink = parentCells[1]?.querySelector('a');
+  const ctaLabel = ctaLink?.textContent?.trim() || '';
+  const ctaHref = ctaLink?.href || '#';
+
+  // [2] hamburgerIcon – reference field renders as <picture><img></picture>
+  const hamburgerImg = parentCells[2]?.querySelector('img');
+
+  // ── Nav Item child rows (rows 1..N) ───────────────────────────────────
+  // Each child row: [0] navLabel, [1] navUrl
   const navItems = rows.slice(1).map((row) => {
     const cells = [...row.children];
     return {
@@ -89,36 +84,27 @@ export default function decorate(block) {
     };
   }).filter((item) => item.title);
 
-  // ── 1. Announcement Banner ─────────────────────────────────────────────
-  const banner = document.createElement('div');
-  banner.className = 'nav-banner';
-  if (announcement) {
-    banner.innerHTML = `<p>${announcement}</p>`;
-  } else {
-    banner.hidden = true;
-  }
-
-  // ── 2. Build <nav> ─────────────────────────────────────────────────────
+  // ── Build <nav> ────────────────────────────────────────────────────────
   const nav = document.createElement('nav');
   nav.id = 'nav';
   nav.setAttribute('aria-label', 'Main navigation');
   nav.setAttribute('aria-expanded', 'false');
 
-  // ── 2a. Brand / Logo ──────────────────────────────────────────────────
+  // ── Logo ───────────────────────────────────────────────────────────────
   const brandDiv = document.createElement('div');
   brandDiv.className = 'nav-brand';
 
-  const logoLink = document.createElement('a');
-  logoLink.href = logoHref;
-  logoLink.setAttribute('aria-label', logoAlt);
+  const logoAnchor = document.createElement('a');
+  logoAnchor.href = '/';
+  logoAnchor.setAttribute('aria-label', logoAlt);
   if (logoImg) {
     logoImg.removeAttribute('loading');
     logoImg.alt = logoAlt;
-    logoLink.append(logoImg);
+    logoAnchor.append(logoImg);
   }
-  brandDiv.append(logoLink);
+  brandDiv.append(logoAnchor);
 
-  // ── 2b. Nav Links ─────────────────────────────────────────────────────
+  // ── Nav links (composite multifield child items) ───────────────────────
   const sectionsDiv = document.createElement('div');
   sectionsDiv.className = 'nav-sections';
 
@@ -135,7 +121,7 @@ export default function decorate(block) {
     sectionsDiv.append(ul);
   }
 
-  // ── 2c. CTA Button ────────────────────────────────────────────────────
+  // ── CTA button (aem-content link) ──────────────────────────────────────
   const toolsDiv = document.createElement('div');
   toolsDiv.className = 'nav-tools';
 
@@ -147,47 +133,51 @@ export default function decorate(block) {
     toolsDiv.append(ctaBtn);
   }
 
-  // ── 2d. Hamburger ─────────────────────────────────────────────────────
+  // ── Hamburger ──────────────────────────────────────────────────────────
   const hamburger = document.createElement('div');
   hamburger.className = 'nav-hamburger';
 
-  const btn = document.createElement('button');
-  btn.type = 'button';
-  btn.setAttribute('aria-controls', 'nav');
-  btn.setAttribute('aria-label', 'Open navigation');
-  btn.setAttribute('aria-expanded', 'false');
+  const menuBtn = document.createElement('button');
+  menuBtn.type = 'button';
+  menuBtn.setAttribute('aria-controls', 'nav');
+  menuBtn.setAttribute('aria-label', 'Open navigation');
+  menuBtn.setAttribute('aria-expanded', 'false');
 
-  if (hamburgerIconImg) {
-    hamburgerIconImg.removeAttribute('loading');
-    hamburgerIconImg.alt = '';
-    hamburgerIconImg.setAttribute('aria-hidden', 'true');
-    btn.append(hamburgerIconImg);
+  if (hamburgerImg) {
+    // Author provided a custom hamburger icon
+    hamburgerImg.removeAttribute('loading');
+    hamburgerImg.alt = '';
+    hamburgerImg.setAttribute('aria-hidden', 'true');
+    menuBtn.append(hamburgerImg);
   } else {
-    btn.innerHTML = `
+    // Default 3-line CSS hamburger
+    menuBtn.innerHTML = `
       <span class="nav-hamburger-icon"></span>
       <span class="nav-hamburger-icon"></span>
       <span class="nav-hamburger-icon"></span>`;
   }
 
-  btn.addEventListener('click', () => toggleMenu(nav));
-  hamburger.append(btn);
+  menuBtn.addEventListener('click', () => toggleMenu(nav));
+  hamburger.append(menuBtn);
 
+  // Close on outside click
   document.addEventListener('click', (e) => {
     if (nav.getAttribute('aria-expanded') === 'true' && !nav.contains(e.target)) {
       toggleMenu(nav, false);
     }
   });
 
+  // Collapse when resizing to desktop
   isDesktop.addEventListener('change', () => {
     if (isDesktop.matches) toggleMenu(nav, false);
   });
 
-  // ── 3. Assemble ────────────────────────────────────────────────────────
+  // ── Assemble ───────────────────────────────────────────────────────────
   nav.append(brandDiv, sectionsDiv, toolsDiv, hamburger);
 
   const navWrapper = document.createElement('div');
   navWrapper.className = 'nav-wrapper';
   navWrapper.append(nav);
 
-  block.replaceChildren(banner, navWrapper);
+  block.replaceChildren(navWrapper);
 }
