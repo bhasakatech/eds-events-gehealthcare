@@ -195,11 +195,9 @@
         ]
       },
       {
-        "component": "reference",
-        "valueType": "string",
+        "component": "text",
         "name": "link",
-        "label": "Card Link",
-        "multi": false
+        "label": "Card Link"
       }
     ]
   },
