@@ -193,39 +193,6 @@
     ]
   },
   {
-    "id": "footer",
-    "fields": [
-      {
-        "component": "text",
-        "name": "countryMessage",
-        "label": "Country Message",
-        "valueType": "string",
-        "value": ""
-      },
-      {
-        "component": "reference",
-        "name": "logo",
-        "label": "Logo",
-        "valueType": "string",
-        "multi": false
-      },
-      {
-        "component": "richtext",
-        "name": "info",
-        "label": "Information",
-        "valueType": "string",
-        "value": ""
-      },
-      {
-        "component": "richtext",
-        "name": "legal",
-        "label": "Legal",
-        "valueType": "string",
-        "value": ""
-      }
-    ]
-  },
-  {
     "id": "fragment",
     "fields": [
       {

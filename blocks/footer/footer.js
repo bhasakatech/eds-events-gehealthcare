@@ -1,4 +1,20 @@
-export default function decorate(block) {
+import { getMetadata } from '../../scripts/aem.js';
+import { loadFragment } from '../fragment/fragment.js';
+
+export default async function decorate(block) {
+  const footerMeta = getMetadata('footer');
+  const footerPath = footerMeta
+    ? new URL(footerMeta, window.location).pathname
+    : '/footer';
+
+  const fragment = await loadFragment(footerPath);
+
+  // Replace the block content with the fragment
+  block.textContent = '';
+  while (fragment.firstElementChild) {
+    block.append(fragment.firstElementChild);
+  }
+
   const rows = [...block.children];
 
   if (rows.length < 4) {
@@ -11,6 +27,9 @@ export default function decorate(block) {
     infoRow,
     copyrightRow,
   ] = rows;
+
+  // Clear the block before rebuilding
+  block.textContent = '';
 
   const footer = document.createElement('div');
   footer.className = 'footer-content';
@@ -27,8 +46,7 @@ export default function decorate(block) {
   const contact = document.createElement('div');
   contact.className = 'footer-contact';
 
-  const contactButton = block.closest('.section')
-    .querySelector('.default-content-wrapper a');
+  const contactButton = document.querySelector('.default-content-wrapper a');
 
   if (contactButton) {
     contact.append(contactButton.cloneNode(true));
@@ -62,5 +80,5 @@ export default function decorate(block) {
 
   footer.append(top, bottom);
 
-  block.replaceChildren(footer);
+  block.append(footer);
 }

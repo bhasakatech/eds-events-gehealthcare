@@ -624,6 +624,10 @@ async function loadHeader(header) {
  * @returns {Promise}
  */
 async function loadFooter(footer) {
+  if (footer.querySelector('.footer')) {
+    return Promise.resolve();
+  }
+
   const footerBlock = buildBlock('footer', '');
   footer.append(footerBlock);
   decorateBlock(footerBlock);
