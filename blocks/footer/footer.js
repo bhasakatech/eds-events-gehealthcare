@@ -15,18 +15,24 @@ export default async function decorate(block) {
     block.append(fragment.firstElementChild);
   }
 
-  const rows = [...block.children];
+  const sections = [...block.children];
 
-  if (rows.length < 4) {
+  if (sections.length < 2) {
     return;
   }
 
-  const [
-    countryRow,
-    logoRow,
-    infoRow,
-    copyrightRow,
-  ] = rows;
+  const [topSection, bottomSection] = sections;
+
+  const topContent = topSection.querySelector('.default-content-wrapper');
+  const bottomContent = bottomSection.querySelector('.default-content-wrapper');
+  const linksWrapper = bottomSection.querySelector('.columns-wrapper');
+
+  if (!topContent || !bottomContent) {
+    return;
+  }
+
+  const topRows = [...topContent.children];
+  const bottomRows = [...bottomContent.children];
 
   // Clear the block before rebuilding
   block.textContent = '';
@@ -41,15 +47,16 @@ export default async function decorate(block) {
 
   const message = document.createElement('div');
   message.className = 'footer-message';
-  message.append(...countryRow.firstElementChild.childNodes);
+
+  if (topRows[0]) {
+    message.append(...topRows[0].childNodes);
+  }
 
   const contact = document.createElement('div');
   contact.className = 'footer-contact';
 
-  const contactButton = document.querySelector('.default-content-wrapper a');
-
-  if (contactButton) {
-    contact.append(contactButton.cloneNode(true));
+  if (topRows[1]) {
+    contact.append(...topRows[1].childNodes);
   }
 
   top.append(message, contact);
@@ -64,17 +71,30 @@ export default async function decorate(block) {
 
   const logo = document.createElement('div');
   logo.className = 'footer-logo';
-  logo.append(...logoRow.firstElementChild.childNodes);
+
+  if (bottomRows[0]) {
+    logo.append(...bottomRows[0].childNodes);
+  }
 
   const info = document.createElement('div');
   info.className = 'footer-info';
-  info.append(...infoRow.firstElementChild.childNodes);
+
+  if (bottomRows[1]) {
+    info.append(bottomRows[1]);
+  }
+
+  if (bottomRows[2]) {
+    info.append(bottomRows[2]);
+  }
 
   left.append(logo, info);
 
   const right = document.createElement('div');
   right.className = 'footer-right';
-  right.append(...copyrightRow.firstElementChild.childNodes);
+
+  if (linksWrapper) {
+    right.append(linksWrapper);
+  }
 
   bottom.append(left, right);
 
