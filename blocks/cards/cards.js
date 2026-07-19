@@ -1,23 +1,90 @@
 import { createOptimizedPicture } from '../../scripts/aem.js';
-import { moveInstrumentation } from '../../scripts/scripts.js';
 
 export default function decorate(block) {
-  /* change to ul, li */
   const ul = document.createElement('ul');
+
   [...block.children].forEach((row) => {
+    const cols = [...row.children];
+
+    if (cols.length < 6) {
+      return;
+    }
+
+    const [
+      category,
+      title,
+      info,
+      icon,
+      background,
+      link,
+    ] = cols;
+
     const li = document.createElement('li');
-    moveInstrumentation(row, li);
-    while (row.firstElementChild) li.append(row.firstElementChild);
-    [...li.children].forEach((div) => {
-      if (div.children.length === 1 && div.querySelector('picture')) div.className = 'cards-card-image';
-      else div.className = 'cards-card-body';
-    });
+    li.className = 'event-card';
+
+    const bg = background.textContent.trim().toLowerCase().replace(/\s+/g, '-');
+
+    if (bg) {
+      li.classList.add(`bg-${bg}`);
+    }
+
+    /* ---------- Category ---------- */
+
+    const categoryDiv = document.createElement('div');
+    categoryDiv.className = 'event-category';
+    categoryDiv.innerHTML = category.innerHTML;
+
+    /* ---------- Link ---------- */
+
+    const authoredLink = link.querySelector('a');
+
+    const content = document.createElement(authoredLink ? 'a' : 'div');
+    content.className = 'event-content';
+
+    if (authoredLink) {
+      content.href = authoredLink.href;
+      content.title = authoredLink.title;
+    }
+
+    /* ---------- Title ---------- */
+
+    const titleDiv = document.createElement('div');
+    titleDiv.className = 'event-title';
+    titleDiv.innerHTML = title.innerHTML;
+
+    /* ---------- Footer ---------- */
+
+    const footer = document.createElement('div');
+    footer.className = 'event-footer';
+
+    const infoDiv = document.createElement('div');
+    infoDiv.className = 'event-info';
+    infoDiv.innerHTML = info.innerHTML;
+
+    const iconDiv = document.createElement('div');
+    iconDiv.className = 'event-icon';
+
+    const img = icon.querySelector('img');
+
+    if (img) {
+      const picture = createOptimizedPicture(
+        img.src,
+        img.alt,
+        false,
+        [{ width: '80' }],
+      );
+
+      iconDiv.append(picture);
+    }
+
+    footer.append(infoDiv, iconDiv);
+
+    content.append(titleDiv, footer);
+
+    li.append(categoryDiv, content);
+
     ul.append(li);
   });
-  ul.querySelectorAll('picture > img').forEach((img) => {
-    const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
-    moveInstrumentation(img, optimizedPic.querySelector('img'));
-    img.closest('picture').replaceWith(optimizedPic);
-  });
+
   block.replaceChildren(ul);
 }

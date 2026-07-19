@@ -296,6 +296,41 @@ main img {
 }
 
 /* sections */
+
+/* Global section container */
+
+.section > div {
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  padding-inline: 15px;
+  margin-inline: auto;
+}
+
+@media (width >= 576px) {
+  .section > div {
+    max-width: 540px !important;
+  }
+}
+
+@media (width >= 768px) {
+  .section > div {
+    max-width: 720px !important;
+  }
+}
+
+@media (width >= 992px) {
+  .section > div {
+    max-width: 960px !important;
+  }
+}
+
+@media (width >= 1200px) {
+  .section > div {
+    max-width: 1140px !important;
+  }
+}
+
 main > .section {
   margin: 40px 0;
 }
