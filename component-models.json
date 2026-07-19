@@ -158,18 +158,38 @@
     "id": "card",
     "fields": [
       {
-        "component": "reference",
-        "valueType": "string",
-        "name": "image",
-        "label": "Image",
-        "multi": false
+        "component": "text",
+        "name": "category",
+        "label": "Category"
+      },
+      {
+        "component": "text",
+        "name": "title",
+        "label": "Event Title"
       },
       {
         "component": "richtext",
-        "name": "text",
-        "value": "",
-        "label": "Text",
-        "valueType": "string"
+        "name": "event-info",
+        "label": "Event Information"
+      },
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "icon",
+        "label": "Icon",
+        "multi": false
+      },
+      {
+        "component": "color",
+        "name": "background-color",
+        "label": "Background Color"
+      },
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "link",
+        "label": "Card Link",
+        "multi": false
       }
     ]
   },
