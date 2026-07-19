@@ -59,9 +59,19 @@
           "multi": false
         },
         {
-          "component": "color",
-          "name": "background-color",
-          "label": "Background Color"
+          "component": "select",
+          "name": "background",
+          "label": "Background",
+          "options": [
+            {
+              "name": "Violet",
+              "value": "Violet"
+            },
+            {
+              "name": "Light Gray",
+              "value": "light-gray"
+            }
+          ]
         },
         {
           "component": "reference",
