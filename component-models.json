@@ -393,19 +393,20 @@
       {
         "component": "text",
         "name": "col1_videoUrl",
-        "label": "Video URL (YouTube/Vimeo)",
+        "label": "Video URL (YouTube/Vimeo/MP4)",
         "valueType": "string"
       },
       {
-        "component": "text",
+        "component": "reference",
+        "valueType": "string",
         "name": "col1_videoThumbnail",
-        "label": "Video Thumbnail URL (Optional)",
-        "valueType": "string"
+        "label": "Video Thumbnail (Optional)",
+        "multi": false
       },
       {
         "component": "text",
-        "name": "col1_autoplay",
-        "label": "Autoplay (true/false)",
+        "name": "col1_videoThumbnailAlt",
+        "label": "Video Thumbnail Alt Text (Optional)",
         "valueType": "string"
       }
     ]
