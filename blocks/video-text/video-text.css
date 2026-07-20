@@ -35,7 +35,7 @@
 }
 
 .video-text.light .text-wrapper {
-    background: #ffffff;
+    background: #fff;
     color: #000;
 }
 
@@ -101,7 +101,7 @@
    Tablet & Mobile
 ========================== */
 
-@media (max-width: 991px) {
+@media (width <= 991px) {
     .video-text.video-left,
     .video-text.video-right {
         flex-direction: column !important;
@@ -136,7 +136,7 @@
    Mobile
 ========================== */
 
-@media (max-width: 767px) {
+@media (width <= 767px) {
     .video-text .video-wrapper {
         min-height: 220px;
     }
