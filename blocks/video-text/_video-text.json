@@ -85,7 +85,7 @@
         },
         {
           "component": "aem-content",
-          "name": "col1_ctaLink",
+          "name": "col1_cta",
           "value": "",
           "label": "Call-to-Action Link",
           "valueType": "string"
