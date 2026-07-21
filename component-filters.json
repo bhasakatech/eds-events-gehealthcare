@@ -17,7 +17,6 @@
       "columns",
       "fragment",
       "quote",
-      "header",
       "split-hero",
       "video-text"
     ]
@@ -41,12 +40,6 @@
       "image",
       "button",
       "title"
-    ]
-  },
-  {
-    "id": "header",
-    "components": [
-      "header-nav-item"
     ]
   },
   {
