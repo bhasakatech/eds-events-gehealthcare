@@ -16,11 +16,34 @@
           "label": "Description"
         },
         {
+          "component": "date",
+          "name": "startDate",
+          "label": "Start Date"
+        },
+        {
+          "component": "date",
+          "name": "endDate",
+          "label": "End Date"
+        },
+        {
           "component": "text",
-          "valueType": "string",
-          "name": "keywords",
-          "multi": true,
-          "label": "Keywords"
+          "name": "country",
+          "label": "Country"
+        },
+         {
+          "component": "select",
+          "name": "eventMode",
+          "label": "Event Type",
+          "options": [
+            {
+              "name": "Online",
+              "value": "online"
+            },
+            {
+              "name": "Onsite",
+              "value": "onsite"
+            }
+          ]
         }
       ]
     }
