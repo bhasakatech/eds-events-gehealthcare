@@ -336,7 +336,38 @@
   },
   {
     "id": "event-list",
-    "fields": []
+    "fields": [
+      {
+        "component": "text",
+        "name": "title",
+        "label": "Heading",
+        "value": "All Events"
+      },
+      {
+        "component": "text",
+        "name": "topicPlaceholder",
+        "label": "Topic Placeholder",
+        "value": "Filter by topic"
+      },
+      {
+        "component": "text",
+        "name": "countryPlaceholder",
+        "label": "Country Placeholder",
+        "value": "Filter by country"
+      },
+      {
+        "component": "text",
+        "name": "searchPlaceholder",
+        "label": "Search Placeholder",
+        "value": "Search for events"
+      },
+      {
+        "component": "text",
+        "name": "clearButtonLabel",
+        "label": "Clear Button Label",
+        "value": "Clear All"
+      }
+    ]
   },
   {
     "id": "fragment",
