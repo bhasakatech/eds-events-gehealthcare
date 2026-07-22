@@ -10,7 +10,8 @@
             "template": {
               "name": "Metadata",
               "model": "metadata",
-              "filter": "metadata"
+              "filter": "metadata",
+              "key-value": true
             }
           }
         }

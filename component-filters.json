@@ -44,6 +44,10 @@
     ]
   },
   {
+    "id": "metadata",
+    "components": []
+  },
+  {
     "id": "video-text",
     "components": [
       "video-text-item"
