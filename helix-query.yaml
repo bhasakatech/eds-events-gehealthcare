@@ -14,3 +14,29 @@ indices:
       robots:
         select: head > meta[name="robots"]
         value: attribute(el, "content")
+  events:
+    include:
+      - '/events/**'
+    exclude:
+      - '/**.json'
+    target: /events/query-index.json
+    properties:
+      title:
+        select: head > meta[property="og:title"]
+        value: attribute(el, "content")
+
+      country:
+        select: head > meta[name="country"]
+        value: attribute(el, "content")
+
+      eventMode:
+        select: head > meta[name="eventmode"]
+        value: attribute(el, "content")
+
+      startDate:
+        select: head > meta[name="startdate"]
+        value: attribute(el, "content")
+
+      endDate:
+        select: head > meta[name="enddate"]
+        value: attribute(el, "content")
