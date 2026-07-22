@@ -25,6 +25,10 @@ indices:
         select: head > meta[property="og:title"]
         value: attribute(el, "content")
 
+      topic:
+        select: head > meta[name="topic"]
+        value: attribute(el, "content")
+
       country:
         select: head > meta[name="country"]
         value: attribute(el, "content")
