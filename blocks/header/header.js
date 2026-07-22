@@ -79,7 +79,7 @@ function toggleAllNavSections(sections, expanded = false) {
  */
 function toggleMenu(nav, forceExpanded = null) {
   const drawer = nav.querySelector('.columns-wrapper');
-  const button = nav.querySelector('.nav-hamburger button');
+  const button = nav.querySelector('.nav-hamburger .hamburger-menu');
 
   if (!drawer) return;
 
@@ -166,20 +166,27 @@ export default async function decorate(block) {
   let hamburger;
 
   if (hamburgerLink) {
-    const iconSrc = hamburgerLink.getAttribute('href');
+    // const iconSrc = hamburgerLink.getAttribute('href');
 
     hamburger = document.createElement('div');
     hamburger.className = 'nav-hamburger';
 
     hamburger.innerHTML = `
-    <button type="button" aria-controls="nav" aria-label="Open navigation">
-      ${
-  iconSrc
-    ? `<img src="${iconSrc}" alt="Menu">`
-    : '<span class="nav-hamburger-icon"></span>'
-}
-    </button>
-  `;
+  <div
+    class="hamburger-menu hidden adobe-tracking-element"
+    data-analytics-link-name="Menu"
+    data-analytics-link-type="Primary navigation"
+    data-analytics-link-title="Header"
+    role="button"
+    tabindex="0"
+    aria-controls="nav"
+    aria-label="Open navigation"
+  >
+    <div></div>
+    <div></div>
+    <div></div>
+  </div>
+`;
 
     // Replace the authored link with hamburger
     hamburgerLink.parentElement.replaceWith(hamburger);
@@ -196,7 +203,7 @@ export default async function decorate(block) {
     nav.prepend(hamburger);
   }
 
-  const hamburgerButton = hamburger.querySelector('button');
+  const hamburgerButton = hamburger.querySelector('.hamburger-menu');
 
   hamburgerButton.addEventListener('click', (e) => {
     e.preventDefault();
@@ -204,6 +211,13 @@ export default async function decorate(block) {
     toggleMenu(nav);
   });
 
+  // Keyboard accessibility
+  hamburgerButton.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      toggleMenu(nav);
+    }
+  });
   nav.setAttribute('aria-expanded', 'false');
 
   // Hide drawer initially
