@@ -1,3 +1,134 @@
-.event{
-    text-align: center;
+.event-list-wrapper {
+    width: 100%;
+}
+
+.event-list-toolbar {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 48px;
+    flex-wrap: wrap;
+}
+
+.event-list-heading {
+    margin: 0;
+    color: #5f259f;
+    font-size: 48px;
+    font-weight: 300;
+    flex: 1;
+}
+
+.event-list-filter,
+.event-list-search {
+    height: 48px;
+    min-width: 240px;
+    padding: 0 16px;
+    border: 1px solid #8d8d8d;
+    border-radius: 4px;
+    background: #fff;
+    font-size: 16px;
+    outline: none;
+}
+
+.event-list-search {
+    width: 260px;
+}
+
+.event-list-clear-btn {
+    height: 48px;
+    padding: 0 24px;
+    border: none;
+    border-radius: 4px;
+    background: #bdbdbd;
+    color: #fff;
+    font-weight: 600;
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+.event-list-clear-btn:hover {
+    background: #9d9d9d;
+}
+
+.event-list-table {
+    width: 100%;
+}
+
+.event-list-table-header {
+    display: grid;
+    grid-template-columns: 3fr 1.5fr 2fr 1.2fr;
+    padding: 0 0 14px;
+    border-bottom: 2px solid #5f259f;
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.event-list-table-header > div {
+    display: flex;
+    align-items: center;
+}
+
+.event-list-table-body {
+    width: 100%;
+}
+
+.event-list-row {
+    display: grid;
+    grid-template-columns: 3fr 1.5fr 2fr 1.2fr;
+    padding: 28px 0;
+    border-bottom: 1px solid #ddd;
+    text-decoration: none;
+    color: inherit;
+    transition: background .2s ease;
+}
+
+.event-list-row:hover {
+    background: #f0f0f0;
+    text-decoration: none;
+}
+
+.event-list-row > div {
+    display: flex;
+    align-items: center;
+}
+
+.event-list-title {
+    color: #60269e;
+    font-size: 18px;
+    font-weight: 600;
+    line-height: 1.5;
+}
+
+.event-list-type,
+.event-list-date,
+.event-list-country {
+    font-size: 16px;
+    line-height: 1.5;
+}
+
+@media (width <= 992px) {
+    .event-list-toolbar {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .event-list-heading {
+        margin-bottom: 12px;
+    }
+
+    .event-list-filter,
+    .event-list-search,
+    .event-list-clear-btn {
+        width: 100%;
+    }
+
+    .event-list-table-header,
+    .event-list-row {
+        grid-template-columns: 1fr;
+        row-gap: 12px;
+    }
+
+    .event-list-table-header {
+        display: none;
+    }
 }
