@@ -17,9 +17,9 @@
       "columns",
       "fragment",
       "quote",
-      "split-hero",
       "video-text",
-      "event-list"
+      "event-list",
+      "metadata"
     ]
   },
   {

@@ -1,0 +1,125 @@
+{
+  "definitions": [
+    {
+      "title": "Metadata",
+      "id": "metadata",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block",
+            "template": {
+              "name": "Metadata",
+              "model": "metadata"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "metadata",
+      "fields": [
+        {
+          "component": "text",
+          "name": "title",
+          "label": "Page Title",
+          "valueType": "string"
+        },
+        {
+          "component": "textarea",
+          "name": "description",
+          "label": "Description",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "name": "canonical",
+          "label": "Canonical URL",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "name": "robots",
+          "label": "Robots",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "name": "ogTitle",
+          "label": "OG Title",
+          "valueType": "string"
+        },
+        {
+          "component": "textarea",
+          "name": "ogDescription",
+          "label": "OG Description",
+          "valueType": "string"
+        },
+        {
+          "component": "reference",
+          "name": "ogImage",
+          "label": "OG Image",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "name": "ogType",
+          "label": "OG Type",
+          "valueType": "string",
+          "value": "website"
+        },
+        {
+          "component": "text",
+          "name": "ogSiteName",
+          "label": "OG Site Name",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "name": "ogLocale",
+          "label": "OG Locale",
+          "valueType": "string",
+          "value": "en_US"
+        },
+        {
+          "component": "text",
+          "name": "twitterCard",
+          "label": "Twitter Card",
+          "valueType": "string",
+          "value": "summary_large_image"
+        },
+        {
+          "component": "text",
+          "name": "twitterTitle",
+          "label": "Twitter Title",
+          "valueType": "string"
+        },
+        {
+          "component": "textarea",
+          "name": "twitterDescription",
+          "label": "Twitter Description",
+          "valueType": "string"
+        },
+        {
+          "component": "reference",
+          "name": "twitterImage",
+          "label": "Twitter Image",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "name": "twitterSite",
+          "label": "Twitter Site",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "name": "twitterCreator",
+          "label": "Twitter Creator",
+          "valueType": "string"
+        }
+      ]
+    }
+  ]
+}
