@@ -22,11 +22,106 @@
           "label": "End Date"
         },
         {
+          "component": "select",
+          "name": "topic",
+          "label": "Topic",
+          "options": [
+            {
+              "name": "Healthcare IT",
+              "value": "Healthcare IT"
+            },
+            {
+              "name": "Service",
+              "value": "Service"
+            },
+            {
+              "name": "Magnetic Resonance Imaging",
+              "value": "Magnetic Resonance Imaging"
+            },
+            {
+              "name": "Women's Health",
+              "value": "Women's Health"
+            },
+            {
+              "name": "Mammography",
+              "value": "Mammography"
+            },
+            {
+              "name": "Financial Services",
+              "value": "Financial Services"
+            },
+            {
+              "name": "Oncology Solutions",
+              "value": "Oncology Solutions"
+            },
+            {
+              "name": "Ultrasound",
+              "value": "Ultrasound"
+            },
+            {
+              "name": "Computed Tomography",
+              "value": "Computed Tomography"
+            },
+            {
+              "name": "Cardiology",
+              "value": "Cardiology"
+            },
+            {
+              "name": "Molecular Imaging",
+              "value": "Molecular Imaging"
+            },
+            {
+              "name": "Surgical Imaging",
+              "value": "Surgical Imaging"
+            },
+            {
+              "name": "X-ray",
+              "value": "X-ray"
+            },
+            {
+              "name": "Interventional Image Guided Systems",
+              "value": "Interventional Image Guided Systems"
+            },
+            {
+              "name": "Imaging Digital Solutions",
+              "value": "Imaging Digital Solutions"
+            },
+            {
+              "name": "Pharmaceutical Diagnostics",
+              "value": "Pharmaceutical Diagnostics"
+            },
+            {
+              "name": "Image Guiding Solutions",
+              "value": "Image Guiding Solutions"
+            },
+            {
+              "name": "AI and Software Solutions",
+              "value": "AI and Software Solutions"
+            },
+            {
+              "name": "Effortless Imaging",
+              "value": "Effortless Imaging"
+            },
+            {
+              "name": "Healthcare Financial Services",
+              "value": "Healthcare Financial Services"
+            },
+            {
+              "name": "Oncology",
+              "value": "Oncology"
+            },
+            {
+              "name": "Operational Efficiency",
+              "value": "Operational Efficiency"
+            }
+          ]
+        },
+        {
           "component": "text",
           "name": "country",
           "label": "Country"
         },
-         {
+        {
           "component": "select",
           "name": "eventMode",
           "label": "Event Type",
