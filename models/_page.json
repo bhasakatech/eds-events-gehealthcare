@@ -10,18 +10,14 @@
           "label": "Title"
         },
         {
-          "component": "text",
-          "valueType": "string",
-          "name": "jcr:description",
-          "label": "Description"
-        },
-        {
-          "component": "date",
+          "component": "date-time",
+          "valueType": "date",
           "name": "startDate",
           "label": "Start Date"
         },
         {
-          "component": "date",
+          "component": "date-time",
+          "valueType": "date",
           "name": "endDate",
           "label": "End Date"
         },
