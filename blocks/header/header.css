@@ -1,3 +1,7 @@
+/* =========================
+   Header Wrapper
+   ========================= */
+
 .header-wrapper {
   position: sticky;
   top: 0;
@@ -9,48 +13,176 @@
 
 .header {
   width: 100%;
+  height: auto !important;
 }
 
 .nav-wrapper {
-  max-width: 1200px;
-  margin: auto;
+  width: 100%;
 }
 
 #nav {
-  padding: 16px 32px;
+  width: 100%;
 }
 
-/* Hamburger menu panel */
+/* =========================
+   Top Announcement Bar
+   ========================= */
+
+.nav-brand {
+  background: #f7f7f7;
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.nav-brand .default-content-wrapper {
+  width: 100%;
+  margin: 0 auto;
+  padding: 6px 10px;
+  overflow: hidden;
+  background-color: #fed830;
+  color: #000;
+  text-align: center;
+  align-items: center;
+  font-size: 14px;
+  line-height: 15px;
+  letter-spacing: 1px;
+}
+
+.nav-brand.top-announcement {
+  transition:
+    height 0.3s ease,
+    opacity 0.3s ease;
+}
+
+.nav-brand p {
+  margin: 0;
+  text-align: right;
+  font-size: 14px;
+  color: #555;
+}
+
+.header-wrapper.sticky-header .nav-brand.top-announcement {
+  display: none;
+}
+
+.section.columns-container.nav-sections {
+  background: #f7f7f7;
+  border-bottom: 1px solid #e5e5e5;
+}
+
+/* =========================
+   Main Navigation
+   ========================= */
+
+.nav-sections > .default-content-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+}
+
+/* Logo */
+
+.nav-sections > .default-content-wrapper > p:first-child {
+  flex-shrink: 0;
+  margin: 0;
+}
+
+.nav-sections > .default-content-wrapper > p:first-child img {
+  display: block;
+  width: 180px;
+}
+
+/* Navigation links */
+
+.nav-sections > .default-content-wrapper > p:nth-child(2),
+.nav-sections > .default-content-wrapper > p:nth-child(3) {
+  margin: 0;
+}
+
+.nav-sections > .default-content-wrapper > p:nth-child(2) a,
+.nav-sections > .default-content-wrapper > p:nth-child(3) a {
+  color: #111;
+  text-decoration: none;
+  font-size: 18px;
+  font-weight: 500;
+  transition: color 0.2s;
+}
+
+.nav-sections > .default-content-wrapper > p:nth-child(2) a:hover,
+.nav-sections > .default-content-wrapper > p:nth-child(3) a:hover {
+  color: #5d2aa6;
+}
+
+/* Contact button */
+
+.nav-sections > .default-content-wrapper > p:nth-child(4) {
+  margin-left: auto;
+}
+
+.nav-sections > .default-content-wrapper > p:nth-child(4) a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 28px;
+  border-radius: 4px;
+  background: #60269e;
+  color: #fff;
+  text-decoration: none;
+  font-weight: 600;
+  transition: background 0.2s;
+}
+
+.nav-sections > .default-content-wrapper > p:nth-child(4) a:hover {
+  background: #4f1f83;
+}
+
+/* Hamburger */
+
+.nav-hamburger {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 16px;
+  cursor: pointer;
+}
+
+.hamburger-menu {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  width: 28px;
+}
+
+.hamburger-menu div {
+  width: 100%;
+  height: 3px;
+  border-radius: 2px;
+  background: #000;
+}
+
+/* =========================
+   Drawer
+   ========================= */
+
 .columns-wrapper {
   display: none;
   position: fixed;
   top: 0;
   right: 0;
+  z-index: 9999;
   width: 420px !important;
   height: 100vh;
+  padding: 120px 40px 40px;
+  overflow-y: auto;
   background: #000;
   color: #fff;
-  z-index: 9999;
-  overflow-y: auto;
-  padding: 120px 40px 40px;
 }
 
 .columns-wrapper img {
-  width: 40px !important;
-  height: auto;
   position: fixed;
   top: 10px;
   right: 29px;
-}
-
-.columns.block.columns-2-cols {
-    position: absolute;
-    top: 75px;
-}
-
-.columns-2-cols > div {
-  display: flex;
-  flex-direction: column;
+  width: 40px !important;
+  height: auto;
 }
 
 .columns-wrapper .button-wrapper {
@@ -60,175 +192,83 @@
 
 .columns-wrapper .button-wrapper a {
   display: block;
+  padding: 22px 0;
   color: #fff;
   text-decoration: none;
   font-size: 28px;
   font-weight: 600;
   letter-spacing: 0.08em;
-  padding: 22px 0;
 }
 
 .columns-wrapper .button.primary {
-  background: none;
-  border: none;
   padding: 22px 0;
-  color: #fff;
+  border: none;
+  background: none;
   box-shadow: none;
-}
-
-.nav-brand > .default-content-wrapper {
-  display: flex;
-  align-items: center;
-  gap: 36px;
-  position: relative;
-  bottom: 10px;
-}
-
-.nav-brand > .default-content-wrapper > p {
-  margin: 0;
-}
-
-.nav-brand > .default-content-wrapper > p:first-child {
-  flex-shrink: 0;
-}
-
-.nav-brand > .default-content-wrapper > p:first-child img {
-  width: 190px;
-  height: auto;
-}
-
-.columns-wrapper .button-wrapper a:hover {
-  color: #b68cff;
-  background-color: transparent;
-}
-
-
-
-/* Navigation links */
-.nav-brand > .default-content-wrapper > p:nth-child(2) a,
-.nav-brand > .default-content-wrapper > p:nth-child(3) a {
-  color: #111;
-  text-decoration: none;
-  font-size: 18px;
-  font-weight: 500;
-}
-
-/* CTA button */
-.nav-brand > .default-content-wrapper > p:nth-child(4) {
-  margin-left: auto;
-}
-
-.nav-brand > .default-content-wrapper > p:nth-child(4) a {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  background: #60269e;
   color: #fff;
-  padding: 12px 28px;
-  border-radius: 4px;
-  text-decoration: none;
-  font-weight: 600;
 }
 
-.nav-hamburger {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-}
+/* =========================
+   Tablet
+   ========================= */
 
-.hamburger-menu {
-  width: 28px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  gap: 5px;
-  cursor: pointer;
-}
-
-.hamburger-menu > div {
-  width: 100%;
-  height: 3px;
-  background: #000;
-  border-radius: 2px;
-  transition: all 0.3s ease;
-}
-
-/* Hamburger icon */
-.nav-brand > .default-content-wrapper > p:nth-child(5) {
-  display: flex;
-  align-items: center;
-}
-
-.nav-brand > .default-content-wrapper > p:nth-child(5) img {
-  width: 32px;
-  height: 32px;
-}
-
-
-.nav-brand > .default-content-wrapper > p:nth-child(2) a:hover,
-.nav-brand > .default-content-wrapper > p:nth-child(3) a:hover {
-  color: #5f2da8;
-}
-
-.nav-brand > .default-content-wrapper > p:nth-child(4) a:hover {
-  background: #4d1f82;
-}
-
-/* Tablet */
 @media (width <= 991px) {
-  #nav {
-    padding: 14px 24px;
+  .nav-brand .default-content-wrapper,
+  .nav-sections > .default-content-wrapper {
+    padding-left: 20px;
+    padding-right: 20px;
   }
 
-  .nav-brand > .default-content-wrapper {
+  .nav-sections > .default-content-wrapper {
     gap: 20px;
   }
 
-  .nav-brand > .default-content-wrapper > p:first-child img {
-    width: 165px;
+  .nav-sections > .default-content-wrapper > p:first-child img {
+    width: 160px;
   }
 
-  .nav-brand > .default-content-wrapper > p:nth-child(2),
-  .nav-brand > .default-content-wrapper > p:nth-child(3) {
+  .nav-sections > .default-content-wrapper > p:nth-child(2),
+  .nav-sections > .default-content-wrapper > p:nth-child(3) {
     display: none;
   }
 
-  .nav-brand > .default-content-wrapper > p:nth-child(4) a {
-    padding: 12px 22px;
-    font-size: 16px;
+  .nav-sections > .default-content-wrapper > p:nth-child(4) a {
+    padding: 10px 20px;
+    font-size: 15px;
   }
 }
 
-/* Mobile */
+/* =========================
+   Mobile
+   ========================= */
+
 @media (width <= 767px) {
-  #nav {
-    padding: 12px 16px;
+  .nav-brand p {
+    text-align: center;
+    font-size: 12px;
   }
 
-  .nav-brand > .default-content-wrapper {
-    gap: 12px;
+  .nav-sections > .default-content-wrapper {
+    gap: 16px;
+    padding: 14px 16px;
   }
 
-  .nav-brand > .default-content-wrapper > p:first-child img {
+  .nav-sections > .default-content-wrapper > p:first-child img {
     width: 135px;
   }
 
-  .nav-brand > .default-content-wrapper > p:nth-child(2),
-  .nav-brand > .default-content-wrapper > p:nth-child(3) {
+  .nav-sections > .default-content-wrapper > p:nth-child(2),
+  .nav-sections > .default-content-wrapper > p:nth-child(3),
+  .nav-sections > .default-content-wrapper > p:nth-child(4) {
     display: none;
   }
 
-  .nav-brand > .default-content-wrapper > p:nth-child(4) {
+  .nav-hamburger {
     margin-left: auto;
   }
 
-  .nav-brand > .default-content-wrapper > p:nth-child(4) a {
-    display: none;
-  }
-
-  .nav-brand > .default-content-wrapper > p:nth-child(5) img {
-    width: 30px;
-    height: 30px;
+  .columns-wrapper {
+    width: 100%;
+    padding: 100px 24px 24px;
   }
 }
