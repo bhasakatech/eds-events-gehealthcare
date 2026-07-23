@@ -564,49 +564,49 @@
     "fields": [
       {
         "component": "text",
-        "valueType": "string",
         "name": "title",
-        "label": "Heading",
-        "value": ""
+        "label": "Heading"
       },
       {
         "component": "richtext",
         "name": "desc",
-        "value": "",
-        "label": "Text Content",
-        "valueType": "string"
+        "label": "Description"
       },
       {
-        "component": "aem-content",
-        "name": "cta",
-        "value": "",
-        "label": "Call-to-Action Link",
-        "valueType": "string"
+        "component": "group",
+        "label": "CTA",
+        "name": "ctaGroup",
+        "collapsible": true,
+        "fields": [
+          {
+            "component": "aem-content",
+            "name": "cta"
+          },
+          {
+            "component": "text",
+            "name": "ctaText"
+          }
+        ]
       },
       {
-        "component": "text",
-        "name": "ctaText",
-        "label": "Call-to-Action Text",
-        "valueType": "string"
-      },
-      {
-        "component": "text",
-        "name": "videoUrl",
-        "label": "Video URL (YouTube/Vimeo/MP4)",
-        "valueType": "string"
-      },
-      {
-        "component": "reference",
-        "valueType": "string",
-        "name": "videoThumbnail",
-        "label": "Video Thumbnail (Optional)",
-        "multi": false
-      },
-      {
-        "component": "text",
-        "name": "videoThumbnailAlt",
-        "label": "Video Thumbnail Alt Text (Optional)",
-        "valueType": "string"
+        "component": "group",
+        "label": "Video",
+        "name": "videoGroup",
+        "collapsible": true,
+        "fields": [
+          {
+            "component": "text",
+            "name": "videoUrl"
+          },
+          {
+            "component": "reference",
+            "name": "videoThumbnail"
+          },
+          {
+            "component": "text",
+            "name": "videoThumbnailAlt"
+          }
+        ]
       }
     ]
   }
