@@ -3,18 +3,34 @@ export default function decorate(block) {
 
   if (!wrapper) return;
 
-  const elements = [...wrapper.children];
+  const fields = [...wrapper.children];
 
-  const heading = elements[0];
-  const description = elements[1];
-  const videoField = elements[2];
-  const thumbnail = elements[3];
+  const heading = fields[0];
+  const description = fields[1];
+  const ctaLinkField = fields[2];
+  const ctaTextField = fields[3];
+  const videoField = fields[4];
+  const thumbnail = fields[5];
+  const thumbnailAlt = fields[6];
 
-  const videoId = videoField ? videoField.textContent.trim() : '';
+  // CTA
+  const ctaLink = ctaLinkField?.querySelector('a');
+  const ctaText = ctaTextField?.textContent.trim();
+
+  // Video
+  let videoId = videoField?.textContent.trim() || '';
+
+  // Support full YouTube URL
+  if (videoId.includes('youtube.com/watch')) {
+    videoId = new URL(videoId).searchParams.get('v');
+  }
+
+  // Support youtu.be URL
+  if (videoId.includes('youtu.be/')) {
+    videoId = videoId.split('youtu.be/')[1].split('?')[0];
+  }
 
   block.innerHTML = '';
-
-  /* Video */
 
   const videoWrapper = document.createElement('div');
   videoWrapper.className = 'video-wrapper';
@@ -30,10 +46,14 @@ export default function decorate(block) {
       </iframe>
     `;
   } else if (thumbnail) {
+    const img = thumbnail.querySelector('img');
+    if (img && thumbnailAlt) {
+      img.alt = thumbnailAlt.textContent.trim();
+    }
     videoWrapper.append(thumbnail);
   }
 
-  /* Text */
+  /* ---------------- Text ---------------- */
 
   const textWrapper = document.createElement('div');
   textWrapper.className = 'text-wrapper';
@@ -52,8 +72,20 @@ export default function decorate(block) {
     content.append(description);
   }
 
+  if (ctaLink) {
+    ctaLink.textContent = ctaText || ctaLink.textContent;
+    ctaLink.classList.add('button', 'primary');
+    content.append(ctaLink);
+  }
+
   textWrapper.append(content);
 
-  block.append(textWrapper);
-  block.append(videoWrapper);
+  // Layout class from block
+  if (block.classList.contains('video-left')) {
+    block.append(videoWrapper);
+    block.append(textWrapper);
+  } else {
+    block.append(textWrapper);
+    block.append(videoWrapper);
+  }
 }
