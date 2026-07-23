@@ -190,23 +190,6 @@
           }
         },
         {
-          "title": "Metadata",
-          "id": "metadata",
-          "plugins": {
-            "xwalk": {
-              "page": {
-                "resourceType": "core/franklin/components/block/v1/block",
-                "template": {
-                  "name": "Metadata",
-                  "model": "metadata",
-                  "filter": "metadata",
-                  "key-value": true
-                }
-              }
-            }
-          }
-        },
-        {
           "title": "Quote",
           "id": "quote",
           "plugins": {
