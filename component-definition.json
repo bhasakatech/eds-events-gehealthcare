@@ -246,7 +246,8 @@
                 "resourceType": "core/franklin/components/block/v1/block/item",
                 "template": {
                   "name": "Video Text Item",
-                  "model": "video-text-item"
+                  "model": "video-text-item",
+                  "key-value": true
                 }
               }
             }

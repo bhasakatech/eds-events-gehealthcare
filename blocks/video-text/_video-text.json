@@ -25,7 +25,8 @@
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
               "name": "Video Text Item",
-              "model": "video-text-item"
+              "model": "video-text-item",
+              "key-value": true
             }
           }
         }
@@ -72,46 +73,46 @@
         {
           "component": "text",
           "valueType": "string",
-          "name": "col1_heading",
+          "name": "title",
           "label": "Heading",
           "value": ""
         },
         {
           "component": "richtext",
-          "name": "col1_text",
+          "name": "desc",
           "value": "",
           "label": "Text Content",
           "valueType": "string"
         },
         {
           "component": "aem-content",
-          "name": "col1_cta",
+          "name": "cta",
           "value": "",
           "label": "Call-to-Action Link",
           "valueType": "string"
         },
         {
           "component": "text",
-          "name": "col1_ctaText",
+          "name": "ctaText",
           "label": "Call-to-Action Text",
           "valueType": "string"
         },
         {
           "component": "text",
-          "name": "col1_videoUrl",
+          "name": "videoUrl",
           "label": "Video URL (YouTube/Vimeo/MP4)",
           "valueType": "string"
         },
         {
           "component": "reference",
           "valueType": "string",
-          "name": "col1_videoThumbnail",
+          "name": "videoThumbnail",
           "label": "Video Thumbnail (Optional)",
           "multi": false
         },
         {
           "component": "text",
-          "name": "col1_videoThumbnailAlt",
+          "name": "videoThumbnailAlt",
           "label": "Video Thumbnail Alt Text (Optional)",
           "valueType": "string"
         }
