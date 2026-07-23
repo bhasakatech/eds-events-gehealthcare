@@ -67,61 +67,68 @@
       ]
     },
     {
-  "id": "video-text-item",
-  "fields": [
-    {
-      "component": "text",
-      "name": "title",
-      "label": "Heading"
-    },
-    {
-      "component": "richtext",
-      "name": "desc",
-      "label": "Description"
-    },
-    {
-      "component": "group",
-      "label": "CTA",
-      "name": "ctaGroup",
-      "collapsible": true,
-      "fields": [
-        {
-          "component": "aem-content",
-          "name": "cta"
-        },
-        {
-          "component": "text",
-          "name": "ctaText"
-        }
-      ]
-    },
-    {
-      "component": "group",
-      "label": "Video",
-      "name": "videoGroup",
-      "collapsible": true,
+      "id": "video-text-item",
       "fields": [
         {
           "component": "text",
-          "name": "videoUrl"
+          "name": "title",
+          "label": "Heading"
         },
         {
-          "component": "reference",
-          "name": "videoThumbnail"
+          "component": "richtext",
+          "name": "desc",
+          "label": "Description"
         },
         {
-          "component": "text",
-          "name": "videoThumbnailAlt"
+          "component": "group",
+          "name": "ctaGroup",
+          "label": "CTA",
+          "collapsible": true,
+          "fields": [
+            {
+              "component": "aem-content",
+              "name": "cta",
+              "label": "CTA Link"
+            },
+            {
+              "component": "text",
+              "name": "ctaText",
+              "label": "CTA Text"
+            }
+          ]
+        },
+        {
+          "component": "group",
+          "name": "videoGroup",
+          "label": "Video",
+          "collapsible": true,
+          "fields": [
+            {
+              "component": "text",
+              "name": "videoUrl",
+              "label": "Video URL"
+            },
+            {
+              "component": "reference",
+              "name": "videoThumbnail",
+              "label": "Video Thumbnail"
+            },
+            {
+              "component": "text",
+              "name": "videoThumbnailAlt",
+              "label": "Thumbnail Alt Text"
+            }
+          ]
         }
       ]
     }
-  ]
-}
   ],
   "filters": [
     {
       "id": "video-text",
-      "components": ["video-text-item"]
+      "components": [
+        "video-text-item"
+      ]
     }
   ]
 }

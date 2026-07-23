@@ -1,39 +1,44 @@
 export default function decorate(block) {
-  const wrapper = block.querySelector(":scope > div > div");
+  const item = block.querySelector(':scope > div > div');
 
-  if (!wrapper) return;
+  if (!item) return;
 
-  const fields = [...wrapper.children];
+  const fields = [...item.children];
 
   const heading = fields[0];
   const description = fields[1];
-  const ctaLinkField = fields[2];
-  const ctaTextField = fields[3];
-  const videoField = fields[4];
-  const thumbnail = fields[5];
-  const thumbnailAlt = fields[6];
 
-  // CTA
-  const ctaLink = ctaLinkField?.querySelector("a");
+  const ctaGroup = fields[2];
+  const videoGroup = fields[3];
+
+  // CTA fields
+  const ctaLinkField = ctaGroup?.children[0];
+  const ctaTextField = ctaGroup?.children[1];
+
+  const ctaLink = ctaLinkField?.querySelector('a');
   const ctaText = ctaTextField?.textContent.trim();
 
+  // Video fields
+  const videoField = videoGroup?.children[0];
+  const thumbnail = videoGroup?.children[1];
+  const thumbnailAlt = videoGroup?.children[2];
+
+  let videoId = videoField?.textContent.trim() || '';
+
+  // Youtube URL parsing
+  if (videoId.includes('youtube.com/watch')) {
+    videoId = new URL(videoId).searchParams.get('v');
+  }
+
+  if (videoId.includes('youtu.be/')) {
+    videoId = new URL(videoId).pathname.substring(1);
+  }
+
+  block.innerHTML = '';
+
   // Video
-  let videoId = videoField?.textContent.trim() || "";
-
-  // Support full YouTube URL
-  if (videoId.includes("youtube.com/watch")) {
-    videoId = new URL(videoId).searchParams.get("v");
-  }
-
-  if (videoId.includes("youtu.be/")) {
-    const url = new URL(videoId);
-    videoId = url.pathname.substring(1);
-  }
-
-  block.innerHTML = "";
-
-  const videoWrapper = document.createElement("div");
-  videoWrapper.className = "video-wrapper";
+  const videoWrapper = document.createElement('div');
+  videoWrapper.className = 'video-wrapper';
 
   if (videoId) {
     videoWrapper.innerHTML = `
@@ -46,42 +51,42 @@ export default function decorate(block) {
       </iframe>
     `;
   } else if (thumbnail) {
-    const img = thumbnail.querySelector("img");
+    const img = thumbnail.querySelector('img');
+
     if (img && thumbnailAlt) {
       img.alt = thumbnailAlt.textContent.trim();
     }
+
     videoWrapper.append(thumbnail);
   }
 
-  /* ---------------- Text ---------------- */
+  // Text
+  const textWrapper = document.createElement('div');
+  textWrapper.className = 'text-wrapper';
 
-  const textWrapper = document.createElement("div");
-  textWrapper.className = "text-wrapper";
-
-  const content = document.createElement("div");
-  content.className = "content";
+  const content = document.createElement('div');
+  content.className = 'content';
 
   if (heading) {
-    const h2 = document.createElement("h2");
+    const h2 = document.createElement('h2');
     h2.innerHTML = heading.innerHTML;
     content.append(h2);
   }
 
   if (description) {
-    description.classList.add("description");
+    description.classList.add('description');
     content.append(description);
   }
 
   if (ctaLink) {
     ctaLink.textContent = ctaText || ctaLink.textContent;
-    ctaLink.classList.add("button", "primary");
+    ctaLink.classList.add('button', 'primary');
     content.append(ctaLink);
   }
 
   textWrapper.append(content);
 
-  // Layout class from block
-  if (block.classList.contains("video-left")) {
+  if (block.classList.contains('video-left')) {
     block.append(videoWrapper);
     block.append(textWrapper);
   } else {

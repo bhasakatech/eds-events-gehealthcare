@@ -574,37 +574,42 @@
       },
       {
         "component": "group",
-        "label": "CTA",
         "name": "ctaGroup",
+        "label": "CTA",
         "collapsible": true,
         "fields": [
           {
             "component": "aem-content",
-            "name": "cta"
+            "name": "cta",
+            "label": "CTA Link"
           },
           {
             "component": "text",
-            "name": "ctaText"
+            "name": "ctaText",
+            "label": "CTA Text"
           }
         ]
       },
       {
         "component": "group",
-        "label": "Video",
         "name": "videoGroup",
+        "label": "Video",
         "collapsible": true,
         "fields": [
           {
             "component": "text",
-            "name": "videoUrl"
+            "name": "videoUrl",
+            "label": "Video URL"
           },
           {
             "component": "reference",
-            "name": "videoThumbnail"
+            "name": "videoThumbnail",
+            "label": "Video Thumbnail"
           },
           {
             "component": "text",
-            "name": "videoThumbnailAlt"
+            "name": "videoThumbnailAlt",
+            "label": "Thumbnail Alt Text"
           }
         ]
       }
