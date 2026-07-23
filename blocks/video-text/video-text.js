@@ -1,42 +1,21 @@
 export default function decorate(block) {
-  const item = block.querySelector(':scope > div > div');
+  const wrapper = block.querySelector(':scope > div > div');
 
-  if (!item) return;
+  if (!wrapper) return;
 
-  const fields = [...item.children];
+  const elements = [...wrapper.children];
 
-  const heading = fields[0];
-  const description = fields[1];
+  const heading = elements[0];
+  const description = elements[1];
+  const videoField = elements[2];
+  const thumbnail = elements[3];
 
-  const ctaGroup = fields[2];
-  const videoGroup = fields[3];
-
-  // CTA fields
-  const ctaLinkField = ctaGroup?.children[0];
-  const ctaTextField = ctaGroup?.children[1];
-
-  const ctaLink = ctaLinkField?.querySelector('a');
-  const ctaText = ctaTextField?.textContent.trim();
-
-  // Video fields
-  const videoField = videoGroup?.children[0];
-  const thumbnail = videoGroup?.children[1];
-  const thumbnailAlt = videoGroup?.children[2];
-
-  let videoId = videoField?.textContent.trim() || '';
-
-  // Youtube URL parsing
-  if (videoId.includes('youtube.com/watch')) {
-    videoId = new URL(videoId).searchParams.get('v');
-  }
-
-  if (videoId.includes('youtu.be/')) {
-    videoId = new URL(videoId).pathname.substring(1);
-  }
+  const videoId = videoField ? videoField.textContent.trim() : '';
 
   block.innerHTML = '';
 
-  // Video
+  /* Video */
+
   const videoWrapper = document.createElement('div');
   videoWrapper.className = 'video-wrapper';
 
@@ -51,16 +30,11 @@ export default function decorate(block) {
       </iframe>
     `;
   } else if (thumbnail) {
-    const img = thumbnail.querySelector('img');
-
-    if (img && thumbnailAlt) {
-      img.alt = thumbnailAlt.textContent.trim();
-    }
-
     videoWrapper.append(thumbnail);
   }
 
-  // Text
+  /* Text */
+
   const textWrapper = document.createElement('div');
   textWrapper.className = 'text-wrapper';
 
@@ -78,19 +52,8 @@ export default function decorate(block) {
     content.append(description);
   }
 
-  if (ctaLink) {
-    ctaLink.textContent = ctaText || ctaLink.textContent;
-    ctaLink.classList.add('button', 'primary');
-    content.append(ctaLink);
-  }
-
   textWrapper.append(content);
 
-  if (block.classList.contains('video-left')) {
-    block.append(videoWrapper);
-    block.append(textWrapper);
-  } else {
-    block.append(textWrapper);
-    block.append(videoWrapper);
-  }
+  block.append(textWrapper);
+  block.append(videoWrapper);
 }

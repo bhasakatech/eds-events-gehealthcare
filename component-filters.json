@@ -18,8 +18,7 @@
       "fragment",
       "quote",
       "video-text",
-      "event-list",
-      "metadata"
+      "event-list"
     ]
   },
   {
@@ -42,10 +41,6 @@
       "button",
       "title"
     ]
-  },
-  {
-    "id": "metadata",
-    "components": []
   },
   {
     "id": "video-text",

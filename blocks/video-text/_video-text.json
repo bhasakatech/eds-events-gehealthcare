@@ -71,54 +71,49 @@
       "fields": [
         {
           "component": "text",
-          "name": "title",
-          "label": "Heading"
+          "valueType": "string",
+          "name": "col1_heading",
+          "label": "Heading",
+          "value": ""
         },
         {
           "component": "richtext",
-          "name": "desc",
-          "label": "Description"
+          "name": "col1_text",
+          "value": "",
+          "label": "Text Content",
+          "valueType": "string"
         },
         {
-          "component": "group",
-          "name": "ctaGroup",
-          "label": "CTA",
-          "collapsible": true,
-          "fields": [
-            {
-              "component": "aem-content",
-              "name": "cta",
-              "label": "CTA Link"
-            },
-            {
-              "component": "text",
-              "name": "ctaText",
-              "label": "CTA Text"
-            }
-          ]
+          "component": "aem-content",
+          "name": "col1_cta",
+          "value": "",
+          "label": "Call-to-Action Link",
+          "valueType": "string"
         },
         {
-          "component": "group",
-          "name": "videoGroup",
-          "label": "Video",
-          "collapsible": true,
-          "fields": [
-            {
-              "component": "text",
-              "name": "videoUrl",
-              "label": "Video URL"
-            },
-            {
-              "component": "reference",
-              "name": "videoThumbnail",
-              "label": "Video Thumbnail"
-            },
-            {
-              "component": "text",
-              "name": "videoThumbnailAlt",
-              "label": "Thumbnail Alt Text"
-            }
-          ]
+          "component": "text",
+          "name": "col1_ctaText",
+          "label": "Call-to-Action Text",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "name": "col1_videoUrl",
+          "label": "Video URL (YouTube/Vimeo/MP4)",
+          "valueType": "string"
+        },
+        {
+          "component": "reference",
+          "valueType": "string",
+          "name": "col1_videoThumbnail",
+          "label": "Video Thumbnail (Optional)",
+          "multi": false
+        },
+        {
+          "component": "text",
+          "name": "col1_videoThumbnailAlt",
+          "label": "Video Thumbnail Alt Text (Optional)",
+          "valueType": "string"
         }
       ]
     }
@@ -126,9 +121,7 @@
   "filters": [
     {
       "id": "video-text",
-      "components": [
-        "video-text-item"
-      ]
+      "components": ["video-text-item"]
     }
   ]
 }

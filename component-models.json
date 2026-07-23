@@ -413,101 +413,6 @@
     ]
   },
   {
-    "id": "metadata",
-    "fields": [
-      {
-        "component": "collapsible",
-        "name": "seo",
-        "label": "SEO",
-        "fields": [
-          {
-            "component": "text",
-            "name": "title",
-            "label": "Title"
-          },
-          {
-            "component": "textarea",
-            "name": "description",
-            "label": "Description"
-          },
-          {
-            "component": "text",
-            "name": "canonical",
-            "label": "Canonical URL"
-          },
-          {
-            "component": "text",
-            "name": "robots",
-            "label": "Robots"
-          },
-          {
-            "component": "text",
-            "name": "ogTitle",
-            "label": "OG Title"
-          },
-          {
-            "component": "textarea",
-            "name": "ogDescription",
-            "label": "OG Description"
-          },
-          {
-            "component": "reference",
-            "name": "ogImage",
-            "label": "OG Image"
-          },
-          {
-            "component": "text",
-            "name": "ogType",
-            "label": "OG Type",
-            "value": "website"
-          },
-          {
-            "component": "text",
-            "name": "ogSiteName",
-            "label": "OG Site Name"
-          },
-          {
-            "component": "text",
-            "name": "ogLocale",
-            "label": "OG Locale",
-            "value": "en_US"
-          },
-          {
-            "component": "text",
-            "name": "twitterCard",
-            "label": "Twitter Card",
-            "value": "summary_large_image"
-          },
-          {
-            "component": "text",
-            "name": "twitterTitle",
-            "label": "Twitter Title"
-          },
-          {
-            "component": "textarea",
-            "name": "twitterDescription",
-            "label": "Twitter Description"
-          },
-          {
-            "component": "reference",
-            "name": "twitterImage",
-            "label": "Twitter Image"
-          },
-          {
-            "component": "text",
-            "name": "twitterSite",
-            "label": "Twitter Site"
-          },
-          {
-            "component": "text",
-            "name": "twitterCreator",
-            "label": "Twitter Creator"
-          }
-        ]
-      }
-    ]
-  },
-  {
     "id": "quote",
     "fields": [
       {
@@ -564,54 +469,49 @@
     "fields": [
       {
         "component": "text",
-        "name": "title",
-        "label": "Heading"
+        "valueType": "string",
+        "name": "col1_heading",
+        "label": "Heading",
+        "value": ""
       },
       {
         "component": "richtext",
-        "name": "desc",
-        "label": "Description"
+        "name": "col1_text",
+        "value": "",
+        "label": "Text Content",
+        "valueType": "string"
       },
       {
-        "component": "group",
-        "name": "ctaGroup",
-        "label": "CTA",
-        "collapsible": true,
-        "fields": [
-          {
-            "component": "aem-content",
-            "name": "cta",
-            "label": "CTA Link"
-          },
-          {
-            "component": "text",
-            "name": "ctaText",
-            "label": "CTA Text"
-          }
-        ]
+        "component": "aem-content",
+        "name": "col1_cta",
+        "value": "",
+        "label": "Call-to-Action Link",
+        "valueType": "string"
       },
       {
-        "component": "group",
-        "name": "videoGroup",
-        "label": "Video",
-        "collapsible": true,
-        "fields": [
-          {
-            "component": "text",
-            "name": "videoUrl",
-            "label": "Video URL"
-          },
-          {
-            "component": "reference",
-            "name": "videoThumbnail",
-            "label": "Video Thumbnail"
-          },
-          {
-            "component": "text",
-            "name": "videoThumbnailAlt",
-            "label": "Thumbnail Alt Text"
-          }
-        ]
+        "component": "text",
+        "name": "col1_ctaText",
+        "label": "Call-to-Action Text",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "name": "col1_videoUrl",
+        "label": "Video URL (YouTube/Vimeo/MP4)",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "col1_videoThumbnail",
+        "label": "Video Thumbnail (Optional)",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "name": "col1_videoThumbnailAlt",
+        "label": "Video Thumbnail Alt Text (Optional)",
+        "valueType": "string"
       }
     ]
   }
