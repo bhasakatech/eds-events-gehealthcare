@@ -1,3 +1,8 @@
+main > .video-text-container > .video-text-wrapper{
+    max-width:100% !important;
+    padding:0 !important;
+}
+
 .video-text {
     display: flex;
     width: 100%;
@@ -150,4 +155,11 @@
         aspect-ratio: 16 / 9;
         min-height: auto;
     }
+}
+
+@media (width > 992px){
+   .video-text .video-wrapper{
+        width: 50% !important;
+        max-width: 713px;
+   }
 }
