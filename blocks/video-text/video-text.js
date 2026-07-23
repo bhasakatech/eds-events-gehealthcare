@@ -1,5 +1,5 @@
 export default function decorate(block) {
-  const wrapper = block.querySelector(':scope > div > div');
+  const wrapper = block.querySelector(":scope > div > div");
 
   if (!wrapper) return;
 
@@ -14,26 +14,26 @@ export default function decorate(block) {
   const thumbnailAlt = fields[6];
 
   // CTA
-  const ctaLink = ctaLinkField?.querySelector('a');
+  const ctaLink = ctaLinkField?.querySelector("a");
   const ctaText = ctaTextField?.textContent.trim();
 
   // Video
-  let videoId = videoField?.textContent.trim() || '';
+  let videoId = videoField?.textContent.trim() || "";
 
   // Support full YouTube URL
-  if (videoId.includes('youtube.com/watch')) {
-    videoId = new URL(videoId).searchParams.get('v');
+  if (videoId.includes("youtube.com/watch")) {
+    videoId = new URL(videoId).searchParams.get("v");
   }
 
-  // Support youtu.be URL
-  if (videoId.includes('youtu.be/')) {
-    videoId = videoId.split('youtu.be/')[1].split('?')[0];
+  if (videoId.includes("youtu.be/")) {
+    const url = new URL(videoId);
+    videoId = url.pathname.substring(1);
   }
 
-  block.innerHTML = '';
+  block.innerHTML = "";
 
-  const videoWrapper = document.createElement('div');
-  videoWrapper.className = 'video-wrapper';
+  const videoWrapper = document.createElement("div");
+  videoWrapper.className = "video-wrapper";
 
   if (videoId) {
     videoWrapper.innerHTML = `
@@ -46,7 +46,7 @@ export default function decorate(block) {
       </iframe>
     `;
   } else if (thumbnail) {
-    const img = thumbnail.querySelector('img');
+    const img = thumbnail.querySelector("img");
     if (img && thumbnailAlt) {
       img.alt = thumbnailAlt.textContent.trim();
     }
@@ -55,33 +55,33 @@ export default function decorate(block) {
 
   /* ---------------- Text ---------------- */
 
-  const textWrapper = document.createElement('div');
-  textWrapper.className = 'text-wrapper';
+  const textWrapper = document.createElement("div");
+  textWrapper.className = "text-wrapper";
 
-  const content = document.createElement('div');
-  content.className = 'content';
+  const content = document.createElement("div");
+  content.className = "content";
 
   if (heading) {
-    const h2 = document.createElement('h2');
+    const h2 = document.createElement("h2");
     h2.innerHTML = heading.innerHTML;
     content.append(h2);
   }
 
   if (description) {
-    description.classList.add('description');
+    description.classList.add("description");
     content.append(description);
   }
 
   if (ctaLink) {
     ctaLink.textContent = ctaText || ctaLink.textContent;
-    ctaLink.classList.add('button', 'primary');
+    ctaLink.classList.add("button", "primary");
     content.append(ctaLink);
   }
 
   textWrapper.append(content);
 
   // Layout class from block
-  if (block.classList.contains('video-left')) {
+  if (block.classList.contains("video-left")) {
     block.append(videoWrapper);
     block.append(textWrapper);
   } else {
