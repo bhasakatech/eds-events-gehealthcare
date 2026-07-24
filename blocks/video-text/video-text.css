@@ -45,7 +45,7 @@ main > .video-text-container > .video-text-wrapper{
 }
 
 .video-text .content {
-    max-width: 650px;
+    max-width: 555px;
     padding: 80px;
 }
 
@@ -162,4 +162,11 @@ main > .video-text-container > .video-text-wrapper{
         width: 50% !important;
         max-width: 713px;
    }
+}
+
+@media (width > 1440px){
+    .video-text .content{
+        position: relative;
+        left:73px;
+    }
 }
