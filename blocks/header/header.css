@@ -77,12 +77,29 @@
   top: 0;
   right: 0;
   z-index: 9999;
-  width: 420px !important;
+  max-width: 500px !important;
   height: 100vh;
-  padding: 120px 40px 40px;
   overflow-y: auto;
   background: #000;
   color: #fff;
+  padding:50px 40px !important;
+}
+
+.hamburger-menu div {
+      width: 24px;
+    height: 3px;
+    background-color: #000;
+    border-radius: 5px;
+    margin: 3px 0;
+    margin-right: 0;
+    margin-left: auto;
+}
+
+
+.header .columns-wrapper .columns > div{ 
+  align-items: flex-start;
+  flex-direction: column;
+
 }
 
 .header .columns-wrapper img {
@@ -114,6 +131,33 @@
   background: none;
   box-shadow: none;
   color: #fff;
+}
+
+.header .columns-wrapper .columns h5{
+        display: block;
+    color: #fff;
+    text-decoration: none !important;
+    transition: all 0.3s ease-out;
+    font-weight: 700;
+    letter-spacing: 2px;
+    border-bottom: 1px solid rgb(255 255 255 / 18%);
+    margin-bottom: 10px;
+    padding-bottom: 10px;
+    cursor: pointer;
+
+}
+
+.header .columns-wrapper .columns h5:hover{
+    color: #fff;
+    opacity: 0.8;
+}
+
+.header .columns-wrapper .columns h5 a{
+      color: #fff;
+    text-decoration: none !important;
+    transition: all 0.3s ease-out;
+    font-size:16px;
+
 }
 
 /* =========================
@@ -207,15 +251,6 @@
   cursor: pointer;
 }
 
-.hamburger-menu div {
-      width: 24px;
-    height: 3px;
-    background-color: #000;
-    border-radius: 5px;
-    margin: 3px 0;
-    margin-right: 0;
-    margin-left: auto;
-}
 
 
 
