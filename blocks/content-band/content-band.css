@@ -1,0 +1,48 @@
+.content-band {
+  --cb-purple: #6022a6;
+  --cb-surface: #f2f1f3;
+
+  color: var(--text-color);
+}
+
+.content-band.surface {
+  background: var(--cb-surface);
+}
+
+.content-band .content-band-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 32px 16px;
+}
+
+.content-band.narrow .content-band-inner {
+  max-width: 860px;
+}
+
+.content-band .content-band-header h2,
+.content-band .content-band-header h3 {
+  margin: 0 0 12px;
+  color: var(--cb-purple);
+  font-family: var(--heading-font-family);
+  font-weight: 400;
+}
+
+.content-band .content-band-body {
+  font-size: var(--body-font-size-s);
+  line-height: 1.6;
+  color: var(--text-color);
+}
+
+.content-band .content-band-body p {
+  margin: 0 0 12px;
+}
+
+.content-band .content-band-body p:last-child {
+  margin-bottom: 0;
+}
+
+@media (width >= 900px) {
+  .content-band .content-band-inner {
+    padding: 40px 24px;
+  }
+}

@@ -256,6 +256,98 @@
     ]
   },
   {
+    "id": "activity-list",
+    "fields": [
+      {
+        "component": "text",
+        "name": "heading_title",
+        "label": "Section Title",
+        "valueType": "string",
+        "value": "Onsite activities"
+      },
+      {
+        "component": "select",
+        "name": "heading_titleType",
+        "label": "Title Level",
+        "valueType": "string",
+        "value": "h2",
+        "options": [
+          {
+            "name": "H2",
+            "value": "h2"
+          },
+          {
+            "name": "H3",
+            "value": "h3"
+          }
+        ]
+      },
+      {
+        "component": "textarea",
+        "name": "heading_intro",
+        "label": "Intro",
+        "valueType": "string",
+        "value": ""
+      }
+    ]
+  },
+  {
+    "id": "activity-item",
+    "fields": [
+      {
+        "component": "reference",
+        "name": "image",
+        "label": "Image",
+        "valueType": "string",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "name": "imageAlt",
+        "label": "Image Alt",
+        "valueType": "string",
+        "value": ""
+      },
+      {
+        "component": "text",
+        "name": "content_title",
+        "label": "Title",
+        "valueType": "string",
+        "value": "",
+        "required": true
+      },
+      {
+        "component": "richtext",
+        "name": "content_description",
+        "label": "Description",
+        "valueType": "string",
+        "value": ""
+      },
+      {
+        "component": "text",
+        "name": "meta_datetime",
+        "label": "Date and Time",
+        "valueType": "string",
+        "value": ""
+      },
+      {
+        "component": "text",
+        "name": "meta_location",
+        "label": "Location",
+        "valueType": "string",
+        "value": ""
+      },
+      {
+        "component": "richtext",
+        "name": "detail",
+        "label": "Popup Detail",
+        "description": "Optional richer detail shown in the activity popup.",
+        "valueType": "string",
+        "value": ""
+      }
+    ]
+  },
+  {
     "id": "announcement-bar",
     "fields": [
       {
@@ -335,6 +427,176 @@
     ]
   },
   {
+    "id": "content-band",
+    "fields": [
+      {
+        "component": "select",
+        "name": "classes",
+        "label": "Style",
+        "valueType": "string",
+        "value": "",
+        "options": [
+          {
+            "name": "Default",
+            "value": ""
+          },
+          {
+            "name": "Surface",
+            "value": "surface"
+          },
+          {
+            "name": "Narrow",
+            "value": "narrow"
+          }
+        ]
+      },
+      {
+        "component": "text",
+        "name": "heading_title",
+        "label": "Heading",
+        "valueType": "string",
+        "value": ""
+      },
+      {
+        "component": "select",
+        "name": "heading_titleType",
+        "label": "Heading Level",
+        "valueType": "string",
+        "value": "h2",
+        "options": [
+          {
+            "name": "H2",
+            "value": "h2"
+          },
+          {
+            "name": "H3",
+            "value": "h3"
+          }
+        ]
+      },
+      {
+        "component": "richtext",
+        "name": "body",
+        "label": "Body",
+        "valueType": "string",
+        "value": ""
+      }
+    ]
+  },
+  {
+    "id": "event-hero",
+    "fields": [
+      {
+        "component": "text",
+        "name": "heading_title",
+        "label": "Event Title",
+        "valueType": "string",
+        "value": "",
+        "required": true
+      },
+      {
+        "component": "select",
+        "name": "heading_titleType",
+        "label": "Title Level",
+        "valueType": "string",
+        "value": "h1",
+        "options": [
+          {
+            "name": "H1",
+            "value": "h1"
+          },
+          {
+            "name": "H2",
+            "value": "h2"
+          }
+        ]
+      },
+      {
+        "component": "textarea",
+        "name": "heading_tagline",
+        "label": "Tagline",
+        "valueType": "string",
+        "value": ""
+      },
+      {
+        "component": "tab",
+        "label": "Event Meta",
+        "name": "tabMeta"
+      },
+      {
+        "component": "text",
+        "name": "meta_date",
+        "label": "Date",
+        "valueType": "string",
+        "value": ""
+      },
+      {
+        "component": "text",
+        "name": "meta_booth",
+        "label": "Booth / Topic",
+        "valueType": "string",
+        "value": ""
+      },
+      {
+        "component": "text",
+        "name": "meta_location",
+        "label": "Location",
+        "valueType": "string",
+        "value": ""
+      },
+      {
+        "component": "tab",
+        "label": "Actions",
+        "name": "tabActions"
+      },
+      {
+        "component": "aem-content",
+        "name": "actions_primary",
+        "label": "Primary CTA Link",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "name": "actions_primaryText",
+        "label": "Primary CTA Label",
+        "valueType": "string",
+        "value": "Request a meeting"
+      },
+      {
+        "component": "aem-content",
+        "name": "actions_secondary",
+        "label": "Secondary CTA Link",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "name": "actions_secondaryText",
+        "label": "Secondary CTA Label",
+        "valueType": "string",
+        "value": "See what's new"
+      },
+      {
+        "component": "tab",
+        "label": "Background",
+        "name": "tabMedia"
+      },
+      {
+        "component": "reference",
+        "name": "image",
+        "label": "Background Image",
+        "valueType": "string",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "name": "imageAlt",
+        "label": "Background Image Alt",
+        "valueType": "string",
+        "value": ""
+      }
+    ]
+  },
+  {
     "id": "event-list",
     "fields": [
       {
@@ -366,6 +628,442 @@
         "name": "clearButtonLabel",
         "label": "Clear Button Label",
         "value": "Clear All"
+      }
+    ]
+  },
+  {
+    "id": "faq-details",
+    "fields": [
+      {
+        "component": "select",
+        "name": "classes",
+        "label": "Style Variant",
+        "description": "Block option applied as a CSS class on the block.",
+        "valueType": "string",
+        "value": "",
+        "options": [
+          {
+            "name": "Default",
+            "value": ""
+          },
+          {
+            "name": "Compact",
+            "value": "compact"
+          },
+          {
+            "name": "Bordered",
+            "value": "bordered"
+          }
+        ]
+      },
+      {
+        "component": "tab",
+        "label": "Heading",
+        "name": "tabHeading"
+      },
+      {
+        "component": "text",
+        "name": "heading_title",
+        "label": "Title",
+        "description": "Main FAQ section heading (text field).",
+        "valueType": "string",
+        "value": "",
+        "validation": {
+          "maxLength": 120,
+          "customErrorMsg": "Title must be 120 characters or fewer."
+        }
+      },
+      {
+        "component": "select",
+        "name": "heading_titleType",
+        "label": "Title Heading Level",
+        "description": "Select field collapsed with title via titleType suffix.",
+        "valueType": "string",
+        "value": "h2",
+        "options": [
+          {
+            "name": "H2",
+            "value": "h2"
+          },
+          {
+            "name": "H3",
+            "value": "h3"
+          },
+          {
+            "name": "H4",
+            "value": "h4"
+          }
+        ]
+      },
+      {
+        "component": "richtext",
+        "name": "heading_intro",
+        "label": "Introduction",
+        "description": "Rich text intro under the title.",
+        "valueType": "string",
+        "value": ""
+      },
+      {
+        "component": "textarea",
+        "name": "heading_summary",
+        "label": "Summary",
+        "description": "Plain multi-line summary (textarea, no formatting).",
+        "valueType": "string",
+        "value": ""
+      },
+      {
+        "component": "tab",
+        "label": "Details",
+        "name": "tabDetails"
+      },
+      {
+        "component": "container",
+        "name": "details",
+        "label": "FAQ Details",
+        "description": "Container groups related fields in the properties panel.",
+        "collapsible": true,
+        "fields": [
+          {
+            "component": "reference",
+            "name": "details_image",
+            "label": "Image",
+            "description": "Asset picker (reference). Pair with Alt via field collapse.",
+            "valueType": "string",
+            "multi": false
+          },
+          {
+            "component": "text",
+            "name": "details_imageAlt",
+            "label": "Image Alt Text",
+            "valueType": "string",
+            "value": ""
+          },
+          {
+            "component": "boolean",
+            "name": "details_expandFirst",
+            "label": "Expand First Item",
+            "description": "Boolean toggle — open the first FAQ item by default.",
+            "valueType": "boolean",
+            "value": false
+          },
+          {
+            "component": "number",
+            "name": "details_maxVisible",
+            "label": "Max Visible Items",
+            "description": "Number field — limit how many FAQ items to show (0 = all).",
+            "valueType": "number",
+            "value": 0,
+            "validation": {
+              "numberMin": 0,
+              "numberMax": 50,
+              "customErrorMsg": "Enter a number between 0 and 50."
+            }
+          },
+          {
+            "component": "date-time",
+            "name": "details_publishDate",
+            "label": "Publish Date",
+            "description": "Date/time picker.",
+            "valueType": "date"
+          },
+          {
+            "component": "radio-group",
+            "name": "details_layout",
+            "label": "Layout",
+            "description": "Radio group — mutually exclusive layout choice.",
+            "valueType": "string",
+            "value": "stacked",
+            "options": [
+              {
+                "name": "Stacked",
+                "value": "stacked"
+              },
+              {
+                "name": "Two Column",
+                "value": "two-column"
+              }
+            ]
+          },
+          {
+            "component": "checkbox-group",
+            "name": "details_features",
+            "label": "Features",
+            "description": "Checkbox group — multiple independent options.",
+            "valueType": "string[]",
+            "options": [
+              {
+                "name": "Show Search",
+                "value": "show-search"
+              },
+              {
+                "name": "Show Numbers",
+                "value": "show-numbers"
+              },
+              {
+                "name": "Allow Multiple Open",
+                "value": "allow-multiple"
+              }
+            ]
+          },
+          {
+            "component": "multiselect",
+            "name": "details_topics",
+            "label": "Topics",
+            "description": "Multiselect — choose one or more topics.",
+            "valueType": "string",
+            "options": [
+              {
+                "name": "Audience",
+                "children": [
+                  {
+                    "name": "Patients",
+                    "value": "patients"
+                  },
+                  {
+                    "name": "Providers",
+                    "value": "providers"
+                  },
+                  {
+                    "name": "Partners",
+                    "value": "partners"
+                  }
+                ]
+              },
+              {
+                "name": "Format",
+                "children": [
+                  {
+                    "name": "General",
+                    "value": "general"
+                  },
+                  {
+                    "name": "Technical",
+                    "value": "technical"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "component": "aem-tag",
+            "name": "details_tags",
+            "label": "Tags",
+            "description": "AEM tag picker.",
+            "valueType": "string"
+          },
+          {
+            "component": "aem-content",
+            "name": "details_relatedPage",
+            "label": "Related Page",
+            "description": "AEM content picker (any resource, not only assets).",
+            "valueType": "string",
+            "validation": {
+              "rootPath": "/content"
+            }
+          },
+          {
+            "component": "aem-content-fragment",
+            "name": "details_contentFragment",
+            "label": "Content Fragment",
+            "description": "Content Fragment picker.",
+            "valueType": "string",
+            "variationName": "details_contentFragmentVariation",
+            "validation": {
+              "rootPath": "/content"
+            }
+          },
+          {
+            "component": "aem-experience-fragment",
+            "name": "details_experienceFragment",
+            "label": "Experience Fragment",
+            "description": "Experience Fragment picker.",
+            "valueType": "string",
+            "variationName": "details_experienceFragmentVariation",
+            "validation": {
+              "rootPath": "/content"
+            }
+          }
+        ]
+      },
+      {
+        "component": "tab",
+        "label": "Help",
+        "name": "tabHelp"
+      },
+      {
+        "component": "container",
+        "name": "help",
+        "label": "Author Help Links",
+        "description": "Second container example with a CTA link (field collapse).",
+        "collapsible": true,
+        "fields": [
+          {
+            "component": "aem-content",
+            "name": "help_cta",
+            "label": "Help Link",
+            "valueType": "string"
+          },
+          {
+            "component": "text",
+            "name": "help_ctaText",
+            "label": "Help Link Label",
+            "valueType": "string",
+            "value": "Learn more"
+          },
+          {
+            "component": "text",
+            "name": "help_ctaTitle",
+            "label": "Help Link Title",
+            "description": "Optional title attribute on the link.",
+            "valueType": "string",
+            "value": ""
+          },
+          {
+            "component": "select",
+            "name": "help_ctaType",
+            "label": "Help Link Style",
+            "valueType": "string",
+            "value": "",
+            "options": [
+              {
+                "name": "Default",
+                "value": ""
+              },
+              {
+                "name": "Primary",
+                "value": "primary"
+              },
+              {
+                "name": "Secondary",
+                "value": "secondary"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "faq-item",
+    "fields": [
+      {
+        "component": "text",
+        "name": "question",
+        "label": "Question",
+        "valueType": "string",
+        "value": "",
+        "required": true
+      },
+      {
+        "component": "richtext",
+        "name": "answer",
+        "label": "Answer",
+        "valueType": "string",
+        "value": ""
+      }
+    ]
+  },
+  {
+    "id": "feature-cards",
+    "fields": [
+      {
+        "component": "select",
+        "name": "classes",
+        "label": "Layout Style",
+        "valueType": "string",
+        "value": "",
+        "options": [
+          {
+            "name": "Default Grid",
+            "value": ""
+          },
+          {
+            "name": "Surface Background",
+            "value": "surface"
+          },
+          {
+            "name": "Compact",
+            "value": "compact"
+          }
+        ]
+      },
+      {
+        "component": "text",
+        "name": "heading_title",
+        "label": "Section Title",
+        "valueType": "string",
+        "value": ""
+      },
+      {
+        "component": "select",
+        "name": "heading_titleType",
+        "label": "Title Level",
+        "valueType": "string",
+        "value": "h2",
+        "options": [
+          {
+            "name": "H2",
+            "value": "h2"
+          },
+          {
+            "name": "H3",
+            "value": "h3"
+          }
+        ]
+      },
+      {
+        "component": "textarea",
+        "name": "heading_intro",
+        "label": "Intro",
+        "valueType": "string",
+        "value": ""
+      }
+    ]
+  },
+  {
+    "id": "feature-card",
+    "fields": [
+      {
+        "component": "reference",
+        "name": "image",
+        "label": "Image",
+        "valueType": "string",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "name": "imageAlt",
+        "label": "Image Alt",
+        "valueType": "string",
+        "value": ""
+      },
+      {
+        "component": "text",
+        "name": "content_title",
+        "label": "Title",
+        "valueType": "string",
+        "value": "",
+        "required": true
+      },
+      {
+        "component": "richtext",
+        "name": "content_description",
+        "label": "Description",
+        "valueType": "string",
+        "value": ""
+      },
+      {
+        "component": "aem-content",
+        "name": "cta",
+        "label": "Link",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "name": "ctaText",
+        "label": "Link Label",
+        "valueType": "string",
+        "value": "Learn more"
       }
     ]
   },
@@ -413,6 +1111,204 @@
     ]
   },
   {
+    "id": "products-solutions",
+    "fields": [
+      {
+        "component": "text",
+        "name": "heading_title",
+        "label": "Section Title",
+        "valueType": "string",
+        "value": "Our products and solutions"
+      },
+      {
+        "component": "select",
+        "name": "heading_titleType",
+        "label": "Title Heading Level",
+        "valueType": "string",
+        "value": "h2",
+        "options": [
+          {
+            "name": "H2",
+            "value": "h2"
+          },
+          {
+            "name": "H3",
+            "value": "h3"
+          }
+        ]
+      },
+      {
+        "component": "tab",
+        "label": "Popup Actions",
+        "name": "tabActions"
+      },
+      {
+        "component": "aem-content",
+        "name": "actions_info",
+        "label": "Request More Info Link",
+        "description": "Destination for the Request more info button in the popup.",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "name": "actions_infoText",
+        "label": "Request More Info Label",
+        "valueType": "string",
+        "value": "Request more info"
+      },
+      {
+        "component": "aem-content",
+        "name": "actions_demo",
+        "label": "Request a Demo Link",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "name": "actions_demoText",
+        "label": "Request a Demo Label",
+        "valueType": "string",
+        "value": "Request a demo"
+      },
+      {
+        "component": "textarea",
+        "name": "actions_disclaimer",
+        "label": "Popup Disclaimer",
+        "valueType": "string",
+        "value": "Not all products and services may be available in your country or region."
+      }
+    ]
+  },
+  {
+    "id": "product-category",
+    "fields": [
+      {
+        "component": "reference",
+        "name": "image",
+        "label": "Tile Image",
+        "description": "Thumbnail shown in the products grid.",
+        "valueType": "string",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "name": "imageAlt",
+        "label": "Tile Image Alt Text",
+        "valueType": "string",
+        "value": ""
+      },
+      {
+        "component": "tab",
+        "label": "Category",
+        "name": "tabCategory"
+      },
+      {
+        "component": "text",
+        "name": "content_title",
+        "label": "Category Title",
+        "description": "Name shown on the grid tile and in the popup.",
+        "valueType": "string",
+        "value": "",
+        "required": true
+      },
+      {
+        "component": "richtext",
+        "name": "content_description",
+        "label": "Category Description",
+        "description": "Short description shown in the popup header.",
+        "valueType": "string",
+        "value": ""
+      },
+      {
+        "component": "boolean",
+        "name": "content_hideInfo",
+        "label": "Hide Request More Info",
+        "valueType": "boolean",
+        "value": false
+      },
+      {
+        "component": "boolean",
+        "name": "content_hideDemo",
+        "label": "Hide Request a Demo",
+        "valueType": "boolean",
+        "value": false
+      },
+      {
+        "component": "tab",
+        "label": "Learn More",
+        "name": "tabCta"
+      },
+      {
+        "component": "aem-content",
+        "name": "cta",
+        "label": "See More Innovations / Learn More Link",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "name": "ctaText",
+        "label": "Learn More Label",
+        "valueType": "string",
+        "value": "See more innovations"
+      },
+      {
+        "component": "tab",
+        "label": "Assets",
+        "name": "tabAssets"
+      },
+      {
+        "component": "container",
+        "name": "assets",
+        "label": "Product Assets",
+        "description": "Products/assets shown in the popup carousel (image, copy, optional PDF).",
+        "multi": true,
+        "fields": [
+          {
+            "component": "reference",
+            "name": "assetImage",
+            "label": "Asset Image",
+            "valueType": "string",
+            "multi": false
+          },
+          {
+            "component": "text",
+            "name": "assetImageAlt",
+            "label": "Asset Image Alt Text",
+            "valueType": "string",
+            "value": ""
+          },
+          {
+            "component": "text",
+            "name": "assetName",
+            "label": "Asset Title",
+            "valueType": "string",
+            "value": ""
+          },
+          {
+            "component": "richtext",
+            "name": "assetDescription",
+            "label": "Asset Description",
+            "valueType": "string",
+            "value": ""
+          },
+          {
+            "component": "aem-content",
+            "name": "assetFile",
+            "label": "Asset File / Link",
+            "description": "Optional PDF or external URL opened from the main asset image.",
+            "valueType": "string"
+          },
+          {
+            "component": "textarea",
+            "name": "assetDisclaimer",
+            "label": "Asset Disclaimer",
+            "valueType": "string",
+            "value": ""
+          }
+        ]
+      }
+    ]
+  },
+  {
     "id": "quote",
     "fields": [
       {
@@ -427,6 +1323,52 @@
         "valueType": "string",
         "name": "author",
         "label": "Author",
+        "value": ""
+      }
+    ]
+  },
+  {
+    "id": "section-nav",
+    "fields": [
+      {
+        "component": "boolean",
+        "name": "classes_sticky",
+        "label": "Sticky on scroll",
+        "valueType": "boolean",
+        "value": true
+      },
+      {
+        "component": "aem-content",
+        "name": "cta",
+        "label": "CTA Link",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "name": "ctaText",
+        "label": "CTA Label",
+        "valueType": "string",
+        "value": "Request a meeting"
+      }
+    ]
+  },
+  {
+    "id": "section-nav-item",
+    "fields": [
+      {
+        "component": "text",
+        "name": "label",
+        "label": "Link Label",
+        "valueType": "string",
+        "value": "",
+        "required": true
+      },
+      {
+        "component": "text",
+        "name": "url",
+        "label": "Anchor / URL",
+        "description": "Use #overview style anchors for in-page navigation.",
+        "valueType": "string",
         "value": ""
       }
     ]

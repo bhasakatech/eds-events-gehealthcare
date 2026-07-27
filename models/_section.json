@@ -53,7 +53,15 @@
         "fragment",
         "quote",
         "video-text",
-        "event-list"
+        "event-list",
+        "announcement-bar",
+        "faq-details",
+        "products-solutions",
+        "event-hero",
+        "section-nav",
+        "content-band",
+        "activity-list",
+        "feature-cards"
       ]
     }
   ]
