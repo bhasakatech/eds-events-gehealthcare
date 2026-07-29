@@ -30,7 +30,6 @@ export function moveAttributes(from, to, attributes) {
   });
 }
 
-
 export async function fetchPlaceholdersWithContext() {
   const placeholdersUrl = new URL('/placeholders.json', window.location.origin);
 
