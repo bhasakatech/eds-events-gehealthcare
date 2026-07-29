@@ -1,7 +1,7 @@
 import config from '../../scripts/config.js';
 
 export default async function decorate(block) {
-  const aemPublish = config.publish;
+  const aemHost = config.host;
   const persistedQuery = '/graphql/execute.json/eds-events-gehealthcare/OfferByPath';
 
   const offerPath = block.querySelector(':scope > div:nth-child(1) a')?.textContent.trim();
@@ -18,7 +18,7 @@ export default async function decorate(block) {
     variation = variationElement.textContent.trim();
   }
 
-  const url = `${aemPublish}${persistedQuery};path=${offerPath};variation=${variation}`;
+  const url = `${aemHost}${persistedQuery};path=${offerPath};variation=${variation}`;
 
   let offer;
 
