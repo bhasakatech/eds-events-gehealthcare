@@ -24,7 +24,7 @@ export default async function decorate(block) {
 
   console.log('Variation:', variation);
 
-  const url = `${aemPublish}${persistedQuery};path=${encodeURIComponent(offerPath)};variation=${variation}`;
+  const url = `${aemPublish}${persistedQuery};path=${offerPath};variation=${variation}`;
 
   console.log('GraphQL URL:', url);
 
