@@ -413,6 +413,22 @@
     ]
   },
   {
+    "id": "offer",
+    "fields": [
+      {
+        "component": "aem-content-fragment",
+        "name": "offer",
+        "label": "Offer",
+        "value": "",
+        "valueType": "string",
+        "variationName": "master",
+        "validation": {
+          "rootPath": "/content/dam/eds-events-gehealthcare/cf"
+        }
+      }
+    ]
+  },
+  {
     "id": "quote",
     "fields": [
       {

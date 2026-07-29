@@ -1,0 +1,38 @@
+{
+  "definitions": [
+    {
+      "title": "Offer",
+      "id": "offer",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block",
+            "template": {
+              "name": "Offer",
+              "model": "offer"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "offer",
+      "fields": [
+        {
+          "component": "aem-content-fragment",
+          "name": "offer",
+          "label": "Offer",
+          "value": "",
+          "valueType": "string",
+          "variationName": "master",
+          "validation": {
+            "rootPath": "/content/dam/eds-events-gehealthcare/cf"
+          }
+        }
+      ]
+    }
+  ],
+  "filters": []
+}
