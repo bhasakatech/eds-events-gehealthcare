@@ -1,0 +1,16 @@
+.experience-fragment-content {
+  width: 100%;
+}
+
+.experience-fragment-content img {
+  max-width: 100%;
+  height: auto;
+}
+
+.experience-fragment-content a {
+  text-decoration: none;
+}
+
+.experience-fragment-content * {
+  box-sizing: border-box;
+}
