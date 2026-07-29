@@ -1,0 +1,89 @@
+{
+  "definitions": [
+    {
+      "title": "Section Nav",
+      "id": "section-nav",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block",
+            "template": {
+              "name": "Section Nav",
+              "model": "section-nav",
+              "filter": "section-nav"
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Section Nav Item",
+      "id": "section-nav-item",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "name": "Section Nav Item",
+              "model": "section-nav-item"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "section-nav",
+      "fields": [
+        {
+          "component": "boolean",
+          "name": "classes_sticky",
+          "label": "Sticky on scroll",
+          "valueType": "boolean",
+          "value": true
+        },
+        {
+          "component": "aem-content",
+          "name": "cta",
+          "label": "CTA Link",
+          "valueType": "string"
+        },
+        {
+          "component": "text",
+          "name": "ctaText",
+          "label": "CTA Label",
+          "valueType": "string",
+          "value": "Request a meeting"
+        }
+      ]
+    },
+    {
+      "id": "section-nav-item",
+      "fields": [
+        {
+          "component": "text",
+          "name": "label",
+          "label": "Link Label",
+          "valueType": "string",
+          "value": "",
+          "required": true
+        },
+        {
+          "component": "text",
+          "name": "url",
+          "label": "Anchor / URL",
+          "description": "Use #overview style anchors for in-page navigation.",
+          "valueType": "string",
+          "value": ""
+        }
+      ]
+    }
+  ],
+  "filters": [
+    {
+      "id": "section-nav",
+      "components": ["section-nav-item"]
+    }
+  ]
+}

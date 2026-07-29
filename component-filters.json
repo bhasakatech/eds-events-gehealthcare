@@ -19,7 +19,21 @@
       "quote",
       "video-text",
       "event-list",
-      "offer"
+      "offer",
+      "announcement-bar",
+      "faq-details",
+      "products-solutions",
+      "event-hero",
+      "section-nav",
+      "content-band",
+      "activity-list",
+      "feature-cards"
+    ]
+  },
+  {
+    "id": "activity-list",
+    "components": [
+      "activity-item"
     ]
   },
   {
@@ -41,6 +55,30 @@
       "image",
       "button",
       "title"
+    ]
+  },
+  {
+    "id": "faq-details",
+    "components": [
+      "faq-item"
+    ]
+  },
+  {
+    "id": "feature-cards",
+    "components": [
+      "feature-card"
+    ]
+  },
+  {
+    "id": "products-solutions",
+    "components": [
+      "product-category"
+    ]
+  },
+  {
+    "id": "section-nav",
+    "components": [
+      "section-nav-item"
     ]
   },
   {

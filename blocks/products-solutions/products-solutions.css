@@ -1,0 +1,372 @@
+/* Products & Solutions – GE HealthCare Events (ESC-style) */
+
+.products-solutions {
+  --ps-purple: #6022a6;
+  --ps-purple-hover: #4b1a84;
+  --ps-navy: #002060;
+  --ps-surface: #f2f1f3;
+  --ps-text: #222;
+  --ps-muted: #76849a;
+  --ps-border: #d9d6de;
+
+  background-color: var(--ps-surface);
+  color: var(--ps-text);
+}
+
+.products-solutions .products-solutions-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 48px 16px 32px;
+}
+
+.products-solutions .products-solutions-header h2,
+.products-solutions .products-solutions-header h3 {
+  margin: 0 0 28px;
+  color: var(--ps-purple);
+  font-family: var(--heading-font-family);
+  font-weight: 400;
+  font-size: var(--heading-font-size-l);
+}
+
+.products-solutions .products-solutions-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px 20px;
+}
+
+.products-solutions .products-solutions-tile {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  text-align: left;
+  cursor: pointer;
+  color: inherit;
+  font: inherit;
+}
+
+.products-solutions .products-solutions-tile-media {
+  overflow: hidden;
+  background: #000;
+  aspect-ratio: 16 / 9;
+  transition: transform 0.35s ease;
+}
+
+.products-solutions .products-solutions-tile-media picture,
+.products-solutions .products-solutions-tile-media img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+}
+
+.products-solutions .products-solutions-tile:hover .products-solutions-tile-media,
+.products-solutions .products-solutions-tile:focus-visible .products-solutions-tile-media {
+  transform: scale(1.03);
+}
+
+.products-solutions .products-solutions-tile-title {
+  color: var(--ps-navy);
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.35;
+}
+
+.products-solutions .products-solutions-tile:hover .products-solutions-tile-title,
+.products-solutions .products-solutions-tile:focus-visible .products-solutions-tile-title {
+  color: var(--ps-purple);
+}
+
+/* Dialog / popup */
+.products-solutions .products-solutions-dialog {
+  width: min(1170px, 96vw);
+  max-width: 96vw;
+  max-height: 92vh;
+  margin: auto;
+  padding: 0;
+  border: 0;
+  border-radius: 5px;
+  background: transparent;
+}
+
+.products-solutions .products-solutions-dialog::backdrop {
+  background: rgb(0 0 0 / 55%);
+}
+
+.products-solutions .products-solutions-dialog-panel {
+  background: #fff;
+  border-radius: 5px;
+  overflow: auto;
+  max-height: 92vh;
+}
+
+.products-solutions .products-solutions-dialog-top {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 20px 20px 0;
+}
+
+.products-solutions .products-solutions-dialog-title {
+  margin: 0 0 8px;
+  color: var(--ps-text);
+  font-size: 28px;
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+.products-solutions .products-solutions-dialog-desc {
+  color: var(--ps-text);
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.products-solutions .products-solutions-dialog-desc p {
+  margin: 0;
+}
+
+.products-solutions .products-solutions-dialog-tools {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.products-solutions .products-solutions-browse {
+  color: var(--ps-muted);
+  font-size: 14px;
+}
+
+.products-solutions .products-solutions-nav,
+.products-solutions .products-solutions-close {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  margin: 0;
+  padding: 0;
+  border: 1px solid var(--ps-border);
+  border-radius: 4px;
+  background: #fff;
+  color: var(--ps-purple);
+  cursor: pointer;
+}
+
+.products-solutions .products-solutions-nav span,
+.products-solutions .products-solutions-close span {
+  font-size: 22px;
+  line-height: 1;
+}
+
+.products-solutions .products-solutions-prev span::before {
+  content: '‹';
+}
+
+.products-solutions .products-solutions-next span::before {
+  content: '›';
+}
+
+.products-solutions .products-solutions-nav:hover,
+.products-solutions .products-solutions-close:hover {
+  background: var(--ps-surface);
+}
+
+.products-solutions .products-solutions-dialog-body {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+  padding: 20px;
+}
+
+.products-solutions .products-solutions-asset-link {
+  position: relative;
+  display: block;
+  text-decoration: none;
+}
+
+.products-solutions .products-solutions-asset-stage {
+  overflow: hidden;
+  background: #111;
+  aspect-ratio: 16 / 9;
+}
+
+.products-solutions .products-solutions-asset-stage picture,
+.products-solutions .products-solutions-asset-stage img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.products-solutions .products-solutions-pdf-badge {
+  position: absolute;
+  right: 12px;
+  bottom: 12px;
+  padding: 4px 8px;
+  border-radius: 3px;
+  background: rgb(0 0 0 / 75%);
+  color: #fff;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.products-solutions .products-solutions-thumbs {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: 12px;
+  margin-top: 12px;
+}
+
+.products-solutions .products-solutions-thumb {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin: 0;
+  padding: 0;
+  border: 2px solid transparent;
+  background: transparent;
+  text-align: left;
+  cursor: pointer;
+  color: var(--ps-text);
+  font-size: 12px;
+}
+
+.products-solutions .products-solutions-thumb.is-active {
+  border-color: var(--ps-purple);
+}
+
+.products-solutions .products-solutions-thumb picture,
+.products-solutions .products-solutions-thumb img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  background: #eee;
+}
+
+.products-solutions .products-solutions-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.products-solutions .products-solutions-btn {
+  display: inline-block;
+  min-width: 180px;
+  padding: 8px 24px;
+  border: 1px solid var(--ps-purple);
+  border-radius: 4px;
+  background: var(--ps-purple);
+  color: #fff !important;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.4;
+  text-align: center;
+  text-decoration: none;
+  transition: background 0.2s ease;
+}
+
+.products-solutions .products-solutions-btn:hover {
+  background: var(--ps-purple-hover);
+}
+
+.products-solutions .products-solutions-btn-secondary {
+  background: #000;
+  border-color: #000;
+}
+
+.products-solutions .products-solutions-btn-secondary:hover {
+  background: #222;
+}
+
+.products-solutions .products-solutions-asset-title {
+  margin: 0 0 10px;
+  font-size: 22px;
+  font-weight: 700;
+}
+
+.products-solutions .products-solutions-asset-description {
+  color: var(--ps-text);
+  font-size: 15px;
+  line-height: 1.55;
+}
+
+.products-solutions .products-solutions-asset-description p {
+  margin: 0 0 12px;
+}
+
+.products-solutions .products-solutions-disclaimer-toggle {
+  margin: 16px 0 8px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--ps-text);
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  text-align: left;
+}
+
+.products-solutions .products-solutions-asset-disclaimer {
+  color: var(--ps-muted);
+  font-size: 13px;
+  line-height: 1.45;
+}
+
+.products-solutions .products-solutions-dialog-footer {
+  margin-top: 8px;
+}
+
+.products-solutions .products-solutions-disclaimer-bar {
+  margin: 0;
+  padding: 10px 20px;
+  background: #f5a623;
+  color: #111;
+  font-size: 13px;
+  text-align: right;
+}
+
+@media (width >= 600px) {
+  .products-solutions .products-solutions-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .products-solutions .products-solutions-inner {
+    padding: 64px 24px 40px;
+  }
+}
+
+@media (width >= 900px) {
+  .products-solutions .products-solutions-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .products-solutions .products-solutions-dialog-top {
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: space-between;
+    padding: 28px 28px 0;
+  }
+
+  .products-solutions .products-solutions-dialog-body {
+    grid-template-columns: 1.05fr 0.95fr;
+    padding: 24px 28px 12px;
+  }
+
+  .products-solutions .products-solutions-actions {
+    flex-flow: row wrap;
+  }
+}
+
+@media (width >= 1200px) {
+  .products-solutions .products-solutions-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}

@@ -1,0 +1,111 @@
+.event-hero {
+  --eh-purple: #6022a6;
+  --eh-purple-hover: #4b1a84;
+  --eh-navy: #002060;
+  --eh-surface: #f2f1f3;
+  --eh-muted: #76849a;
+
+  background: var(--eh-surface);
+  color: var(--text-color);
+}
+
+.event-hero .event-hero-inner {
+  position: relative;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 48px 16px 40px;
+  background-position: center right;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.event-hero .event-hero-inner.has-media::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, #f2f1f3 42%, rgb(242 241 243 / 75%) 68%, rgb(242 241 243 / 25%));
+  pointer-events: none;
+}
+
+.event-hero .event-hero-content {
+  position: relative;
+  z-index: 1;
+  max-width: 640px;
+}
+
+.event-hero .event-hero-title {
+  margin: 0 0 16px;
+  color: var(--eh-purple);
+  font-family: var(--heading-font-family);
+  font-size: var(--heading-font-size-xxl);
+  font-weight: 400;
+  line-height: 1.1;
+}
+
+.event-hero .event-hero-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 10px;
+  margin: 0 0 16px;
+  color: var(--eh-navy);
+  font-size: var(--body-font-size-xs);
+  font-weight: 600;
+}
+
+.event-hero .event-hero-meta-sep {
+  color: var(--eh-muted);
+  font-weight: 400;
+}
+
+.event-hero .event-hero-tagline {
+  margin: 0 0 24px;
+  color: var(--text-color);
+  font-size: var(--body-font-size-s);
+  line-height: 1.45;
+}
+
+.event-hero .event-hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.event-hero .event-hero-btn {
+  display: inline-block;
+  min-width: 160px;
+  padding: 10px 22px;
+  border-radius: 4px;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.4;
+  text-align: center;
+  text-decoration: none;
+}
+
+.event-hero .event-hero-btn-primary {
+  background: #000;
+  border: 1px solid #000;
+  color: #fff !important;
+}
+
+.event-hero .event-hero-btn-primary:hover {
+  background: #222;
+}
+
+.event-hero .event-hero-btn-secondary {
+  background: transparent;
+  border: 1px solid var(--eh-purple);
+  color: var(--eh-purple) !important;
+}
+
+.event-hero .event-hero-btn-secondary:hover {
+  background: var(--eh-purple);
+  color: #fff !important;
+}
+
+@media (width >= 900px) {
+  .event-hero .event-hero-inner {
+    padding: 72px 24px 56px;
+  }
+}
