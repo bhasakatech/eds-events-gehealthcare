@@ -1,5 +1,5 @@
 export default async function decorate(block) {
-  const aemPublish = 'https://author-p139816-e1765605.adobeaemcloud.com';
+  const aemPublish = 'https://publish-p139816-e1765605.adobeaemcloud.com';
   const persistedQuery = '/graphql/execute.json/eds-events-gehealthcare/OfferByPath';
 
   const offerPath = block.querySelector(':scope > div:nth-child(1) a')?.textContent.trim();
