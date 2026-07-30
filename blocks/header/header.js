@@ -107,7 +107,7 @@ export default async function decorate(block) {
     if (wrapper) wrapper.classList.add('main-header');
   }
 
-  const placeholder = placeholders['contact-us:Contact us'];
+  const placeholder = placeholders['contact-us:Contact us..'];
   const { Key, Text } = placeholder;
   console.log(Key);
   console.log(Text);
