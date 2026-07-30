@@ -632,6 +632,22 @@
     ]
   },
   {
+    "id": "experience-fragment",
+    "fields": [
+      {
+        "component": "aem-experience-fragment",
+        "name": "experienceFragment",
+        "label": "Experience Fragment",
+        "value": "",
+        "valueType": "string",
+        "variationName": "master",
+        "validation": {
+          "rootPath": "/content/experience-fragments"
+        }
+      }
+    ]
+  },
+  {
     "id": "faq-details",
     "fields": [
       {

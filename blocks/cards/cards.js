@@ -19,6 +19,14 @@ export default function decorate(block) {
       link,
     ] = cols;
 
+    if (
+      !title.textContent.trim()
+      && !category.textContent.trim()
+      && !info.textContent.trim()
+    ) {
+      return;
+    }
+
     const li = document.createElement('li');
     li.className = 'event-card';
 
