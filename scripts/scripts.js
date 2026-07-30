@@ -30,6 +30,22 @@ export function moveAttributes(from, to, attributes) {
   });
 }
 
+export async function fetchPlaceholdersWithContext() {
+  const placeholdersUrl = new URL('/placeholders.json', window.location.origin);
+
+  const res = await fetch(placeholdersUrl);
+  const { data } = await res.json();
+
+  const map = {};
+
+  data.forEach((row) => {
+    const mapKey = row.Text ? `${row.Key}:${row.Text}` : row.Key;
+    map[mapKey] = row;
+  });
+
+  return map;
+}
+
 /**
  * Move instrumentation attributes from a given element to another given element.
  * @param {Element} from the element to copy attributes from

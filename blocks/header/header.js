@@ -1,13 +1,18 @@
 import { getMetadata } from '../../scripts/aem.js';
 import { loadFragment } from '../fragment/fragment.js';
+import { fetchPlaceholdersWithContext } from '../../scripts/scripts.js';
 
 const isDesktop = window.matchMedia('(min-width: 900px)');
 
+const placeholders = await fetchPlaceholdersWithContext();
+
 function toggleAllNavSections(sections, expanded = false) {
   if (!sections) return;
-  sections.querySelectorAll('.default-content-wrapper > ul > li').forEach((section) => {
-    section.setAttribute('aria-expanded', expanded);
-  });
+  sections
+    .querySelectorAll('.default-content-wrapper > ul > li')
+    .forEach((section) => {
+      section.setAttribute('aria-expanded', expanded);
+    });
 }
 
 function toggleMenu(nav, forceExpanded = null) {
@@ -23,7 +28,10 @@ function toggleMenu(nav, forceExpanded = null) {
   document.body.style.overflow = isOpen ? 'hidden' : '';
 
   if (button) {
-    button.setAttribute('aria-label', isOpen ? 'Close navigation' : 'Open navigation');
+    button.setAttribute(
+      'aria-label',
+      isOpen ? 'Close navigation' : 'Open navigation',
+    );
   }
 }
 
@@ -99,21 +107,35 @@ export default async function decorate(block) {
     if (wrapper) wrapper.classList.add('main-header');
   }
 
+  const placeholder = placeholders['contact-us:Contact us..'];
+  const { Key, Text } = placeholder;
+  console.log(Key);
+  console.log(Text);
+
+  const contactText = Text;
+  const contactBtn = nav.querySelector('a[title="contact-us"]');
+
+  if (contactBtn && contactText) {
+    contactBtn.textContent = contactText;
+  }
+
   // Mark dropdown sections
   if (navSections) {
-    navSections.querySelectorAll('.default-content-wrapper > ul > li').forEach((item) => {
-      if (item.querySelector('ul')) {
-        item.classList.add('nav-drop');
-      }
-
-      item.addEventListener('click', () => {
-        if (isDesktop.matches) {
-          const expanded = item.getAttribute('aria-expanded') === 'true';
-          toggleAllNavSections(navSections);
-          item.setAttribute('aria-expanded', expanded ? 'false' : 'true');
+    navSections
+      .querySelectorAll('.default-content-wrapper > ul > li')
+      .forEach((item) => {
+        if (item.querySelector('ul')) {
+          item.classList.add('nav-drop');
         }
+
+        item.addEventListener('click', () => {
+          if (isDesktop.matches) {
+            const expanded = item.getAttribute('aria-expanded') === 'true';
+            toggleAllNavSections(navSections);
+            item.setAttribute('aria-expanded', expanded ? 'false' : 'true');
+          }
+        });
       });
-    });
   }
 
   // Hamburger

@@ -62,7 +62,8 @@
         "section-nav",
         "content-band",
         "activity-list",
-        "feature-cards"
+        "feature-cards",
+        "experience-fragment"
       ]
     }
   ]
