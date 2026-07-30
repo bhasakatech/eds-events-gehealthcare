@@ -2,7 +2,8 @@
   "mappings": [
     "/content/eds-events-gehealthcare/:/",
     "/content/eds-events-gehealthcare/configuration:/.helix/config.json",
-    "/content/eds-events-gehealthcare/metadata:/metadata.json"
+    "/content/eds-events-gehealthcare/metadata:/metadata.json",
+    "/content/eds-events-gehealthcare/index/tag-configuration:/tag-configuration.json"
   ],
   "includes": [
     "/content/eds-events-gehealthcare/"
