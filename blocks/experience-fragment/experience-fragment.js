@@ -6,52 +6,61 @@ export default async function decorate(block) {
   const xfPath = block.querySelector(':scope > div:nth-child(1) a')?.textContent.trim();
 
   if (!xfPath) {
+    console.error('Experience Fragment path not found.');
     return;
   }
 
-  const urls = xfPath.endsWith('/master')
-    ? [`${aemHost}${xfPath}.plain.html`]
-    : [
-        `${aemHost}${xfPath}.plain.html`,
-        `${aemHost}${xfPath}/master.plain.html`,
-      ];
+  const url = xfPath.endsWith('/master')
+    ? `${aemHost}${xfPath}.plain.html`
+    : `${aemHost}${xfPath}/master.plain.html`;
 
-  const responses = await Promise.all(
-    urls.map(async (url) => {
-      try {
-        const response = await fetch(url, {
-          credentials: 'include',
-        });
+  try {
+    const response = await fetch(url, {
+      credentials: 'include',
+    });
 
-        if (!response.ok) {
-          return null;
-        }
+    if (!response.ok) {
+      throw new Error(`Failed to load Experience Fragment (${response.status})`);
+    }
 
-        return {
-          url,
-          html: await response.text(),
-        };
-      } catch {
-        return null;
+    const html = await response.text();
+
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(html, 'text/html');
+
+    // Remove scripts and stylesheets
+    doc.querySelectorAll('script, link').forEach((el) => el.remove());
+
+    // Convert relative image URLs to absolute URLs
+    doc.querySelectorAll('img').forEach((img) => {
+      const src = img.getAttribute('src');
+      if (src && src.startsWith('/')) {
+        img.src = `${aemHost}${src}`;
       }
-    }),
-  );
+    });
 
-  const result = responses.find(Boolean);
+    // Convert relative links to absolute URLs
+    doc.querySelectorAll('a').forEach((anchor) => {
+      const href = anchor.getAttribute('href');
+      if (href && href.startsWith('/')) {
+        anchor.href = `${aemHost}${href}`;
+      }
+    });
 
-  if (!result) {
-    return;
+    const content = doc.body ? doc.body.innerHTML : html;
+
+    const itemId = `urn:aemconnection:${xfPath}/master`;
+
+    block.innerHTML = `
+      <div
+        class="experience-fragment-content"
+        data-aue-resource="${itemId}"
+        data-aue-type="reference"
+        data-aue-label="Experience Fragment">
+        ${content}
+      </div>
+    `;
+  } catch (e) {
+    console.error('Failed to load Experience Fragment', e);
   }
-
-  const itemId = `urn:aemconnection:${xfPath}`;
-
-  block.innerHTML = `
-    <div
-      class="experience-fragment-content"
-      data-aue-resource="${itemId}"
-      data-aue-type="reference"
-      data-aue-label="Experience Fragment">
-      ${result.html}
-    </div>
-  `;
 }
