@@ -27,6 +27,13 @@
           "label": "Announcement Text",
           "description": "Text shown in the grey top bar. Leave empty to hide the bar.",
           "value": ""
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "announcementLabel",
+          "label": "Announcement Text Label",
+          "value": ""
         }
       ]
     }
