@@ -1,21 +1,21 @@
 {
   "mappings": [
-    "/content/eds-events-gehealthcare/:/",
-    "/content/eds-events-gehealthcare/configuration:/.helix/config.json",
-    "/content/eds-events-gehealthcare/metadata:/metadata.json",
-    "/content/eds-events-gehealthcare/index/spreadsheet:/products.json",
-    "/content/eds-events-gehealthcare/index/tag-configuration:/tag-configuration.json",
-    "/content/dam/eds-events-gehealthcare/:/"
+    "/content/gehc-events/:/",
+    "/content/gehc-events/configuration:/.helix/config.json",
+    "/content/gehc-events/metadata:/metadata.json",
+    "/content/gehc-events/index/spreadsheet:/products.json",
+    "/content/gehc-events/index/tag-configuration:/tag-configuration.json",
+    "/content/dam/gehc-events/:/"
   ],
   "includes": [
-    "/content/eds-events-gehealthcare/",
-    "/content/dam/eds-events-gehealthcare/"
+    "/content/gehc-events/",
+    "/content/dam/gehc-events/"
   ],
   "xwalk": {
     "content-fragment-overlay": {
-      "/content/dam/eds-events-gehealthcare/**": {
+      "/content/dam/gehc-events/**": {
         "includes": [
-          "/conf/eds-events-gehealthcare/eds-events-gehealthcare/settings/dam/cfm/models/product-info"
+          "/conf/gehc-events/gehc-events/settings/dam/cfm/models/product-info"
         ]
       }
     }
