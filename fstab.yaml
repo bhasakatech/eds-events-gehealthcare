@@ -1,5 +1,5 @@
 mountpoints:
   /:
-    url: "https://author-p139816-e1765605.adobeaemcloud.com/bin/franklin.delivery/bhasakatech/eds-events-gehealthcare/main"
+    url: "https://author-p139816-e1765605.adobeaemcloud.com/bin/franklin.delivery/bhasakatech/gehc-events/main"
     type: "markup"
     suffix: ".html"
