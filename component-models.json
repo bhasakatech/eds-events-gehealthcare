@@ -357,6 +357,13 @@
         "label": "Announcement Text",
         "description": "Text shown in the grey top bar. Leave empty to hide the bar.",
         "value": ""
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "announcementLabel",
+        "label": "Announcement Text Label",
+        "value": ""
       }
     ]
   },
@@ -885,7 +892,7 @@
             "valueType": "string",
             "variationName": "details_contentFragmentVariation",
             "validation": {
-              "rootPath": "/content"
+              "rootPath": "/content/dam"
             }
           },
           {
@@ -1410,18 +1417,18 @@
     "fields": [
       {
         "component": "multiselect",
-        "name": "classes",
-        "label": "Classes",
+        "name": "videoTextClasses",
+        "label": "Video Text Layout Options",
         "options": [
           {
-            "name": "Layout Variants",
+            "name": "Video Text Variants",
             "children": [
               {
-                "name": "Video on Left",
+                "name": "Video Left",
                 "value": "video-left"
               },
               {
-                "name": "Video on Right",
+                "name": "Video Right",
                 "value": "video-right"
               },
               {
@@ -1442,50 +1449,67 @@
     "id": "video-text-item",
     "fields": [
       {
+        "component": "accordion",
+        "name": "videoTextContent",
+        "label": "Video Text Content",
+        "fields": [
+          {
+            "component": "text",
+            "name": "videoTextHeading",
+            "label": "Heading",
+            "valueType": "string",
+            "value": ""
+          },
+          {
+            "component": "richtext",
+            "name": "videoTextDescription",
+            "label": "Description",
+            "valueType": "string",
+            "value": ""
+          },
+          {
+            "component": "text",
+            "name": "videoTextVideoUrl",
+            "label": "Video URL",
+            "valueType": "string",
+            "value": ""
+          },
+          {
+            "component": "reference",
+            "name": "videoTextThumbnail",
+            "label": "Video Thumbnail",
+            "valueType": "string",
+            "multi": false
+          }
+        ]
+      },
+      {
+        "component": "accordion",
+        "name": "videoTextCta",
+        "label": "Video Text CTA",
+        "fields": [
+          {
+            "component": "aem-content",
+            "name": "videoTextCtaLink",
+            "label": "CTA Link",
+            "valueType": "string",
+            "value": ""
+          },
+          {
+            "component": "text",
+            "name": "videoTextCtaLabel",
+            "label": "CTA Label",
+            "valueType": "string",
+            "value": ""
+          }
+        ]
+      },
+      {
         "component": "text",
+        "name": "videoTextImageDescription",
+        "label": "Thumbnail Description",
         "valueType": "string",
-        "name": "col1_heading",
-        "label": "Heading",
         "value": ""
-      },
-      {
-        "component": "richtext",
-        "name": "col1_text",
-        "value": "",
-        "label": "Text Content",
-        "valueType": "string"
-      },
-      {
-        "component": "aem-content",
-        "name": "col1_cta",
-        "value": "",
-        "label": "Call-to-Action Link",
-        "valueType": "string"
-      },
-      {
-        "component": "text",
-        "name": "col1_ctaText",
-        "label": "Call-to-Action Text",
-        "valueType": "string"
-      },
-      {
-        "component": "text",
-        "name": "col1_videoUrl",
-        "label": "Video URL (YouTube/Vimeo/MP4)",
-        "valueType": "string"
-      },
-      {
-        "component": "reference",
-        "valueType": "string",
-        "name": "col1_videoThumbnail",
-        "label": "Video Thumbnail (Optional)",
-        "multi": false
-      },
-      {
-        "component": "text",
-        "name": "col1_videoThumbnailAlt",
-        "label": "Video Thumbnail Alt Text (Optional)",
-        "valueType": "string"
       }
     ]
   }
