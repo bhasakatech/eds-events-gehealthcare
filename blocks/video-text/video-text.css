@@ -52,7 +52,7 @@ main > .video-text-container > .video-text-wrapper{
 .video-text h2 {
     margin: 0 0 24px;
     font-weight: 400;
-    color: inherit;
+    color: black;
     font-size: 38px;
     line-height: 41px;
 }
