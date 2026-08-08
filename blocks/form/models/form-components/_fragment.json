@@ -86,7 +86,7 @@
                     }
                 },
                 {
-                    "...": "../form-common/_help-container.json#/fields"
+                   "...": "../form-common/_fragment-help-container.json#/fields"
                 }
             ]
         }

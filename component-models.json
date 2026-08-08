@@ -2155,12 +2155,6 @@
         "name": "description",
         "label": "Help text",
         "valueType": "string"
-      },
-      {
-        "component": "richtext",
-        "name": "tooltip",
-        "label": "Short description",
-        "valueType": "string"
       }
     ]
   },
@@ -2771,12 +2765,6 @@
         "component": "richtext",
         "name": "description",
         "label": "Help text",
-        "valueType": "string"
-      },
-      {
-        "component": "richtext",
-        "name": "tooltip",
-        "label": "Short description",
         "valueType": "string"
       }
     ]
