@@ -12,6 +12,8 @@
       "image",
       "button",
       "title",
+      "form",
+      "embed-adaptive-form",
       "hero",
       "cards",
       "columns",
@@ -68,6 +70,36 @@
     "id": "feature-cards",
     "components": [
       "feature-card"
+    ]
+  },
+  {
+    "id": "form",
+    "components": [
+      "captcha",
+      "checkbox",
+      "checkbox-group",
+      "date-input",
+      "drop-down",
+      "email",
+      "file-input",
+      "form-accordion",
+      "form-button",
+      "form-fragment",
+      "form-image",
+      "form-modal",
+      "form-reset-button",
+      "form-submit-button",
+      "number-input",
+      "panel",
+      "password",
+      "plain-text",
+      "radio-group",
+      "rating",
+      "telephone-input",
+      "text-input",
+      "tnc",
+      "wizard",
+      "range"
     ]
   },
   {
