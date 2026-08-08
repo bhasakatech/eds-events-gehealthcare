@@ -1,14 +1,14 @@
 {
   "mappings": [
-    "/content/eds-events-gehealthcare-dev/:/",
-    "/content/eds-events-gehealthcare-dev/configuration:/.helix/config.json",
-    "/content/eds-events-gehealthcare-dev/metadata:/metadata.json",
-    "/content/eds-events-gehealthcare-dev/index/spreadsheet:/products.json",
-    "/content/eds-events-gehealthcare-dev/index/tag-configuration:/tag-configuration.json",
-    "/content/dam/eds-events-gehealthcare-dev/:/"
+    "/content/eds-events-gehealthcare/:/",
+    "/content/eds-events-gehealthcare/configuration:/.helix/config.json",
+    "/content/eds-events-gehealthcare/metadata:/metadata.json",
+    "/content/eds-events-gehealthcare/index/spreadsheet:/products.json",
+    "/content/eds-events-gehealthcare/index/tag-configuration:/tag-configuration.json",
+    "/content/dam/eds-events-gehealthcare/:/"
   ],
   "includes": [
-    "/content/eds-events-gehealthcare-dev/",
-    "/content/dam/eds-events-gehealthcare-dev/"
+    "/content/eds-events-gehealthcare/",
+    "/content/dam/eds-events-gehealthcare/"
   ]
 }
