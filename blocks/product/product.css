@@ -1,0 +1,50 @@
+.product {
+  max-width: 1200px;
+  margin: auto;
+  padding: 40px 24px;
+}
+
+.product > div {
+  display: grid;
+  grid-template-columns: minmax(300px, 1fr) minmax(300px, 1fr);
+  gap: 48px;
+  align-items: start;
+}
+
+.product picture,
+.product picture img {
+  display: block;
+  width: 100%;
+}
+
+.product picture img {
+  height: auto;
+  object-fit: contain;
+}
+
+.product-category {
+  margin: 0 0 12px;
+  font-size: 14px;
+  text-transform: uppercase;
+}
+
+.product h1 {
+  margin: 0 0 20px;
+}
+
+.product-description {
+  margin-bottom: 24px;
+}
+
+.product-price {
+  margin-bottom: 20px;
+  font-size: 28px;
+  font-weight: 700;
+}
+
+@media (width < 768px) {
+  .product > div {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+}
