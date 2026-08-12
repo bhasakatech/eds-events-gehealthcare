@@ -1,7 +1,35 @@
-<div>
-  <div class="product">
+<!DOCTYPE html>
+<html>
+<head>
+  <title>{{title}}</title>
+  <meta name="description" content="{{description}}">
+</head>
+<body>
+  <header></header>
+
+  <main>
     <div>
-      <h1>Hello EDS</h1>
+      <div class="product">
+        <div>
+          <div>
+            <p>
+              <picture>
+                <img src="{{thumbnail}}" alt="{{title}}">
+              </picture>
+            </p>
+          </div>
+          <div>
+            <h1>{{title}}</h1>
+            <p>{{description}}</p>
+            <p><strong>Brand:</strong> {{brand}}</p>
+            <p><strong>Category:</strong> {{category}}</p>
+            <p><strong>Price:</strong> ${{price}}</p>
+          </div>
+        </div>
+      </div>
     </div>
-  </div>
-</div>
+  </main>
+
+  <footer></footer>
+</body>
+</html>
