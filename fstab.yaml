@@ -3,3 +3,7 @@ mountpoints:
     url: "https://author-p139816-e1765605.adobeaemcloud.com/bin/franklin.delivery/bhasakatech/eds-events-gehealthcare/main"
     type: "markup"
     suffix: ".html"
+  /da/:
+    url: "https://drive.google.com/drive/folders/1RdD9Q0jVdla5RwS2U1ZnSYFBWkJ427DH?usp=sharing"
+    type: "markup"
+    suffix: ".html"
