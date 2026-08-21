@@ -1,66 +1,90 @@
-.event-hero {
-  --eh-purple: #6022a6;
-  --eh-purple-hover: #4b1a84;
-  --eh-navy: #002060;
-  --eh-surface: #f2f1f3;
-  --eh-muted: #76849a;
+/*
+ * Event Hero — full-width purple band with a background video on the right
+ * and an event title / meta / CTA panel on the left.
+ * Values extracted from events.gehealthcare.com/events/rsna-2026 computed styles.
+ */
 
-  background: var(--eh-surface);
-  color: var(--text-color);
+/* Full-bleed: neutralise the .section wrapper constraints + dark band padding */
+.section.event-hero-container:has(.event-hero) {
+  margin: 0;
+  padding: 0;
+  background-color: var(--brand-purple); /* #6022a6 */
 }
 
+.event-hero-wrapper {
+  max-width: 100% !important;
+  width: 100% !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.event-hero {
+  position: relative;
+  background-color: var(--brand-purple); /* #6022a6 */
+  color: #fff;
+  overflow: hidden;
+}
+
+/* --- Background media (Vidyard video / image) --- */
+.event-hero .event-hero-media {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  background-color: #000;
+  line-height: 0;
+}
+
+.event-hero .event-hero-video,
+.event-hero .event-hero-media img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  object-fit: cover;
+}
+
+/* --- Text panel --- */
 .event-hero .event-hero-inner {
   position: relative;
-  max-width: 1200px;
+  max-width: 1140px;
   margin: 0 auto;
-  padding: 48px 16px 40px;
-  background-position: center right;
-  background-size: cover;
-  background-repeat: no-repeat;
-}
-
-.event-hero .event-hero-inner.has-media::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(90deg, #f2f1f3 42%, rgb(242 241 243 / 75%) 68%, rgb(242 241 243 / 25%));
-  pointer-events: none;
+  padding: 20px 15px 30px;
 }
 
 .event-hero .event-hero-content {
   position: relative;
   z-index: 1;
-  max-width: 640px;
 }
 
 .event-hero .event-hero-title {
-  margin: 0 0 16px;
-  color: var(--eh-purple);
+  margin: 0 0 8px;
+  color: #fff;
   font-family: var(--heading-font-family);
-  font-size: var(--heading-font-size-xxl);
-  font-weight: 400;
-  line-height: 1.1;
+  font-size: 38px;
+  font-weight: 500;
+  line-height: 41px;
 }
 
 .event-hero .event-hero-meta {
   display: flex;
   flex-wrap: wrap;
-  align-items: center;
-  gap: 8px 10px;
-  margin: 0 0 16px;
-  color: var(--eh-navy);
-  font-size: var(--body-font-size-xs);
-  font-weight: 600;
+  align-items: baseline;
+  gap: 4px 10px;
+  margin: 0 0 15px;
+  color: #fff;
+  font-size: 24px;
+  font-weight: 400;
+  line-height: 29px;
 }
 
 .event-hero .event-hero-meta-sep {
-  color: var(--eh-muted);
+  color: #fff;
   font-weight: 400;
 }
 
 .event-hero .event-hero-tagline {
-  margin: 0 0 24px;
-  color: var(--text-color);
+  margin: 0 0 20px;
+  color: #fff;
   font-size: var(--body-font-size-s);
   line-height: 1.45;
 }
@@ -71,41 +95,57 @@
   gap: 12px;
 }
 
+/* CTA button — transparent, white outline (matches source "See what's new") */
 .event-hero .event-hero-btn {
   display: inline-block;
-  min-width: 160px;
-  padding: 10px 22px;
+  padding: 6px 38px;
   border-radius: 4px;
   font-size: 16px;
   font-weight: 700;
-  line-height: 1.4;
+  line-height: 1.75;
   text-align: center;
   text-decoration: none;
 }
 
 .event-hero .event-hero-btn-primary {
-  background: #000;
-  border: 1px solid #000;
+  background: transparent;
+  border: 1px solid #fff;
   color: #fff !important;
 }
 
 .event-hero .event-hero-btn-primary:hover {
-  background: #222;
+  background: #fff;
+  color: var(--brand-purple) !important;
 }
 
 .event-hero .event-hero-btn-secondary {
   background: transparent;
-  border: 1px solid var(--eh-purple);
-  color: var(--eh-purple) !important;
-}
-
-.event-hero .event-hero-btn-secondary:hover {
-  background: var(--eh-purple);
+  border: 1px solid #fff;
   color: #fff !important;
 }
 
+.event-hero .event-hero-btn-secondary:hover {
+  background: #fff;
+  color: var(--brand-purple) !important;
+}
+
+/* --- Desktop: video occupies the right half, text panel on the left --- */
 @media (width >= 900px) {
+  .event-hero.has-media .event-hero-media {
+    position: absolute;
+    inset: 0 0 0 50%;
+    width: 50%;
+    height: 100%;
+    aspect-ratio: auto;
+  }
+
   .event-hero .event-hero-inner {
-    padding: 72px 24px 56px;
+    padding: 77px 15px;
+    min-height: 364px;
+    box-sizing: border-box;
+  }
+
+  .event-hero .event-hero-content {
+    max-width: 540px;
   }
 }

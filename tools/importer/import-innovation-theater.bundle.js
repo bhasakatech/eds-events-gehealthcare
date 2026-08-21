@@ -35,10 +35,10 @@ var CustomImportScript = (() => {
   };
   var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
 
-  // tools/importer/import-product-page.js
-  var import_product_page_exports = {};
-  __export(import_product_page_exports, {
-    default: () => import_product_page_default
+  // tools/importer/import-innovation-theater.js
+  var import_innovation_theater_exports = {};
+  __export(import_innovation_theater_exports, {
+    default: () => import_innovation_theater_default
   });
 
   // tools/importer/parsers/event-hero.js
@@ -203,65 +203,122 @@ var CustomImportScript = (() => {
     element.replaceWith(block);
   }
 
-  // tools/importer/parsers/feature-cards.js
+  // tools/importer/parsers/theater-sessions.js
+  function comment(document2, name) {
+    return document2.createComment(` field:${name} `);
+  }
+  function textOf(el) {
+    return (el && el.textContent ? el.textContent : "").trim();
+  }
+  function hasContent(el) {
+    if (!el) return false;
+    if (el.querySelector && el.querySelector("img, picture, a, br, span, b, strong")) return true;
+    return textOf(el).length > 0;
+  }
+  function readCardData(card) {
+    const trigger = card.querySelector("a.theater-popup-trigger, a[data]");
+    const raw = trigger && trigger.getAttribute("data");
+    if (!raw) return {};
+    try {
+      return JSON.parse(raw);
+    } catch (e) {
+      return {};
+    }
+  }
+  function relatedEventOf(data) {
+    const rel = data.related_to;
+    if (Array.isArray(rel) && rel.length && rel[0] && rel[0].post_title) {
+      return String(rel[0].post_title).trim();
+    }
+    if (typeof data.featured_in_event === "string") return data.featured_in_event.trim();
+    return "";
+  }
+  function videoUrlOf(data) {
+    const candidates = [data.zoom_link, data.external_link, data.learn_more_link, data.register_link];
+    const url = candidates.find((v) => typeof v === "string" && /^https?:\/\//i.test(v));
+    return url ? url.trim() : "";
+  }
+  function pushField(cell, document2, name, value) {
+    if (!value) return;
+    const p = document2.createElement("p");
+    p.textContent = value;
+    cell.push(comment(document2, name), p);
+  }
   function parse3(element, { document: document2 }) {
-    var _a;
-    const hint = (name) => document2.createComment(` field:${name} `);
-    const headingEl = element.querySelector(".resources-title, .section-title, h1, h2, h3, .h2");
-    const headingText = ((_a = headingEl == null ? void 0 : headingEl.textContent) == null ? void 0 : _a.trim()) || "";
-    let titleTag = "h2";
-    if (headingEl && /^h[23]$/i.test(headingEl.tagName)) titleTag = headingEl.tagName.toLowerCase();
-    const cardEls = [...element.querySelectorAll(".home-eventtile, .product-tile, .resource-tile")];
-    const cards = cardEls.map((tile) => {
-      var _a2;
-      const titleEl = tile.querySelector(".resource-title, .title, h3, h4");
-      const title = ((_a2 = titleEl == null ? void 0 : titleEl.textContent) == null ? void 0 : _a2.trim()) || "";
-      const img = tile.querySelector("img.event-image, .image > img, .image img, img");
-      const descEl = tile.querySelector(".description");
-      const descHtml = descEl && descEl.textContent.trim() ? descEl.innerHTML.trim() : "";
-      const link = tile.querySelector("a[href]");
-      return { title, img, descHtml, link };
-    }).filter((c) => c.title || c.img || c.link);
-    if (!headingText && !cards.length) {
+    const cards = Array.from(element.querySelectorAll(".home-eventtile"));
+    if (!cards.length) {
       element.replaceWith(...element.childNodes);
       return;
     }
     const cells = [];
-    if (headingText) {
-      const h = document2.createElement(titleTag);
-      h.textContent = headingText;
-      cells.push([[hint("heading_title"), h]]);
+    const heading = element.querySelector(":scope h1, :scope h2, :scope h3");
+    const isInsideCard = heading && heading.closest(".home-eventtile");
+    if (heading && !isInsideCard) {
+      const headingCell = [comment(document2, "heading_title"), heading.cloneNode(true)];
+      const intro = heading.nextElementSibling;
+      if (intro && intro.tagName === "P" && textOf(intro)) {
+        headingCell.push(comment(document2, "heading_intro"), intro.cloneNode(true));
+      }
+      cells.push([headingCell]);
     }
     cards.forEach((card) => {
+      const img = card.querySelector("img.event-image") || card.querySelector(".image img");
+      const titleEl = card.querySelector(".title");
+      const descEl = card.querySelector(".description");
+      const speakersEl = card.querySelector(".speakers");
+      const trigger = card.querySelector("a.theater-popup-trigger, a[title]");
+      const data = readCardData(card);
+      const title = textOf(titleEl) || trigger && trigger.getAttribute("title") || (typeof data.title === "string" ? data.title.trim() : "") || "";
+      if (!title && !img) return;
       const imageCell = [];
-      if (card.img && (card.img.getAttribute("src") || "").trim()) {
-        const im = card.img.cloneNode(true);
-        if (!im.getAttribute("alt")) im.setAttribute("alt", card.title);
-        imageCell.push(hint("image"), im);
+      if (img) {
+        const imgEl = img.cloneNode(true);
+        imgEl.removeAttribute("class");
+        if (title) imgEl.setAttribute("alt", title);
+        imageCell.push(comment(document2, "image"), imgEl);
       }
       const contentCell = [];
-      if (card.title) {
-        const t = document2.createElement("p");
-        t.textContent = card.title;
-        contentCell.push(hint("content_title"), t);
+      if (title) {
+        const titleP = document2.createElement("p");
+        titleP.textContent = title;
+        contentCell.push(comment(document2, "content_title"), titleP);
       }
-      if (card.descHtml) {
-        const d = document2.createElement("div");
-        d.innerHTML = card.descHtml;
-        contentCell.push(hint("content_description"), d);
+      if (hasContent(descEl)) {
+        const descWrap = document2.createElement("div");
+        Array.from(descEl.childNodes).forEach((n) => descWrap.appendChild(n.cloneNode(true)));
+        if (textOf(descWrap) || descWrap.querySelector("img, a")) {
+          contentCell.push(comment(document2, "content_description"), descWrap);
+        }
+      } else if (typeof data.description === "string" && data.description.trim()) {
+        const descWrap = document2.createElement("div");
+        descWrap.innerHTML = data.description.trim();
+        contentCell.push(comment(document2, "content_description"), descWrap);
       }
-      const ctaCell = [];
-      if (card.link) {
-        const href = card.link.getAttribute("href") || "";
-        const label = card.link.textContent.trim() || card.link.getAttribute("title") || card.title || "Learn more";
-        const a = document2.createElement("a");
-        a.href = href;
-        a.textContent = label;
-        ctaCell.push(hint("cta"), a);
+      if (hasContent(speakersEl)) {
+        const spWrap = document2.createElement("div");
+        Array.from(speakersEl.childNodes).forEach((n) => spWrap.appendChild(n.cloneNode(true)));
+        contentCell.push(comment(document2, "content_speakers"), spWrap);
+      } else if (typeof data.speakers === "string" && data.speakers.trim()) {
+        const spWrap = document2.createElement("div");
+        spWrap.innerHTML = data.speakers.trim();
+        contentCell.push(comment(document2, "content_speakers"), spWrap);
       }
-      cells.push([imageCell, contentCell, ctaCell]);
+      const metaCell = [];
+      const type = typeof data.type === "string" ? data.type.trim().toLowerCase() : "";
+      if (type === "ondemand" || type === "upcoming") {
+        pushField(metaCell, document2, "meta_type", type);
+      }
+      pushField(metaCell, document2, "meta_relatedEvent", relatedEventOf(data));
+      pushField(metaCell, document2, "meta_length", typeof data.length === "string" ? data.length.trim() : "");
+      const videoCell = [];
+      pushField(videoCell, document2, "video_url", videoUrlOf(data));
+      cells.push([imageCell, contentCell, metaCell, videoCell]);
     });
-    const block = WebImporter.Blocks.createBlock(document2, { name: "feature-cards", cells });
+    if (!cells.length || cells.length === 1 && !cells[0][1]) {
+      element.replaceWith(...element.childNodes);
+      return;
+    }
+    const block = WebImporter.Blocks.createBlock(document2, { name: "theater-sessions", cells });
     element.replaceWith(block);
   }
 
@@ -350,25 +407,24 @@ var CustomImportScript = (() => {
     }
   }
 
-  // tools/importer/import-product-page.js
+  // tools/importer/import-innovation-theater.js
   var parsers = {
     "event-hero": parse,
     "video-text": parse2,
-    "feature-cards": parse3
+    "theater-sessions": parse3
   };
   var PAGE_TEMPLATE = {
-    name: "product-page",
-    description: "Product detail page: product hero, overview section, innovation-theater media section, and product-partial related content section.",
+    name: "innovation-theater",
+    description: "Innovation Theater landing page: dark hero (title + intro), a tagline+video intro band, and a large grid of session cards (thumbnail + title + speakers).",
     blocks: [
-      { name: "event-hero", instances: ["section.hero-section.product-hero.header-section"] },
-      { name: "video-text", instances: ["section.modality-innovation-theater"] },
-      { name: "feature-cards", instances: ["section.product-partial-section"] }
+      { name: "event-hero", instances: ["section.innovation-hero.hero-section.header-section"] },
+      { name: "video-text", instances: ["section.theater-intro"] },
+      { name: "theater-sessions", instances: ["section.theater-videos"] }
     ],
     sections: [
-      { id: "section-1", name: "product-hero", selector: "section.hero-section.product-hero.header-section", style: "dark", blocks: ["event-hero"], defaultContent: [] },
-      { id: "section-2", name: "overview", selector: "section.overview", style: null, blocks: [], defaultContent: ["section.overview"] },
-      { id: "section-3", name: "innovation-theater", selector: "section.modality-innovation-theater", style: "dark", blocks: ["video-text"], defaultContent: [] },
-      { id: "section-4", name: "product-partial", selector: "section.product-partial-section", style: null, blocks: ["feature-cards"], defaultContent: [] }
+      { id: "section-1", name: "hero", selector: "section.innovation-hero.hero-section.header-section", style: "dark", blocks: ["event-hero"], defaultContent: [] },
+      { id: "section-2", name: "intro", selector: "section.theater-intro", style: "dark", blocks: ["video-text"], defaultContent: [] },
+      { id: "section-3", name: "sessions", selector: "section.theater-videos", style: null, blocks: ["theater-sessions"], defaultContent: [] }
     ]
   };
   var transformers = [
@@ -401,7 +457,7 @@ var CustomImportScript = (() => {
     console.log(`Found ${pageBlocks.length} block instances on page`);
     return pageBlocks;
   }
-  var import_product_page_default = {
+  var import_innovation_theater_default = {
     transform: (payload) => {
       const { document: document2, url, params } = payload;
       const main = document2.body;
@@ -439,5 +495,5 @@ var CustomImportScript = (() => {
       }];
     }
   };
-  return __toCommonJS(import_product_page_exports);
+  return __toCommonJS(import_innovation_theater_exports);
 })();

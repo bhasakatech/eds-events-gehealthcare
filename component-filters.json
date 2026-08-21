@@ -115,9 +115,9 @@
     ]
   },
   {
-    "id": "video-text",
+    "id": "theater-sessions",
     "components": [
-      "video-text-item"
+      "theater-session"
     ]
   }
 ]

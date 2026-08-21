@@ -810,6 +810,66 @@
         }
       ],
       "importSkipped": true
+    },
+    {
+      "name": "innovation-theater",
+      "urls": [
+        "https://events.gehealthcare.com/innovation-theater/"
+      ],
+      "coverageGaps": [],
+      "description": "Innovation Theater landing page: dark hero (title + intro), a sticky OnDemand/Upcoming session filter, a tagline+video intro band, and a large grid of session cards (thumbnail + title + speakers, opening a popup video).",
+      "blocks": [
+        {
+          "name": "event-hero",
+          "instances": [
+            "section.innovation-hero.hero-section.header-section"
+          ]
+        },
+        {
+          "name": "video-text",
+          "instances": [
+            "section.theater-intro"
+          ]
+        },
+        {
+          "name": "theater-sessions",
+          "instances": [
+            "section.theater-videos"
+          ]
+        }
+      ],
+      "sections": [
+        {
+          "id": "section-1",
+          "name": "hero",
+          "selector": "section.innovation-hero.hero-section.header-section",
+          "style": "dark",
+          "blocks": [
+            "event-hero"
+          ],
+          "defaultContent": []
+        },
+        {
+          "id": "section-2",
+          "name": "intro",
+          "selector": "section.theater-intro",
+          "style": "dark",
+          "blocks": [
+            "video-text"
+          ],
+          "defaultContent": []
+        },
+        {
+          "id": "section-3",
+          "name": "sessions",
+          "selector": "section.theater-videos",
+          "style": null,
+          "blocks": [
+            "theater-sessions"
+          ],
+          "defaultContent": []
+        }
+      ]
     }
   ]
 }

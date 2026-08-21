@@ -15,13 +15,20 @@ function isItemRow(row) {
 
 export default function decorate(block) {
   const rows = [...block.children];
-  const parentRows = rows.filter((row) => !isItemRow(row));
   const itemRows = rows.filter((row) => isItemRow(row));
+  const otherRows = rows.filter((row) => !isItemRow(row));
 
-  let cta;
-  parentRows.forEach((row) => {
+  // The CTA row is a non-item row carrying a link or a plain text label.
+  let ctaLink;
+  let ctaLabel = '';
+  otherRows.forEach((row) => {
     const link = row.querySelector('a[href]');
-    if (link) cta = link;
+    if (link) {
+      ctaLink = link;
+      ctaLabel = textOf(link);
+    } else if (!ctaLabel) {
+      ctaLabel = textOf(row);
+    }
   });
 
   const nav = document.createElement('nav');
@@ -53,18 +60,26 @@ export default function decorate(block) {
 
   nav.append(list);
 
-  if (cta) {
+  if (ctaLabel) {
     const tools = document.createElement('div');
     tools.className = 'section-nav-tools';
-    const a = cta.cloneNode(true);
-    a.className = 'section-nav-cta';
-    tools.append(a);
+    let ctaEl;
+    if (ctaLink) {
+      ctaEl = ctaLink.cloneNode(true);
+    } else {
+      // No destination authored – render an actionable button.
+      ctaEl = document.createElement('button');
+      ctaEl.type = 'button';
+      ctaEl.textContent = ctaLabel;
+    }
+    ctaEl.className = 'section-nav-cta';
+    tools.append(ctaEl);
     nav.append(tools);
   }
 
   block.replaceChildren(nav);
 
-  // Smooth-ish active state for in-page anchors
+  // Highlight the in-page anchor for the section currently in view.
   const anchors = [...list.querySelectorAll('a[href^="#"]')];
   if (!anchors.length) return;
 

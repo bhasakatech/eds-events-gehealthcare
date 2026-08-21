@@ -202,36 +202,43 @@ var CustomImportScript = (() => {
       element.replaceWith(...element.childNodes);
       return;
     }
-    const itemCell = [];
+    const cells = [];
+    const contentCell = [];
     if (headingText) {
       const h = document2.createElement("p");
       h.textContent = headingText;
-      itemCell.push(hint("videoTextHeading"), h);
+      contentCell.push(hint("content_heading"), h);
     }
     if (descriptionHtml) {
       const desc = document2.createElement("div");
       desc.innerHTML = descriptionHtml;
-      itemCell.push(hint("videoTextDescription"), desc);
+      contentCell.push(hint("content_description"), desc);
     }
     if (videoUrl) {
-      itemCell.push(hint("videoTextVideoUrl"), document2.createTextNode(videoUrl));
+      const u = document2.createElement("p");
+      u.textContent = videoUrl;
+      contentCell.push(hint("content_videoUrl"), u);
     }
     if (thumbImg && (thumbImg.getAttribute("src") || "").trim()) {
       const img = thumbImg.cloneNode(true);
       if (!img.getAttribute("alt")) img.setAttribute("alt", headingText);
-      itemCell.push(hint("videoTextThumbnail"), img);
+      contentCell.push(hint("content_thumbnail"), img);
     }
+    if (contentCell.length) cells.push([contentCell]);
     if (ctaLabel) {
+      const ctaCell = [];
       if (ctaHref) {
         const a = document2.createElement("a");
         a.href = ctaHref;
         a.textContent = ctaLabel;
-        itemCell.push(hint("videoTextCtaLink"), a);
+        ctaCell.push(hint("cta_link"), a);
       } else {
-        itemCell.push(hint("videoTextCtaLabel"), document2.createTextNode(ctaLabel));
+        const l = document2.createElement("p");
+        l.textContent = ctaLabel;
+        ctaCell.push(hint("cta_label"), l);
       }
+      cells.push([ctaCell]);
     }
-    const cells = [[itemCell]];
     const block = WebImporter.Blocks.createBlock(document2, { name: "video-text", cells });
     element.replaceWith(block);
   }
@@ -375,6 +382,12 @@ var CustomImportScript = (() => {
       WebImporter.DOMUtils.remove(element, [
         "div.overlay",
         "div.message-wrapper"
+      ]);
+      WebImporter.DOMUtils.remove(element, [
+        "div.search-sticky-wrapper",
+        "div.theater-radios",
+        "div.event-options",
+        "div.customdropdown"
       ]);
       WebImporter.DOMUtils.remove(element, [
         'iframe[src*="demdex.net"]',

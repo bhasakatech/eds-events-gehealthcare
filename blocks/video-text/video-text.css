@@ -1,216 +1,140 @@
 /* =========================================================
-   DEFAULT
+   video-text
    eds-events-gehealthcare
-   Text | Video
+   Media-beside-text band (source: div.theater-intro)
+   Black band: full-width heading, then video + text row.
+   Values extracted from source computed styles.
    ========================================================= */
 
 .video-text {
-  --video-text-bg: #60269e;
+  --video-text-bg: #000;
   --video-text-color: #fff;
-  --video-text-content-max-width: 555px;
-  --video-text-content-padding: 80px;
-  --video-text-title-size: 38px;
-  --video-text-title-line-height: 41px;
+  --video-text-max-width: 1140px;
+  --video-text-title-size: 33px;
+  --video-text-title-line-height: 39.6px;
   --video-text-description-size: 18px;
-  --video-text-description-line-height: 21px;
+  --video-text-description-line-height: 23px;
 
-  display: flex;
-  width: 100%;
-}
-
-main > .video-text-container > .video-text-wrapper {
-  max-width: 100% !important;
-  padding: 0 !important;
-}
-
-.video-text > div {
-  flex: 1;
-}
-
-.video-text .text-wrapper {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: var(--video-text-bg);
+  box-sizing: border-box;
+  max-width: var(--video-text-max-width);
+  margin: 0 auto;
+  padding: 40px 15px 50px;
   color: var(--video-text-color);
 }
 
-.video-text .content {
-  max-width: var(--video-text-content-max-width);
-  padding: var(--video-text-content-padding);
+/* Full-width black band behind the block (source: .theater-intro bg #000).
+   Variable is scoped to .video-text, so use the literal value on the section. */
+main .section.dark.video-text-container {
+  background-color: #000;
 }
 
-.video-text h2 {
+main .section.dark.video-text-container > .video-text-wrapper {
+  max-width: 100% !important;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+/* Heading spans the full content width above the row. */
+.video-text .video-text-heading {
   margin: 0 0 24px;
-  font-weight: 400;
-  color: inherit;
+}
+
+.video-text .video-text-heading h2 {
+  margin: 0;
+  color: var(--video-text-color);
+  font-family: var(--heading-font-family);
   font-size: var(--video-text-title-size);
+  font-weight: 500;
   line-height: var(--video-text-title-line-height);
 }
 
-.video-text .description {
-  font-size: var(--video-text-description-size);
-  line-height: var(--video-text-description-line-height);
+/* Body row (mobile-first: stacked). */
+.video-text .video-text-body {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
 }
 
-.video-text .description p:last-child {
-  margin-bottom: 0;
-}
-
-
-/* =========================================================
-   VIDEO
-   ========================================================= */
-
-.video-text .video-wrapper {
+/* Media / video */
+.video-text .video-text-media {
   position: relative;
   width: 100%;
   aspect-ratio: 16 / 9;
-  min-height: auto;
   overflow: hidden;
 }
 
-.video-text .video-wrapper iframe,
-.video-text .video-wrapper video,
-.video-text .video-wrapper img,
-.video-text .video-wrapper picture {
+.video-text .video-text-media iframe {
   display: block;
   width: 100%;
   height: 100%;
   border: 0;
-  object-fit: cover;
 }
 
+/* Content column */
+.video-text .video-text-content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.video-text .video-text-description p {
+  margin: 0 0 16px;
+  color: var(--video-text-color);
+  font-family: var(--body-font-family);
+  font-size: var(--video-text-description-size);
+  font-weight: 400;
+  line-height: var(--video-text-description-line-height);
+}
+
+.video-text .video-text-description strong {
+  font-weight: 700;
+}
+
+/* CTA — white "grey-button" style from source. */
+.video-text .video-text-cta {
+  margin-top: 8px;
+  border: 1px solid #fff;
+  border-radius: 4px;
+  padding: 8px 30px;
+  background-color: #fff;
+  color: #000;
+  font-family: var(--body-font-family);
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 26px;
+  text-align: center;
+  cursor: pointer;
+}
+
+.video-text .video-text-cta:hover,
+.video-text .video-text-cta:focus-visible {
+  background-color: #e6e6e6;
+  border-color: #e6e6e6;
+}
 
 /* =========================================================
-   DEFAULT LAYOUT
-   Text | Video
+   DESKTOP — two columns (video 58.33% | text 41.67%)
    ========================================================= */
 
-.video-text.video-right {
-  flex-direction: row;
-}
-
-
-/* =========================================================
-   gehealthcare-care
-   Video | Text
-   ========================================================= */
-
-body[data-site="gehealthcare-care"] .video-text {
-  --video-text-bg: #005eb8;
-  --video-text-color: #fff;
-  --video-text-content-max-width: 600px;
-  --video-text-content-padding: 72px;
-  --video-text-title-size: 40px;
-  --video-text-title-line-height: 44px;
-  --video-text-description-size: 18px;
-  --video-text-description-line-height: 26px;
-
-  /* Swap the desktop layout */
-  flex-direction: row-reverse;
-}
-
-
-/* =========================================================
-   gehealth-care
-   Text | Video
-   Distinct teal treatment
-   ========================================================= */
-
-body[data-site="gehealth-care"] .video-text {
-  --video-text-bg: #007f86;
-  --video-text-color: #fff;
-  --video-text-content-max-width: 600px;
-  --video-text-content-padding: 72px;
-  --video-text-title-size: 40px;
-  --video-text-title-line-height: 44px;
-  --video-text-description-size: 18px;
-  --video-text-description-line-height: 26px;
-
-  flex-direction: row;
-}
-
-
-/* =========================================================
-   TABLET
-   ========================================================= */
-
-@media (width <= 991px) {
-  .video-text.video-left,
-  .video-text.video-right {
-    flex-direction: column !important;
+@media (width >= 900px) {
+  .video-text {
+    padding: 120px 15px 50px;
   }
 
-  .video-text .video-wrapper {
-    order: 1;
-    width: 100%;
-    min-height: 320px;
+  .video-text .video-text-body {
+    flex-direction: row;
+    gap: 30px;
+    align-items: flex-start;
   }
 
-  .video-text .text-wrapper {
-    order: 2;
-    width: 100%;
+  .video-text .video-text-media {
+    flex: 0 0 58.3333%;
+    max-width: 58.3333%;
   }
 
-  .video-text .content {
-    max-width: 100%;
-    padding: 48px 32px;
-  }
-
-  .video-text h2 {
-    font-size: 2.75rem;
-    line-height: 1.15;
-  }
-
-  .video-text .description {
-    font-size: 1.25rem;
-    line-height: 1.5;
-  }
-}
-
-
-/* =========================================================
-   MOBILE
-   ========================================================= */
-
-@media (width <= 767px) {
-  .video-text .content {
-    padding: 32px 24px;
-  }
-
-  .video-text h2 {
-    margin-bottom: 20px;
-    font-size: 2.2rem;
-    line-height: 1.15;
-  }
-
-  .video-text .description {
-    font-size: 1rem;
-    line-height: 1.6;
-  }
-
-  .video-text .video-wrapper {
-    aspect-ratio: 16 / 9;
-    min-height: auto;
-  }
-}
-
-
-/* =========================================================
-   LARGE DESKTOP
-   ========================================================= */
-
-@media (width > 992px) {
-  .video-text .video-wrapper {
-    width: 50% !important;
-    max-width: 713px;
-  }
-}
-
-@media (width > 1440px) {
-  .video-text .content {
-    position: relative;
-    left: 73px;
+  .video-text .video-text-content {
+    flex: 0 0 41.6667%;
+    max-width: 41.6667%;
+    padding-top: 8px;
   }
 }

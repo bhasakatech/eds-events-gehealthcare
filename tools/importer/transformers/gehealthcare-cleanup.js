@@ -37,6 +37,19 @@ export default function transform(hookName, element, payload) {
       'div.message-wrapper',
     ]);
 
+    // Innovation Theater filter toolbar (search-sticky-wrapper / theater-radios /
+    // customdropdown option lists). This is a client-side JS filter UI whose
+    // dropdown options otherwise leak into the import as long lists of plain
+    // <p> tags (event names, modality names, "OnDemand"/"Upcoming"). The
+    // theater-sessions block rebuilds a styled, data-driven toolbar from the
+    // session cards, so the source markup must not survive into the content.
+    WebImporter.DOMUtils.remove(element, [
+      'div.search-sticky-wrapper',
+      'div.theater-radios',
+      'div.event-options',
+      'div.customdropdown',
+    ]);
+
     // Tracking / identity-sync iframes injected late by martech (Adobe demdex/dest5.html
     // "Adobe ID Syncing iFrame", Hotjar _hjSafeContext*, and placeholder about:blank /
     // javascript: iframes). Removed in beforeTransform so WebImporter's link rules never

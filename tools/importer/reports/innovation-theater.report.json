@@ -1,0 +1,13 @@
+{
+  "status": "success",
+  "url": "https://events.gehealthcare.com/innovation-theater/",
+  "path": "innovation-theater",
+  "timestamp": "2026-08-21T12:15:29.864Z",
+  "title": "GE HealthCare Events Center",
+  "template": "innovation-theater",
+  "blocks": [
+    "event-hero",
+    "video-text",
+    "theater-sessions"
+  ]
+}

@@ -68,43 +68,52 @@ export default function parse(element, { document }) {
     return;
   }
 
-  // Single item cell holding all item fields in the model's field order.
-  const itemCell = [];
+  // Flat single "video-text" model, kept under the xwalk 4-cell limit by
+  // grouping fields by their shared prefix into ONE cell per group (the same
+  // pattern event-hero uses: all `content_*` fields collapse into one cell,
+  // all `cta_*` into another). md2jcr aligns the prefixed field-hints to the
+  // model's field groups.
+  const cells = [];
 
+  // Cell 1: content_* (heading, description, videoUrl, thumbnail)
+  const contentCell = [];
   if (headingText) {
     const h = document.createElement('p');
     h.textContent = headingText;
-    itemCell.push(hint('videoTextHeading'), h);
+    contentCell.push(hint('content_heading'), h);
   }
-
   if (descriptionHtml) {
     const desc = document.createElement('div');
     desc.innerHTML = descriptionHtml;
-    itemCell.push(hint('videoTextDescription'), desc);
+    contentCell.push(hint('content_description'), desc);
   }
-
   if (videoUrl) {
-    itemCell.push(hint('videoTextVideoUrl'), document.createTextNode(videoUrl));
+    const u = document.createElement('p');
+    u.textContent = videoUrl;
+    contentCell.push(hint('content_videoUrl'), u);
   }
-
   if (thumbImg && (thumbImg.getAttribute('src') || '').trim()) {
     const img = thumbImg.cloneNode(true);
     if (!img.getAttribute('alt')) img.setAttribute('alt', headingText);
-    itemCell.push(hint('videoTextThumbnail'), img);
+    contentCell.push(hint('content_thumbnail'), img);
   }
+  if (contentCell.length) cells.push([contentCell]);
 
+  // Cell 2: cta_* (link + label)
   if (ctaLabel) {
+    const ctaCell = [];
     if (ctaHref) {
       const a = document.createElement('a');
       a.href = ctaHref;
       a.textContent = ctaLabel;
-      itemCell.push(hint('videoTextCtaLink'), a);
+      ctaCell.push(hint('cta_link'), a);
     } else {
-      itemCell.push(hint('videoTextCtaLabel'), document.createTextNode(ctaLabel));
+      const l = document.createElement('p');
+      l.textContent = ctaLabel;
+      ctaCell.push(hint('cta_label'), l);
     }
+    cells.push([ctaCell]);
   }
-
-  const cells = [[itemCell]];
 
   const block = WebImporter.Blocks.createBlock(document, { name: 'video-text', cells });
   element.replaceWith(block);

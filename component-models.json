@@ -6109,11 +6109,191 @@
     ]
   },
   {
+    "id": "theater-sessions",
+    "fields": [
+      {
+        "component": "text",
+        "name": "heading_title",
+        "label": "Section Title",
+        "valueType": "string",
+        "value": ""
+      },
+      {
+        "component": "select",
+        "name": "heading_titleType",
+        "label": "Title Level",
+        "valueType": "string",
+        "value": "h2",
+        "options": [
+          {
+            "name": "H2",
+            "value": "h2"
+          },
+          {
+            "name": "H3",
+            "value": "h3"
+          }
+        ]
+      },
+      {
+        "component": "textarea",
+        "name": "heading_intro",
+        "label": "Intro",
+        "valueType": "string",
+        "value": ""
+      }
+    ]
+  },
+  {
+    "id": "theater-session",
+    "fields": [
+      {
+        "component": "reference",
+        "name": "image",
+        "label": "Thumbnail",
+        "valueType": "string",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "name": "imageAlt",
+        "label": "Thumbnail Alt",
+        "valueType": "string",
+        "value": ""
+      },
+      {
+        "component": "text",
+        "name": "content_title",
+        "label": "Session Title",
+        "valueType": "string",
+        "value": "",
+        "required": true
+      },
+      {
+        "component": "richtext",
+        "name": "content_description",
+        "label": "Description",
+        "valueType": "string",
+        "value": ""
+      },
+      {
+        "component": "richtext",
+        "name": "content_speakers",
+        "label": "Speaker(s)",
+        "valueType": "string",
+        "value": ""
+      },
+      {
+        "component": "select",
+        "name": "meta_type",
+        "label": "Session Type",
+        "valueType": "string",
+        "value": "ondemand",
+        "options": [
+          {
+            "name": "OnDemand",
+            "value": "ondemand"
+          },
+          {
+            "name": "Upcoming",
+            "value": "upcoming"
+          }
+        ]
+      },
+      {
+        "component": "text",
+        "name": "meta_relatedEvent",
+        "label": "Related Event",
+        "valueType": "string",
+        "value": ""
+      },
+      {
+        "component": "text",
+        "name": "meta_length",
+        "label": "Length",
+        "valueType": "string",
+        "value": ""
+      },
+      {
+        "component": "text",
+        "name": "video_url",
+        "label": "Video URL (Vidyard)",
+        "valueType": "string",
+        "value": ""
+      },
+      {
+        "component": "aem-content",
+        "name": "video_learnMore",
+        "label": "Learn More Link",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "name": "video_learnMoreText",
+        "label": "Learn More Label",
+        "valueType": "string",
+        "value": "Learn more"
+      }
+    ]
+  },
+  {
     "id": "video-text",
     "fields": [
       {
+        "component": "text",
+        "name": "content_heading",
+        "label": "Heading",
+        "valueType": "string",
+        "value": ""
+      },
+      {
+        "component": "richtext",
+        "name": "content_description",
+        "label": "Description",
+        "valueType": "string",
+        "value": ""
+      },
+      {
+        "component": "text",
+        "name": "content_videoUrl",
+        "label": "Video URL",
+        "valueType": "string",
+        "value": ""
+      },
+      {
+        "component": "reference",
+        "name": "content_thumbnail",
+        "label": "Video Thumbnail",
+        "valueType": "string",
+        "multi": false
+      },
+      {
+        "component": "tab",
+        "name": "tabCta",
+        "label": "CTA"
+      },
+      {
+        "component": "aem-content",
+        "name": "cta_link",
+        "label": "CTA Link",
+        "valueType": "string",
+        "value": ""
+      },
+      {
+        "component": "text",
+        "name": "cta_label",
+        "label": "CTA Label",
+        "valueType": "string",
+        "value": ""
+      },
+      {
+        "component": "tab",
+        "name": "tabLayout",
+        "label": "Layout"
+      },
+      {
         "component": "multiselect",
-        "name": "videoTextClasses",
+        "name": "classes",
         "label": "Video Text Layout Options",
         "options": [
           {
@@ -6138,74 +6318,6 @@
             ]
           }
         ]
-      }
-    ]
-  },
-  {
-    "id": "video-text-item",
-    "fields": [
-      {
-        "component": "accordion",
-        "name": "videoTextContent",
-        "label": "Video Text Content",
-        "fields": [
-          {
-            "component": "text",
-            "name": "videoTextHeading",
-            "label": "Heading",
-            "valueType": "string",
-            "value": ""
-          },
-          {
-            "component": "richtext",
-            "name": "videoTextDescription",
-            "label": "Description",
-            "valueType": "string",
-            "value": ""
-          },
-          {
-            "component": "text",
-            "name": "videoTextVideoUrl",
-            "label": "Video URL",
-            "valueType": "string",
-            "value": ""
-          },
-          {
-            "component": "reference",
-            "name": "videoTextThumbnail",
-            "label": "Video Thumbnail",
-            "valueType": "string",
-            "multi": false
-          }
-        ]
-      },
-      {
-        "component": "accordion",
-        "name": "videoTextCta",
-        "label": "Video Text CTA",
-        "fields": [
-          {
-            "component": "aem-content",
-            "name": "videoTextCtaLink",
-            "label": "CTA Link",
-            "valueType": "string",
-            "value": ""
-          },
-          {
-            "component": "text",
-            "name": "videoTextCtaLabel",
-            "label": "CTA Label",
-            "valueType": "string",
-            "value": ""
-          }
-        ]
-      },
-      {
-        "component": "text",
-        "name": "videoTextImageDescription",
-        "label": "Thumbnail Description",
-        "valueType": "string",
-        "value": ""
       }
     ]
   }

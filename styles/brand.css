@@ -1,0 +1,33 @@
+/*
+ * brand.css — GE HealthCare Events design tokens
+ * Extracted from events.gehealthcare.com (Phase 1 site-wide design migration).
+ */
+:root {
+  /* fonts */
+  --heading-font-family: "Source Sans Pro", sans-serif;
+  --body-font-family: "Source Sans Pro", sans-serif;
+
+  /* colors */
+  --background-color: #fff;
+  --text-color: #000;
+  --link-color: #6022a6;        /* GE HealthCare purple */
+  --link-hover-color: #0056b3;  /* hover blue */
+
+  /* brand accents */
+  --brand-purple: #6022a6;
+  --brand-purple-dark: #3d1a5b; /* hero panel */
+  --section-light: #f2f1f3;     /* light grey band */
+
+  /* spacing */
+  --section-padding: 20px;
+  --content-max-width: 720px;
+  --nav-height: 112px;
+
+  /* heading sizes (desktop) */
+  --heading-size-xxl: 38px;
+  --heading-size-xl: 33px;
+  --heading-size-l: 28px;
+  --heading-size-m: 24px;
+  --heading-size-s: 20px;
+  --heading-size-xs: 18px;
+}
