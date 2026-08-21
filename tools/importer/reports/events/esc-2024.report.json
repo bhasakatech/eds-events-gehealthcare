@@ -1,0 +1,13 @@
+{
+  "status": "success",
+  "url": "https://events.gehealthcare.com/events/esc-2024/",
+  "path": "events/esc-2024",
+  "timestamp": "2026-08-21T07:08:49.854Z",
+  "title": "GE HealthCare Events Center",
+  "template": "event-page",
+  "blocks": [
+    "event-hero",
+    "products-solutions",
+    "feature-cards"
+  ]
+}

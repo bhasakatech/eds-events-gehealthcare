@@ -1,0 +1,13 @@
+{
+  "status": "success",
+  "url": "https://events.gehealthcare.com/events/himss-2026/",
+  "path": "events/himss-2026",
+  "timestamp": "2026-08-21T07:11:51.828Z",
+  "title": "GE HealthCare Events Center",
+  "template": "event-page",
+  "blocks": [
+    "event-hero",
+    "section-nav",
+    "products-solutions"
+  ]
+}

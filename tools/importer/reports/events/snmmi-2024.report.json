@@ -1,0 +1,12 @@
+{
+  "status": "success",
+  "url": "https://events.gehealthcare.com/events/snmmi-2024/",
+  "path": "events/snmmi-2024",
+  "timestamp": "2026-08-21T07:08:58.819Z",
+  "title": "GE HealthCare Events Center",
+  "template": "event-page",
+  "blocks": [
+    "event-hero",
+    "feature-cards"
+  ]
+}

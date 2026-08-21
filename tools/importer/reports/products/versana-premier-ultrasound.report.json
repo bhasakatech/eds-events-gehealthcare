@@ -1,0 +1,8 @@
+{
+  "status": "failed",
+  "url": "https://events.gehealthcare.com/products/versana-premier-ultrasound/",
+  "path": "products/versana-premier-ultrasound",
+  "timestamp": "2026-08-21T07:01:26.689Z",
+  "error": "page.goto: Target page, context or browser has been closed",
+  "errorStack": "page.goto: Target page, context or browser has been closed\n    at processUrl (/home/node/.excat-marketplaces/excat-marketplace/excat/skills/excat-content-import/scripts/run-bulk-import.js:469:18)\n    at async main (/home/node/.excat-marketplaces/excat-marketplace/excat/skills/excat-content-import/scripts/run-bulk-import.js:696:22)"
+}
