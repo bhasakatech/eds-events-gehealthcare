@@ -1,0 +1,11 @@
+{
+  "status": "success",
+  "url": "https://events.gehealthcare.com/events/scct-2025/",
+  "path": "events/scct-2025",
+  "timestamp": "2026-08-21T10:28:41.531Z",
+  "title": "GE HealthCare Events Center",
+  "template": "event-page",
+  "blocks": [
+    "event-hero"
+  ]
+}

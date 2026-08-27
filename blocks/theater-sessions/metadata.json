@@ -1,0 +1,40 @@
+{
+  "variantName": "theater-sessions",
+  "baseBlock": "theater-sessions",
+  "version": "1.0.0",
+  "created": "2026-08-21T00:00:00.000Z",
+  "sourceContext": {
+    "originUrl": "https://events.gehealthcare.com/innovation-theater/",
+    "originPage": "Innovation Theater session library",
+    "blockPosition": "bottom"
+  },
+  "visualCharacteristics": {
+    "colorScheme": "light",
+    "density": "spacious",
+    "purpose": "video-session-grid",
+    "imagePattern": "large"
+  },
+  "contentPattern": {
+    "structure": "heading + toolbar(ondemand/upcoming toggle + event filter) + responsive card grid + popup video player",
+    "buttonCount": 0,
+    "imageCount": 75
+  },
+  "reuseGuidance": {
+    "suitableFor": [
+      "session/webinar video libraries",
+      "on-demand + upcoming content grids that open a popup player",
+      "filterable thumbnail grids with per-card speakers and event tagging"
+    ],
+    "notSuitableFor": [
+      "downloadable resource/PDF grids (use feature-cards)",
+      "query-index driven tabular event lists (use event-list)",
+      "product category tiles with asset carousels (use products-solutions)"
+    ]
+  },
+  "usage": {
+    "pagesUsing": ["/innovation-theater/index"],
+    "reuseCount": 1,
+    "lastUsed": "2026-08-21T00:00:00.000Z"
+  },
+  "notes": "NEW block created for the Innovation Theater migration. Not a variant of an existing block — no existing block modelled a session video grid with popup player + ondemand/upcoming filtering + per-card speakers. The Section 2 sticky OnDemand/Upcoming + event filter toolbar is folded into this block's toolbar."
+}

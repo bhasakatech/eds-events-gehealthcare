@@ -73,6 +73,17 @@ async function loadFonts() {
   }
 }
 
+function setSiteIdentifier() {
+  const { hostname } = window.location;
+  const [, site] = hostname.match(/^.*?--(.+?)--[^.]+\.aem\./) || [];
+
+  if (site && document.body) {
+    document.body.dataset.site = site;
+  }
+}
+
+setSiteIdentifier();
+
 /**
  * Builds all synthetic blocks in a container element.
  * @param {Element} main The container element

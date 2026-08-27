@@ -223,7 +223,7 @@
               "valueType": "string",
               "variationName": "details_contentFragmentVariation",
               "validation": {
-                "rootPath": "/content"
+                "rootPath": "/content/dam"
               }
             },
             {

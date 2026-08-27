@@ -1,0 +1,13 @@
+{
+  "status": "success",
+  "url": "https://events.gehealthcare.com/events/acc-2026/",
+  "path": "events/acc-2026",
+  "timestamp": "2026-08-21T10:26:41.162Z",
+  "title": "GE HealthCare Events Center",
+  "template": "event-page",
+  "blocks": [
+    "event-hero",
+    "products-solutions",
+    "feature-cards"
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "status": "success",
+  "url": "https://events.gehealthcare.com/events/ecr-2026-2/",
+  "path": "events/ecr-2026-2",
+  "timestamp": "2026-08-21T10:26:22.524Z",
+  "title": "GE HealthCare Events Center",
+  "template": "event-page",
+  "blocks": [
+    "event-hero",
+    "section-nav",
+    "products-solutions",
+    "feature-cards"
+  ]
+}

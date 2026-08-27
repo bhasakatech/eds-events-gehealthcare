@@ -1,0 +1,15 @@
+{
+  "status": "success",
+  "url": "https://events.gehealthcare.com/events/rsna-2026/",
+  "path": "events/rsna-2026",
+  "timestamp": "2026-08-21T10:22:20.256Z",
+  "title": "GE HealthCare Events Center",
+  "template": "event-page",
+  "blocks": [
+    "event-hero",
+    "section-nav",
+    "video-text",
+    "products-solutions",
+    "feature-cards"
+  ]
+}

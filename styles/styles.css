@@ -10,18 +10,20 @@
  * governing permissions and limitations under the License.
  */
 
+@import url('brand.css');
+
 :root {
-  /* colors */
-  --background-color: white;
-  --light-color: #f8f8f8;
-  --dark-color: #505050;
-  --text-color: #131313;
-  --link-color: #3b63fb;
-  --link-hover-color: #1d3ecf;
+  /* colors — GE HealthCare Events brand */
+  --background-color: #fff;
+  --light-color: #f2f1f3;
+  --dark-color: #3d1a5b;
+  --text-color: #000;
+  --link-color: #6022a6;
+  --link-hover-color: #0056b3;
 
   /* fonts */
-  --body-font-family: roboto, roboto-fallback, sans-serif;
-  --heading-font-family: roboto-condensed, roboto-condensed-fallback, sans-serif;
+  --body-font-family: "Source Sans Pro", sans-serif;
+  --heading-font-family: "Source Sans Pro", sans-serif;
 
   /* body sizes */
   --body-font-size-m: 22px;
@@ -199,18 +201,18 @@ button.button:disabled {
 
 a.button.primary,
 button.button.primary {
-  border-color: var(--text-color);
-  background-color: var(--text-color);
-  color: var(--background-color);
+  border-color: var(--brand-purple);
+  background-color: var(--brand-purple);
+  color: #fff;
 }
 
 a.button.primary:hover,
 a.button.primary:focus-visible,
 button.button.primary:hover,
 button.button.primary:focus-visible {
-  border-color: var(--dark-color);
-  background-color: var(--dark-color);
-  color: var(--light-color);
+  border-color: var(--brand-purple-dark);
+  background-color: var(--brand-purple-dark);
+  color: #fff;
 }
 
 a.button.primary[aria-disabled="true"],
@@ -355,8 +357,26 @@ main > .section:first-of-type {
 
 /* section metadata */
 main .section.light,
-main .section.highlight {
-  background-color: var(--light-color);
+main .section.highlight,
+main .section.grey,
+main .section.light-grey {
+  background-color: var(--section-light);
   margin: 0;
   padding: 40px 0;
 }
+
+main .section.dark {
+  background-color: var(--brand-purple-dark);
+  color: #fff;
+  margin: 0;
+  padding: 40px 0;
+}
+
+main .section.dark h1,
+main .section.dark h2,
+main .section.dark h3,
+main .section.dark h4,
+main .section.dark p {
+  color: #fff;
+}
+

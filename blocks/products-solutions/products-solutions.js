@@ -142,12 +142,15 @@ function parseParentConfig(rows) {
   const config = {
     title: 'Our products and solutions',
     titleTag: 'h2',
+    descriptionHtml: '',
     infoHref: '',
     infoLabel: 'Request more info',
     demoHref: '',
     demoLabel: 'Request a demo',
     disclaimer: 'Not all products and services may be available in your country or region.',
   };
+
+  const descriptionParts = [];
 
   rows.forEach((row) => {
     const cell = row.firstElementChild;
@@ -167,12 +170,18 @@ function parseParentConfig(rows) {
       config.demoHref = links[1].href;
       config.demoLabel = textOf(links[1]) || config.demoLabel;
     }
-    const paragraphs = [...cell.querySelectorAll('p')]
-      .map((p) => textOf(p))
-      .filter((t) => t && !links.some((a) => textOf(a) === t));
-    if (paragraphs.length) config.disclaimer = paragraphs[paragraphs.length - 1];
+    const paragraphEls = [...cell.querySelectorAll('p')]
+      .filter((p) => textOf(p) && !links.some((a) => textOf(a) === textOf(p)));
+    if (paragraphEls.length) {
+      config.disclaimer = textOf(paragraphEls[paragraphEls.length - 1]);
+      // If this row has no links/buttons, treat its paragraphs as the section descriptor.
+      if (!links.length) {
+        paragraphEls.forEach((p) => descriptionParts.push(`<p>${p.innerHTML.trim()}</p>`));
+      }
+    }
   });
 
+  config.descriptionHtml = descriptionParts.join('');
   return config;
 }
 
@@ -396,7 +405,21 @@ export default function decorate(block) {
   const title = document.createElement(config.titleTag);
   title.textContent = config.title;
   header.append(title);
+  if (config.descriptionHtml) {
+    const desc = document.createElement('div');
+    desc.className = 'products-solutions-descriptor';
+    desc.innerHTML = config.descriptionHtml;
+    header.append(desc);
+  }
   root.append(header);
+
+  // No product categories authored (tiles are data-driven on the source):
+  // render heading + descriptor only and skip the interactive grid/dialog.
+  if (!categories.length) {
+    block.replaceChildren(root);
+    optimizePictures(block);
+    return;
+  }
 
   const grid = document.createElement('div');
   grid.className = 'products-solutions-grid';

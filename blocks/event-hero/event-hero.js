@@ -1,6 +1,10 @@
 /*
  * Event Hero – reusable event landing hero
- * Cells: heading_* | meta_* | actions_* | image(+Alt)
+ * Cells: heading_* | meta_* | actions_* | image (background video/image)
+ *
+ * Source layout (events.gehealthcare.com): full-width purple band with a
+ * background video occupying the right half on desktop (stacked on top on
+ * mobile) and a text panel (title, event meta line, CTA) on the left.
  */
 
 function textOf(el) {
@@ -9,6 +13,11 @@ function textOf(el) {
 
 function firstLink(el) {
   return el?.querySelector('a[href]');
+}
+
+// Vidyard share/player URLs render as an embeddable iframe, not an <img>.
+function isVidyard(src) {
+  return /(?:play|share)\.vidyard\.com|vidyard\.com\/(?:watch|share)/i.test(src);
 }
 
 export default function decorate(block) {
@@ -41,14 +50,37 @@ export default function decorate(block) {
   const primary = links[0] || firstLink(actionsCell);
   const secondary = links[1];
 
+  // --- Background media (video or image) ---
+  const img = mediaCell?.querySelector('img');
+  const mediaSrc = img?.getAttribute('src') || '';
+  let mediaEl = null;
+  if (mediaSrc && isVidyard(mediaSrc)) {
+    const media = document.createElement('div');
+    media.className = 'event-hero-media';
+    const iframe = document.createElement('iframe');
+    iframe.className = 'event-hero-video';
+    iframe.src = mediaSrc;
+    iframe.title = img.getAttribute('alt') || title;
+    iframe.setAttribute('allow', 'autoplay; fullscreen; encrypted-media');
+    iframe.setAttribute('allowfullscreen', '');
+    iframe.setAttribute('loading', 'lazy');
+    iframe.setAttribute('frameborder', '0');
+    media.append(iframe);
+    mediaEl = media;
+  } else if (mediaSrc) {
+    const media = document.createElement('div');
+    media.className = 'event-hero-media';
+    const image = document.createElement('img');
+    image.src = mediaSrc;
+    image.alt = img.getAttribute('alt') || '';
+    image.loading = 'eager';
+    image.decoding = 'async';
+    media.append(image);
+    mediaEl = media;
+  }
+
   const root = document.createElement('div');
   root.className = 'event-hero-inner';
-
-  if (mediaCell?.querySelector('img')) {
-    const img = mediaCell.querySelector('img');
-    root.style.backgroundImage = `url("${img.src}")`;
-    root.classList.add('has-media');
-  }
 
   const content = document.createElement('div');
   content.className = 'event-hero-content';
@@ -101,5 +133,11 @@ export default function decorate(block) {
   }
 
   root.append(content);
-  block.replaceChildren(root);
+
+  if (mediaEl) {
+    block.classList.add('has-media');
+    block.replaceChildren(mediaEl, root);
+  } else {
+    block.replaceChildren(root);
+  }
 }

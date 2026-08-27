@@ -1,0 +1,14 @@
+{
+  "status": "success",
+  "url": "https://events.gehealthcare.com/events/effortless-2023/",
+  "path": "events/effortless-2023",
+  "timestamp": "2026-08-21T10:25:55.354Z",
+  "title": "GE HealthCare Events Center",
+  "template": "event-page",
+  "blocks": [
+    "event-hero",
+    "section-nav",
+    "products-solutions",
+    "feature-cards"
+  ]
+}
