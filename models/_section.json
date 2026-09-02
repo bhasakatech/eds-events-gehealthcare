@@ -65,7 +65,8 @@
         "content-band",
         "activity-list",
         "feature-cards",
-        "experience-fragment"
+        "experience-fragment",
+        "call-to-action"
       ]
     }
   ]
