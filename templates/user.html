@@ -1,0 +1,57 @@
+<html>
+  <head>
+    <title>{{firstName}} {{lastName}} · GE HealthCare Events</title>
+    <meta name="description" content="{{company.title}} at {{company.name}}, {{company.department}} department.">
+    <meta name="template" content="user-profile">
+    <link rel="stylesheet" href="/styles/user-profile.css">
+  </head>
+  <body>
+    <header></header>
+    <main>
+      <div>
+        <div class="user-profile">
+          <div class="user-profile-header">
+            <img src="{{image}}" alt="{{firstName}} {{lastName}}" loading="eager" width="96" height="96">
+            <div>
+              <h1>{{firstName}} {{lastName}}</h1>
+              <p class="user-title">{{company.title}} · {{company.department}}</p>
+              <p class="user-company">{{company.name}}</p>
+            </div>
+          </div>
+
+          <div class="user-profile-details">
+            <div class="user-profile-card">
+              <h2>Contact</h2>
+              <ul>
+                <li><strong>Email:</strong> {{email}}</li>
+                <li><strong>Phone:</strong> {{phone}}</li>
+                <li><strong>Username:</strong> {{username}}</li>
+              </ul>
+            </div>
+
+            <div class="user-profile-card">
+              <h2>Address</h2>
+              <ul>
+                <li>{{address.address}}</li>
+                <li>{{address.city}}, {{address.state}} {{address.postalCode}}</li>
+                <li>{{address.country}}</li>
+              </ul>
+            </div>
+
+            <div class="user-profile-card">
+              <h2>About</h2>
+              <ul>
+                <li><strong>Age:</strong> {{age}}</li>
+                <li><strong>Gender:</strong> {{gender}}</li>
+                <li><strong>Blood Group:</strong> {{bloodGroup}}</li>
+                <li><strong>Eye Color:</strong> {{eyeColor}}</li>
+                <li><strong>Hair:</strong> {{hair.color}}, {{hair.type}}</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+    <footer></footer>
+  </body>
+</html>

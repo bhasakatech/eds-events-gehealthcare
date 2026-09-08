@@ -3,3 +3,8 @@ mountpoints:
     url: "https://author-p139816-e1765605.adobeaemcloud.com/bin/franklin.delivery/bhasakatech/eds-events-gehealthcare/main"
     type: "markup"
     suffix: ".html"
+
+overlays:
+  /users/:
+    url: "https://json2html.adobeaem.workers.dev/bhasakatech/eds-events-gehealthcare/main"
+    type: "markup"
