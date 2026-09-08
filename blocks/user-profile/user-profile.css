@@ -1,47 +1,101 @@
 .user-profile {
-  max-width: 960px;
-  margin: 40px auto;
-  padding: 0 16px;
+  max-width: 1000px;
+  margin: 48px auto;
+  padding: 0 20px;
+  font-family: var(--body-font-family, "Source Sans Pro", sans-serif);
 }
 
-/* ─── Header: avatar + name/title row ─── */
+/* ─── Hero header banner ─── */
 .user-profile .user-profile-header {
+  position: relative;
   display: flex;
   align-items: center;
-  gap: 24px;
-  padding: 32px;
-  background-color: var(--brand-purple-dark, #3d1a5b);
+  gap: 32px;
+  padding: 40px 48px;
+  background: linear-gradient(135deg, var(--brand-purple-dark, #3d1a5b) 0%, var(--brand-purple, #6022a6) 100%);
   color: #fff;
-  border-radius: 8px;
-  margin-bottom: 32px;
+  border-radius: 16px;
+  margin-bottom: 36px;
+  box-shadow: 0 8px 32px rgb(96 34 166 / 30%);
+  overflow: hidden;
 }
 
+/* decorative background circle */
+.user-profile .user-profile-header::before {
+  content: "";
+  position: absolute;
+  top: -40px;
+  right: -40px;
+  width: 220px;
+  height: 220px;
+  border-radius: 50%;
+  background: rgb(255 255 255 / 6%);
+  pointer-events: none;
+}
+
+.user-profile .user-profile-header::after {
+  content: "";
+  position: absolute;
+  bottom: -60px;
+  right: 80px;
+  width: 160px;
+  height: 160px;
+  border-radius: 50%;
+  background: rgb(255 255 255 / 4%);
+  pointer-events: none;
+}
+
+/* ─── Avatar ─── */
 .user-profile .user-profile-header img {
-  width: 96px;
-  height: 96px;
+  width: 110px;
+  height: 110px;
   border-radius: 50%;
   object-fit: cover;
-  border: 3px solid #fff;
+  border: 4px solid rgb(255 255 255 / 90%);
   flex-shrink: 0;
+  box-shadow: 0 4px 16px rgb(0 0 0 / 25%);
+}
+
+/* ─── Name & meta ─── */
+.user-profile .user-profile-header > div {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  z-index: 1;
 }
 
 .user-profile .user-profile-header h1 {
-  margin: 0 0 4px;
-  font-size: var(--heading-font-size-l, 28px);
+  margin: 0;
+  font-size: clamp(22px, 4vw, 36px);
   color: #fff;
-  line-height: 1.2;
+  line-height: 1.15;
+  font-weight: 700;
+  letter-spacing: -0.01em;
 }
 
 .user-profile .user-profile-header .user-title {
-  margin: 0 0 2px;
-  font-size: var(--body-font-size-s, 16px);
+  margin: 0;
+  font-size: 15px;
   color: rgb(255 255 255 / 85%);
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.user-profile .user-profile-header .user-title::before {
+  content: "";
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  background: rgb(255 255 255 / 60%);
+  border-radius: 50%;
 }
 
 .user-profile .user-profile-header .user-company {
   margin: 0;
-  font-size: var(--body-font-size-xs, 14px);
-  color: rgb(255 255 255 / 65%);
+  font-size: 13px;
+  color: rgb(255 255 255 / 60%);
   font-style: italic;
 }
 
@@ -64,34 +118,70 @@
   }
 }
 
-/* ─── Individual info card ─── */
+/* ─── Info card ─── */
 .user-profile .user-profile-card {
-  background-color: var(--light-color, #f2f1f3);
-  border-radius: 8px;
-  padding: 20px 24px;
+  background: #fff;
+  border-radius: 12px;
+  padding: 24px;
+  border: 1px solid rgb(0 0 0 / 7%);
+  box-shadow: 0 2px 12px rgb(0 0 0 / 6%);
+  transition: box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.user-profile .user-profile-card:hover {
+  box-shadow: 0 8px 28px rgb(96 34 166 / 15%);
+  transform: translateY(-2px);
+}
+
+/* coloured top accent per card position */
+.user-profile .user-profile-card:nth-child(1) {
   border-top: 4px solid var(--brand-purple, #6022a6);
 }
 
-.user-profile .user-profile-card h2 {
-  margin: 0 0 12px;
-  font-size: var(--heading-font-size-xs, 18px);
-  color: var(--brand-purple-dark, #3d1a5b);
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
+.user-profile .user-profile-card:nth-child(2) {
+  border-top: 4px solid #0077b6;
 }
 
+.user-profile .user-profile-card:nth-child(3) {
+  border-top: 4px solid #2a9d8f;
+}
+
+/* ─── Card heading ─── */
+.user-profile .user-profile-card h2 {
+  margin: 0 0 16px;
+  font-size: 11px;
+  color: var(--brand-purple, #6022a6);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.user-profile .user-profile-card h2::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: rgb(0 0 0 / 8%);
+}
+
+/* ─── Card list ─── */
 .user-profile .user-profile-card ul {
   list-style: none;
   margin: 0;
   padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
 }
 
 .user-profile .user-profile-card ul li {
-  padding: 6px 0;
-  font-size: var(--body-font-size-xs, 14px);
-  color: var(--text-color, #000);
-  border-bottom: 1px solid rgb(0 0 0 / 8%);
-  line-height: 1.5;
+  padding: 8px 0;
+  font-size: 14px;
+  color: #444;
+  border-bottom: 1px solid rgb(0 0 0 / 5%);
+  line-height: 1.6;
 }
 
 .user-profile .user-profile-card ul li:last-child {
@@ -100,4 +190,25 @@
 
 .user-profile .user-profile-card ul li strong {
   color: var(--brand-purple-dark, #3d1a5b);
+  font-weight: 600;
+  display: inline-block;
+  min-width: 90px;
+}
+
+/* ─── Mobile: stack header vertically ─── */
+@media (width < 600px) {
+  .user-profile .user-profile-header {
+    flex-direction: column;
+    text-align: center;
+    padding: 32px 24px;
+    gap: 16px;
+  }
+
+  .user-profile .user-profile-header .user-title::before {
+    display: none;
+  }
+
+  .user-profile .user-profile-header .user-title {
+    justify-content: center;
+  }
 }
