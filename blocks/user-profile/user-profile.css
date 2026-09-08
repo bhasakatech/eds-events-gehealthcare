@@ -1,9 +1,3 @@
-/*
- * user-profile.css — styles for dynamically generated /users/{id} pages
- * Scoped to .user-profile and child elements rendered via the json2html mustache template.
- */
-
-/* ─── Layout wrapper ─── */
 .user-profile {
   max-width: 960px;
   margin: 40px auto;
@@ -11,18 +5,18 @@
 }
 
 /* ─── Header: avatar + name/title row ─── */
-.user-profile-header {
+.user-profile .user-profile-header {
   display: flex;
   align-items: center;
   gap: 24px;
   padding: 32px;
-  background-color: var(--brand-purple-dark);
+  background-color: var(--brand-purple-dark, #3d1a5b);
   color: #fff;
   border-radius: 8px;
   margin-bottom: 32px;
 }
 
-.user-profile-header img {
+.user-profile .user-profile-header img {
   width: 96px;
   height: 96px;
   border-radius: 50%;
@@ -31,54 +25,54 @@
   flex-shrink: 0;
 }
 
-.user-profile-header h1 {
+.user-profile .user-profile-header h1 {
   margin: 0 0 4px;
   font-size: var(--heading-font-size-l, 28px);
   color: #fff;
   line-height: 1.2;
 }
 
-.user-profile-header .user-title {
+.user-profile .user-profile-header .user-title {
   margin: 0 0 2px;
   font-size: var(--body-font-size-s, 16px);
   color: rgb(255 255 255 / 85%);
 }
 
-.user-profile-header .user-company {
+.user-profile .user-profile-header .user-company {
   margin: 0;
   font-size: var(--body-font-size-xs, 14px);
   color: rgb(255 255 255 / 65%);
   font-style: italic;
 }
 
-/* ─── Details grid: cards side-by-side on larger screens ─── */
-.user-profile-details {
+/* ─── Details grid ─── */
+.user-profile .user-profile-details {
   display: grid;
   grid-template-columns: 1fr;
   gap: 20px;
 }
 
 @media (width >= 600px) {
-  .user-profile-details {
+  .user-profile .user-profile-details {
     grid-template-columns: repeat(2, 1fr);
   }
 }
 
 @media (width >= 900px) {
-  .user-profile-details {
+  .user-profile .user-profile-details {
     grid-template-columns: repeat(3, 1fr);
   }
 }
 
 /* ─── Individual info card ─── */
-.user-profile-card {
+.user-profile .user-profile-card {
   background-color: var(--light-color, #f2f1f3);
   border-radius: 8px;
   padding: 20px 24px;
   border-top: 4px solid var(--brand-purple, #6022a6);
 }
 
-.user-profile-card h2 {
+.user-profile .user-profile-card h2 {
   margin: 0 0 12px;
   font-size: var(--heading-font-size-xs, 18px);
   color: var(--brand-purple-dark, #3d1a5b);
@@ -86,13 +80,13 @@
   letter-spacing: 0.05em;
 }
 
-.user-profile-card ul {
+.user-profile .user-profile-card ul {
   list-style: none;
   margin: 0;
   padding: 0;
 }
 
-.user-profile-card ul li {
+.user-profile .user-profile-card ul li {
   padding: 6px 0;
   font-size: var(--body-font-size-xs, 14px);
   color: var(--text-color, #000);
@@ -100,10 +94,10 @@
   line-height: 1.5;
 }
 
-.user-profile-card ul li:last-child {
+.user-profile .user-profile-card ul li:last-child {
   border-bottom: none;
 }
 
-.user-profile-card ul li strong {
+.user-profile .user-profile-card ul li strong {
   color: var(--brand-purple-dark, #3d1a5b);
 }
