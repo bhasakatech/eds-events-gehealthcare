@@ -41,13 +41,13 @@
 .user-profile-header .user-title {
   margin: 0 0 2px;
   font-size: var(--body-font-size-s, 16px);
-  color: rgba(255 255 255 / 85%);
+  color: rgb(255 255 255 / 85%);
 }
 
 .user-profile-header .user-company {
   margin: 0;
   font-size: var(--body-font-size-xs, 14px);
-  color: rgba(255 255 255 / 65%);
+  color: rgb(255 255 255 / 65%);
   font-style: italic;
 }
 
@@ -96,7 +96,7 @@
   padding: 6px 0;
   font-size: var(--body-font-size-xs, 14px);
   color: var(--text-color, #000);
-  border-bottom: 1px solid rgba(0 0 0 / 8%);
+  border-bottom: 1px solid rgb(0 0 0 / 8%);
   line-height: 1.5;
 }
 
