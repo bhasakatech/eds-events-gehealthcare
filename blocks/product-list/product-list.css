@@ -17,6 +17,12 @@
   animation: product-list-bounce 1.2s infinite ease-in-out;
 }
 
+.product-list .product-list-rating span {
+  color: #6b7280;
+  font-size: 12px;
+  font-weight: 400;
+}
+
 .product-list .product-list-loading span:nth-child(2) {
   animation-delay: 0.2s;
 }
@@ -26,8 +32,17 @@
 }
 
 @keyframes product-list-bounce {
-  0%, 80%, 100% { transform: scale(0.6); opacity: 0.4; }
-  40% { transform: scale(1); opacity: 1; }
+  0%,
+  80%,
+  100% {
+    transform: scale(0.6);
+    opacity: 0.4;
+  }
+
+  40% {
+    transform: scale(1);
+    opacity: 1;
+  }
 }
 
 /* ══════════════════════════════════════
@@ -191,12 +206,6 @@
   font-size: 13px;
   color: #f59e0b;
   font-weight: 600;
-}
-
-.product-list .product-list-rating span {
-  color: #6b7280;
-  font-size: 12px;
-  font-weight: 400;
 }
 
 .product-list .product-list-stock {
