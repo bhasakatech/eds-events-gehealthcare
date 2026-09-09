@@ -22,7 +22,36 @@ function setText(el, text) {
 }
 
 /**
- * Builds a single product card element using DOM APIs (no innerHTML with user data).
+ * Reads the authored title and heading level from the block's DOM rows.
+ * EDS renders model fields as rows: first cell = key, second cell = value.
+ * Falls back to "All Products" / h2 if not authored.
+ * @param {Element} block
+ * @returns {{ title: string, tag: string }}
+ */
+function parseConfig(block) {
+  let title = 'All Products';
+  let tag = 'h2';
+
+  [...block.children].forEach((row) => {
+    const cells = [...row.children];
+    const key = cells[0]?.textContent?.trim().toLowerCase();
+    const val = cells[1]?.textContent?.trim();
+    if (key === 'heading_title' && val) title = val;
+    if (key === 'heading_titletype' && val) tag = val;
+
+    // Also handle when the block row contains a heading element directly
+    const heading = row.querySelector('h1,h2,h3,h4,h5,h6');
+    if (heading && !key) {
+      title = heading.textContent.trim();
+      tag = heading.tagName.toLowerCase();
+    }
+  });
+
+  return { title, tag };
+}
+
+/**
+ * Builds a single product card element using DOM APIs.
  * @param {object} product
  * @returns {HTMLElement}
  */
@@ -53,13 +82,13 @@ function buildCard(product) {
   const body = document.createElement('div');
   body.className = 'product-list-card-body';
 
-  const category = document.createElement('span');
-  category.className = 'product-list-category';
-  setText(category, product.category);
+  const categoryEl = document.createElement('span');
+  categoryEl.className = 'product-list-category';
+  setText(categoryEl, product.category);
 
-  const title = document.createElement('h3');
-  title.className = 'product-list-title';
-  setText(title, product.title);
+  const titleEl = document.createElement('h3');
+  titleEl.className = 'product-list-title';
+  setText(titleEl, product.title);
 
   const desc = document.createElement('p');
   desc.className = 'product-list-desc';
@@ -72,13 +101,14 @@ function buildCard(product) {
   const ratingEl = document.createElement('span');
   ratingEl.className = 'product-list-rating';
   ratingEl.setAttribute('aria-label', `Rating: ${product.rating} out of 5`);
-  ratingEl.textContent = renderStars(product.rating);
+  setText(ratingEl, renderStars(product.rating));
   const ratingVal = document.createElement('span');
   setText(ratingVal, String(product.rating));
   ratingEl.append(ratingVal);
 
   const stock = document.createElement('span');
-  stock.className = `product-list-stock ${product.availabilityStatus === 'In Stock' ? 'in-stock' : 'out-of-stock'}`;
+  const inStock = product.availabilityStatus === 'In Stock';
+  stock.className = `product-list-stock ${inStock ? 'in-stock' : 'out-of-stock'}`;
   setText(stock, product.availabilityStatus);
 
   meta.append(ratingEl, stock);
@@ -98,7 +128,7 @@ function buildCard(product) {
   setText(link, 'View Details');
 
   footer.append(price, link);
-  body.append(category, title, desc, meta, footer);
+  body.append(categoryEl, titleEl, desc, meta, footer);
   card.append(imageWrap, body);
 
   return card;
@@ -109,7 +139,10 @@ function buildCard(product) {
  * @param {Element} block
  */
 export default async function decorate(block) {
-  // replace authored content with loading state
+  // ── 1. Read authored config BEFORE replacing DOM ──────────
+  const { title, tag } = parseConfig(block);
+
+  // ── 2. Show loading state ─────────────────────────────────
   const loader = document.createElement('div');
   loader.className = 'product-list-loading';
   loader.append(
@@ -119,6 +152,7 @@ export default async function decorate(block) {
   );
   block.replaceChildren(loader);
 
+  // ── 3. Fetch products ─────────────────────────────────────
   let products = [];
 
   try {
@@ -127,16 +161,28 @@ export default async function decorate(block) {
     const data = await res.json();
     products = data.products || [];
   } catch (err) {
-    const error = document.createElement('p');
-    error.className = 'product-list-error';
-    setText(error, 'Failed to load products. Please try again later.');
-    block.replaceChildren(error);
+    const errorEl = document.createElement('p');
+    errorEl.className = 'product-list-error';
+    setText(errorEl, 'Failed to load products. Please try again later.');
+    block.replaceChildren(errorEl);
     // eslint-disable-next-line no-console
     console.error('product-list: fetch failed', err);
     return;
   }
 
-  // ── build grid ────────────────────────────────────────────
+  // ── 4. Build inner wrapper (mirrors products-solutions pattern) ──
+  const inner = document.createElement('div');
+  inner.className = 'product-list-inner';
+
+  // Section header with authored title
+  const header = document.createElement('div');
+  header.className = 'product-list-header';
+  const heading = document.createElement(tag);
+  setText(heading, title);
+  header.append(heading);
+  inner.append(header);
+
+  // ── 5. Build grid ─────────────────────────────────────────
   const grid = document.createElement('div');
   grid.className = 'product-list-grid';
 
@@ -145,12 +191,13 @@ export default async function decorate(block) {
     if (index >= INITIAL_COUNT) card.classList.add('product-list-hidden');
     grid.append(card);
   });
+  inner.append(grid);
 
-  // ── show more / show less button ──────────────────────────
-  const controls = document.createElement('div');
-  controls.className = 'product-list-controls';
-
+  // ── 6. Show more / show less button ──────────────────────
   if (products.length > INITIAL_COUNT) {
+    const controls = document.createElement('div');
+    controls.className = 'product-list-controls';
+
     const btn = document.createElement('button');
     btn.className = 'product-list-toggle button primary';
     btn.setAttribute('aria-expanded', 'false');
@@ -175,8 +222,9 @@ export default async function decorate(block) {
     });
 
     controls.append(btn);
+    inner.append(controls);
   }
 
-  // ── assemble ──────────────────────────────────────────────
-  block.replaceChildren(grid, controls);
+  // ── 7. Assemble ───────────────────────────────────────────
+  block.replaceChildren(inner);
 }

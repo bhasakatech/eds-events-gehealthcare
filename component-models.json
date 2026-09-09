@@ -5883,6 +5883,35 @@
     ]
   },
   {
+    "id": "product-list",
+    "fields": [
+      {
+        "component": "text",
+        "name": "heading_title",
+        "label": "Section Title",
+        "valueType": "string",
+        "value": "All Products"
+      },
+      {
+        "component": "select",
+        "name": "heading_titleType",
+        "label": "Title Heading Level",
+        "valueType": "string",
+        "value": "h2",
+        "options": [
+          {
+            "name": "H2",
+            "value": "h2"
+          },
+          {
+            "name": "H3",
+            "value": "h3"
+          }
+        ]
+      }
+    ]
+  },
+  {
     "id": "products-solutions",
     "fields": [
       {

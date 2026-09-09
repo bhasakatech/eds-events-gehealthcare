@@ -1,4 +1,37 @@
 /* ══════════════════════════════════════
+   INNER WRAPPER
+══════════════════════════════════════ */
+.product-list .product-list-inner {
+  max-width: 100%;
+  margin: 0 auto;
+  padding: 10px 0 0;
+}
+
+/* ══════════════════════════════════════
+   SECTION HEADER
+══════════════════════════════════════ */
+.product-list .product-list-header {
+  margin-bottom: 32px;
+}
+
+.product-list .product-list-header h2,
+.product-list .product-list-header h3 {
+  margin: 0;
+  color: var(--brand-purple, #6022a6);
+  font-family: var(--heading-font-family, "Source Sans Pro", sans-serif);
+  font-weight: 400;
+  font-size: 28px;
+  line-height: 1.2;
+}
+
+@media (width >= 900px) {
+  .product-list .product-list-header h2,
+  .product-list .product-list-header h3 {
+    font-size: 33px;
+  }
+}
+
+/* ══════════════════════════════════════
    LOADING SKELETON
 ══════════════════════════════════════ */
 .product-list .product-list-loading {
