@@ -1,0 +1,7 @@
+/*
+  X-Content-Type-Options: nosniff
+
+/tools/assets-selector/*
+  Access-Control-Allow-Origin: https://experience.adobe.com
+  Access-Control-Allow-Methods: GET
+  Access-Control-Allow-Headers: Content-Type

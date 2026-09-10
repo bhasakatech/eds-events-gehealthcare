@@ -1,0 +1,53 @@
+{
+  "repoNames": [
+    "author-p139816-e1765605.adobeaemcloud.com",
+    "delivery-p139816-e1765605.adobeaemcloud.com"
+  ],
+  "aemTierType": [
+    "delivery",
+    "author"
+  ],
+  "expiryOptions": {
+    "allowSelectionAndDrag": false
+  },
+  "filterSchema": [
+    {
+      "fields": [
+        {
+          "defaultValue": ["image/*"],
+          "element": "checkbox",
+          "name": "type",
+          "options": [
+            {
+              "label": "Image",
+              "readOnly": true,
+              "value": "image/*"
+            }
+          ]
+        }
+      ],
+      "groupKey": "FileTypeGroup",
+      "header": "File Type"
+    },
+    {
+      "fields": [
+        {
+          "defaultValue": ["dam:assetStatus==approved"],
+          "element": "radiogroup",
+          "name": "property",
+          "readOnly": true,
+          "options": [
+            {
+              "label": "Approved",
+              "value": "dam:assetStatus==approved"
+            }
+          ]
+        }
+      ],
+      "groupKey": "StatusGroup",
+      "header": "Approval Status"
+    }
+  ],
+  "alwaysUseDMDelivery": true,
+  "rootPath": "/content/dam"
+}

@@ -368,6 +368,66 @@
     ]
   },
   {
+    "id": "asset-picker",
+    "fields": [
+      {
+        "component": "tab",
+        "label": "Asset",
+        "name": "tabAsset"
+      },
+      {
+        "component": "custom-asset-namespace:custom-asset",
+        "name": "image",
+        "label": "Image (DM Asset Picker)",
+        "description": "Select an approved image from Dynamic Media. Uses the Configurable Asset Picker extension.",
+        "configUrl": "https://main--gehealthcare--bhasakatech.aem.page/tools/assets-selector/image.config.json",
+        "valueType": "string"
+      },
+      {
+        "component": "custom-asset-namespace:custom-asset-mimetype",
+        "name": "imageMimeType",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "name": "imageAlt",
+        "label": "Alt Text",
+        "description": "Descriptive alt text for accessibility.",
+        "valueType": "string",
+        "value": ""
+      },
+      {
+        "component": "tab",
+        "label": "Content",
+        "name": "tabContent"
+      },
+      {
+        "component": "text",
+        "name": "title",
+        "label": "Title",
+        "description": "Optional heading displayed alongside the image.",
+        "valueType": "string",
+        "value": ""
+      },
+      {
+        "component": "text",
+        "name": "caption",
+        "label": "Caption",
+        "description": "Short caption displayed below the image.",
+        "valueType": "string",
+        "value": ""
+      },
+      {
+        "component": "textarea",
+        "name": "description",
+        "label": "Description",
+        "description": "Optional body text displayed below the caption.",
+        "valueType": "string",
+        "value": ""
+      }
+    ]
+  },
+  {
     "id": "call-to-action",
     "fields": [
       {
