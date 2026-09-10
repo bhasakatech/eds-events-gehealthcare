@@ -28,24 +28,6 @@
       ],
       "groupKey": "FileTypeGroup",
       "header": "File Type"
-    },
-    {
-      "fields": [
-        {
-          "defaultValue": ["dam:assetStatus==approved"],
-          "element": "radiogroup",
-          "name": "property",
-          "readOnly": true,
-          "options": [
-            {
-              "label": "Approved",
-              "value": "dam:assetStatus==approved"
-            }
-          ]
-        }
-      ],
-      "groupKey": "StatusGroup",
-      "header": "Approval Status"
     }
   ],
   "alwaysUseDMDelivery": true,
