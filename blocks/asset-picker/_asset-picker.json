@@ -30,7 +30,7 @@
           "name": "image",
           "label": "Image (DM Asset Picker)",
           "description": "Select an approved image from Dynamic Media. Uses the Configurable Asset Picker extension.",
-          "configUrl": "https://main--gehealthcare--bhasakatech.aem.page/tools/assets-selector/image.config.json",
+          "configUrl": "https://main--eds-events-gehealthcare--bhasakatech.aem.page/tools/assets-selector/image.config.json",
           "valueType": "string"
         },
         {
