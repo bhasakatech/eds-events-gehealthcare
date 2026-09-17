@@ -10,6 +10,30 @@
           "label": "Title"
         },
         {
+          "component": "text",
+          "valueType": "string",
+          "name": "description",
+          "label": "Description"
+        },
+        {
+          "component": "reference",
+          "valueType": "string",
+          "name": "image",
+          "label": "Cover Image"
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "author",
+          "label": "Author"
+        },
+        {
+          "component": "date-time",
+          "valueType": "date",
+          "name": "publication-date",
+          "label": "Publication Date"
+        },
+        {
           "component": "date-time",
           "valueType": "date",
           "name": "startDate",

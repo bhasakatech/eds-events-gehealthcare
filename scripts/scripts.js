@@ -9,6 +9,9 @@ import {
   loadSection,
   loadSections,
   loadCSS,
+  buildBlock,
+  getMetadata,
+  createOptimizedPicture,
 } from './aem.js';
 
 /**
@@ -88,9 +91,80 @@ setSiteIdentifier();
  * Builds all synthetic blocks in a container element.
  * @param {Element} main The container element
  */
-function buildAutoBlocks() {
+/**
+ * Builds a blog-header block from page metadata for pages under /blogs.
+ * Reads: title, image, author, publication-date, description.
+ * @param {Element} main The container element
+ */
+function buildBlogHeaderBlock(main) {
+  // only auto-block on blog pages (matches /blogs/... and /drafts/blogs/... for previews)
+  if (!/(^|\/)blogs(\/|$)/.test(window.location.pathname)) return;
+
+  const title = getMetadata('title') || (main.querySelector('h1')?.textContent ?? '');
+  if (!title) return; // nothing to build a header from
+
+  const image = getMetadata('image');
+  const author = getMetadata('author');
+  const pubDate = getMetadata('publication-date');
+  const description = getMetadata('description');
+
+  const rows = [];
+
+  // row 1 - cover image (optional)
+  if (image) {
+    const picture = createOptimizedPicture(image, title, true, [{ width: '900' }]);
+    rows.push([picture]);
+  }
+
+  // row 2 - title
+  const h1 = document.createElement('h1');
+  h1.textContent = title;
+  rows.push([h1]);
+
+  // row 3 - author + date (optional)
+  if (author || pubDate) {
+    const meta = document.createElement('div');
+    meta.className = 'blog-header-meta';
+    if (author) {
+      const a = document.createElement('span');
+      a.className = 'blog-header-author';
+      a.textContent = author;
+      meta.append(a);
+    }
+    if (pubDate) {
+      const d = document.createElement('span');
+      d.className = 'blog-header-date';
+      d.textContent = pubDate;
+      meta.append(d);
+    }
+    rows.push([meta]);
+  }
+
+  // row 4 - description (optional)
+  if (description) {
+    const p = document.createElement('p');
+    p.textContent = description;
+    rows.push([p]);
+  }
+
+  const section = document.createElement('div');
+  section.append(buildBlock('blog-header', rows));
+  main.prepend(section);
+
+  // remove a duplicate authored H1 left in the body, if present
+  const authoredH1 = main.querySelector('.blog-header ~ * h1, main > div:not(:first-child) h1');
+  if (authoredH1 && authoredH1.textContent.trim() === title.trim()) {
+    authoredH1.remove();
+  }
+}
+
+/**
+ * Builds all synthetic blocks in a container element.
+ * @param {Element} main The container element
+ */
+function buildAutoBlocks(main) {
   try {
-    // TODO: add auto block, if needed
+    buildBlogHeaderBlock(main);
   } catch (error) {
     // eslint-disable-next-line no-console
     console.error('Auto Blocking failed', error);
