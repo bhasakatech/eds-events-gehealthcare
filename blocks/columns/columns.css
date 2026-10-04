@@ -31,3 +31,52 @@
     order: unset;
   }
 }
+
+/* Workshop description: title + description | "Speaker(s):" + names
+   (source section.mammo-section .row: col-lg-7 / col-lg-1 spacer / col-lg-4,
+   values in migration-work/columns-extracted.css). Scoped to the light-grey
+   section that follows a workshop event-hero so generic columns keep the
+   standard layout above. */
+main .event-hero-container:has(.event-hero-meta) + .light-grey .columns > div > div {
+  font-size: var(--body-font-size-s);
+  line-height: 24px;
+}
+
+main .event-hero-container:has(.event-hero-meta) + .light-grey .columns h2 {
+  margin: 0 0 16px;
+  color: var(--heading-color);
+  font-weight: 700;
+  line-height: 39.6px;
+}
+
+main .event-hero-container:has(.event-hero-meta) + .light-grey .columns p {
+  margin: 0 0 16px;
+  font-size: var(--body-font-size-s);
+  line-height: 24px;
+}
+
+/* speakers cell: label + names stacked without gaps (source <br> list) */
+main .event-hero-container:has(.event-hero-meta) + .light-grey .columns > div > div:last-child:not(:first-child) p {
+  margin: 0;
+}
+
+@media (width >= 900px) {
+  main .event-hero-container:has(.event-hero-meta) + .light-grey .columns > div {
+    align-items: stretch;
+    gap: 0;
+    margin: 0 -15px;
+  }
+
+  main .event-hero-container:has(.event-hero-meta) + .light-grey .columns > div > div {
+    box-sizing: border-box;
+    flex: 0 0 58.3333%;
+    max-width: 58.3333%;
+    padding: 0 15px;
+  }
+
+  main .event-hero-container:has(.event-hero-meta) + .light-grey .columns > div > div + div {
+    flex-basis: 33.3333%;
+    max-width: 33.3333%;
+    margin-left: 8.3333%;
+  }
+}

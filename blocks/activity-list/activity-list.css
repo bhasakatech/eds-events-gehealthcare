@@ -1,185 +1,639 @@
+/*
+ * Activity List — values from events.gehealthcare.com section.all-events
+ * (events/acc-2026, product_categories/*, workshops/*).
+ */
+
+/* The block paints its own vertical rhythm (source .container.pt-5 /
+   .home-events.mt-2.pb-5), so the section adds none. */
+main > .section.activity-list-container {
+  margin: 0;
+  padding: 0;
+}
+
+/* Source paints the light-grey band (#f2f1f3) behind the card layouts
+   (workshop session grid, image cards). The list layout follows the section
+   style: white by default, `light-grey` where authored (product categories). */
+main > .section.activity-list-container:has(.activity-list-sessions, .activity-list-media) {
+  background-color: var(--section-light);
+}
+
 .activity-list {
-  --al-purple: #6022a6;
-  --al-navy: #002060;
-  --al-surface: #f2f1f3;
-  --al-muted: #76849a;
-  --al-border: #d9d6de;
+  --al-title-color: var(--brand-title-color);
+  --al-row-border: #b5b5b5;
+  --al-row-hover: #e4e4e4;
+  --al-tile-border: #b2c1d0;
+  --al-icon-dark: #0b1f3a;
+  --al-sort-color: #808080;
 
-  background: var(--al-surface);
+  padding: 80px 0 48px;
   color: var(--text-color);
+  font-family: var(--body-font-family);
+  font-size: 16px;
+  line-height: 24px;
 }
 
-.activity-list .activity-list-inner {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 48px 16px 40px;
+/* authored copy follows the block's own type scale, not the global p/li size */
+.activity-list :is(p, li) {
+  font-size: inherit;
+  line-height: inherit;
 }
 
-.activity-list .activity-list-header h2,
-.activity-list .activity-list-header h3 {
-  margin: 0 0 8px;
-  color: var(--al-purple);
+/* ---------- header ---------- */
+
+.activity-list .activity-list-header {
+  padding-bottom: 8px;
+}
+
+.activity-list .activity-list-header :is(h1, h2, h3, h4) {
+  margin: 0 0 16px;
+  color: var(--brand-purple);
   font-family: var(--heading-font-family);
+  font-size: var(--heading-size-xl);
   font-weight: 400;
+  line-height: 29px;
 }
 
 .activity-list .activity-list-header p {
-  margin: 0 0 24px;
-  color: var(--al-muted);
-  font-size: var(--body-font-size-xs);
+  margin: 0 0 16px;
+  font-size: 18px;
+  line-height: 21px;
 }
+
+/* ---------- list (table) ---------- */
 
 .activity-list .activity-list-head {
   display: none;
 }
 
+.activity-list .activity-list-rows,
+.activity-list .activity-list-cards {
+  margin: 0 -15px;
+  padding: 0;
+  list-style: none;
+}
+
 .activity-list .activity-list-row {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 8px;
-  width: 100%;
-  margin: 0;
-  padding: 20px 0;
-  border: 0;
-  border-bottom: 1px solid var(--al-border);
-  background: transparent;
-  color: inherit;
-  font: inherit;
-  text-align: left;
+  display: flex;
+  flex-direction: column;
+  padding: 24px 15px;
+  border-bottom: 1px solid var(--al-row-border);
   cursor: pointer;
+  transition: background-color 0.3s;
 }
 
-.activity-list .activity-list-title {
-  margin-bottom: 6px;
-  color: var(--text-color);
-  font-size: var(--body-font-size-s);
-  font-weight: 700;
+.activity-list .activity-list-row:hover {
+  background-color: var(--al-row-hover);
 }
 
-.activity-list .activity-list-desc {
-  color: var(--dark-color);
-  font-size: var(--body-font-size-xs);
-  line-height: 1.5;
+.activity-list .activity-list-main {
+  order: 3;
+  min-width: 0;
 }
 
-.activity-list .activity-list-desc p {
-  margin: 0 0 6px;
-}
-
-.activity-list .activity-list-datetime {
-  color: var(--al-purple);
-  font-size: 14px;
-  font-weight: 700;
-}
-
-.activity-list .activity-list-location {
-  color: var(--al-navy);
-  font-size: 14px;
-  font-weight: 600;
-}
-
-.activity-list .activity-list-arrow {
-  display: none;
-  color: var(--al-purple);
-  font-size: 28px;
-  line-height: 1;
+.activity-list .activity-list-row .activity-list-title {
+  margin: 0 0 15px;
+  color: var(--al-title-color);
+  font-family: var(--body-font-family);
+  font-size: 22px;
+  font-weight: 400;
+  line-height: 26px;
+  scroll-margin: 0;
+  transition: color 0.3s;
 }
 
 .activity-list .activity-list-row:hover .activity-list-title {
-  color: var(--al-purple);
+  color: var(--brand-purple);
 }
 
+.activity-list .activity-list-desc {
+  display: -webkit-box;
+  overflow: hidden;
+  font-size: 15px;
+  line-height: 18px;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+}
+
+.activity-list .activity-list-desc :is(p, ul, ol) {
+  display: inline;
+  margin: 0;
+  padding: 0;
+}
+
+.activity-list .activity-list-desc :is(p, ul, ol) + :is(p, ul, ol)::before {
+  content: " ";
+}
+
+.activity-list .activity-list-desc li {
+  display: inline;
+}
+
+.activity-list .activity-list-datetime {
+  order: 1;
+  color: var(--brand-purple);
+}
+
+.activity-list .activity-list-location {
+  order: 2;
+  padding-bottom: 16px;
+}
+
+.activity-list .activity-list-location:empty {
+  padding-bottom: 0;
+}
+
+.activity-list .activity-list-action {
+  display: flex;
+  order: 4;
+  padding-top: 24px;
+}
+
+.activity-list .activity-list-arrow {
+  display: block;
+  width: 30px;
+  height: 30px;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: none;
+  cursor: pointer;
+}
+
+.activity-list .activity-list-arrow svg {
+  display: block;
+}
+
+.activity-list .activity-list-arrow circle {
+  fill: var(--brand-purple);
+}
+
+.activity-list .activity-list-arrow path {
+  stroke: #fff;
+}
+
+.activity-list .activity-list-arrow:hover circle,
+.activity-list .activity-list-arrow:focus-visible circle {
+  fill: #fff;
+}
+
+.activity-list .activity-list-arrow:hover path,
+.activity-list .activity-list-arrow:focus-visible path {
+  stroke: var(--brand-purple);
+}
+
+.activity-list .activity-list-sort {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+}
+
+.activity-list .activity-list-sort:disabled {
+  cursor: default;
+}
+
+.activity-list .activity-list-sort svg {
+  stroke: var(--al-sort-color);
+  transition: transform 0.2s;
+}
+
+.activity-list .activity-list-sort.is-descending svg {
+  transform: rotate(180deg);
+}
+
+/* ---------- sessions (workshop schedule grid) ---------- */
+
+.activity-list.activity-list-sessions {
+  padding: 0 0 48px;
+}
+
+.activity-list .activity-list-cards {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.activity-list .activity-list-card {
+  padding: 24px 15px;
+}
+
+.activity-list .activity-list-card-inner {
+  padding: 0 20px;
+  border-left: 2px solid var(--al-tile-border);
+}
+
+.activity-list .activity-list-card-title {
+  margin: 0 0 10px;
+  color: var(--al-title-color);
+  font-family: var(--body-font-family);
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 29px;
+}
+
+.activity-list .activity-list-card .activity-list-datetime {
+  min-height: 42px;
+  margin: 0 0 10px;
+  color: var(--text-color);
+  font-size: 14px;
+  line-height: 21px;
+}
+
+/* ---------- media (image cards) ---------- */
+
+.activity-list .activity-list-card-media {
+  margin-bottom: 16px;
+  cursor: pointer;
+}
+
+.activity-list .activity-list-card-media picture,
+.activity-list .activity-list-card-media img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+/* source leaves a 24px band (hidden list head) above the image cards */
+.activity-list.activity-list-media .activity-list-cards {
+  margin-top: 24px;
+}
+
+.activity-list.activity-list-media .activity-list-card-inner {
+  padding: 0;
+  border: 0;
+}
+
+.activity-list.activity-list-media .activity-list-card-title {
+  font-size: var(--heading-size-s);
+  font-weight: 400;
+  line-height: 23px;
+}
+
+.activity-list .activity-list-card-open {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  text-align: inherit;
+  cursor: pointer;
+}
+
+.activity-list .activity-list-card-open:hover {
+  color: var(--brand-purple);
+}
+
+.activity-list .activity-list-card-desc {
+  display: -webkit-box;
+  overflow: hidden;
+  margin: 0 0 10px;
+  font-size: 14px;
+  line-height: 21px;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+.activity-list .activity-list-card-desc p {
+  display: inline;
+  margin: 0;
+}
+
+.activity-list .activity-list-card-calendar {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--brand-purple);
+  font: inherit;
+  cursor: pointer;
+}
+
+.activity-list .activity-list-card-calendar:hover {
+  color: var(--link-hover-color);
+}
+
+.activity-list .activity-list-speakers p,
+.activity-list .activity-list-dialog-speakers p {
+  margin: 0;
+}
+
+.activity-list .activity-list-details {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--brand-purple);
+  font: inherit;
+  cursor: pointer;
+}
+
+.activity-list .activity-list-details:hover {
+  color: var(--link-hover-color);
+}
+
+.activity-list .activity-list-arrow:focus-visible,
+.activity-list .activity-list-sort:focus-visible,
+.activity-list .activity-list-details:focus-visible,
+.activity-list .activity-list-card-open:focus-visible,
+.activity-list .activity-list-card-calendar:focus-visible {
+  outline: var(--focus-outline);
+  outline-offset: var(--focus-outline-offset);
+}
+
+/* ---------- popup (shared) ---------- */
+
 .activity-list .activity-list-dialog {
-  width: min(900px, 96vw);
+  width: 1170px;
+  max-width: 95%;
   max-height: 90vh;
   margin: auto;
   padding: 0;
   border: 0;
-  border-radius: 6px;
-  background: transparent;
+  border-radius: 5px;
+  background: #fff;
+  color: var(--text-color);
 }
 
 .activity-list .activity-list-dialog::backdrop {
-  background: rgb(0 0 0 / 55%);
+  background: rgb(1 8 48 / 49%);
 }
 
 .activity-list .activity-list-dialog-panel {
-  position: relative;
   overflow: auto;
   max-height: 90vh;
-  padding: 24px;
-  border-radius: 6px;
-  background: #fff;
+  padding: 20px 0 16px;
+  box-sizing: border-box;
 }
 
-.activity-list .activity-list-close {
-  position: absolute;
-  top: 12px;
-  right: 12px;
-  width: 36px;
-  height: 36px;
-  border: 1px solid var(--al-border);
-  border-radius: 4px;
-  background: #fff;
+.activity-list .activity-list-dialog-head {
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+  justify-content: space-between;
+  padding: 0 20px;
+}
+
+.activity-list .activity-list-dialog-meta {
+  margin: 0;
+}
+
+.activity-list .activity-list-dialog-title {
+  margin: 0 0 24px;
+  color: var(--text-color);
+  font-family: var(--heading-font-family);
+  font-size: var(--heading-size-l);
+  font-weight: 500;
+  line-height: 33.6px;
+  scroll-margin: 0;
+}
+
+.activity-list .activity-list-dialog :is(.activity-list-dialog-close, .activity-list-dialog-prev, .activity-list-dialog-next) {
+  flex: none;
+  width: 25px;
+  height: 25px;
+  margin: 2px 0 0;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: none;
   cursor: pointer;
-  font-size: 22px;
 }
 
-.activity-list .activity-list-dialog-media {
-  margin-bottom: 16px;
-  overflow: hidden;
-  background: #111;
-  aspect-ratio: 16 / 9;
+.activity-list .activity-list-dialog :is(.activity-list-dialog-close, .activity-list-dialog-prev, .activity-list-dialog-next) svg {
+  display: block;
+}
+
+.activity-list .activity-list-dialog .activity-list-dialog-close circle {
+  fill: var(--al-icon-dark);
+}
+
+.activity-list .activity-list-dialog .activity-list-dialog-close path {
+  stroke: #fff;
+}
+
+.activity-list .activity-list-dialog :is(.activity-list-dialog-prev, .activity-list-dialog-next) circle {
+  fill: #fff;
+  stroke: var(--al-icon-dark);
+  stroke-width: 1.5;
+}
+
+.activity-list .activity-list-dialog :is(.activity-list-dialog-prev, .activity-list-dialog-next) path {
+  stroke: var(--al-icon-dark);
+}
+
+.activity-list .activity-list-dialog-content {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 16px;
+  padding: 16px 20px 0;
 }
 
 .activity-list .activity-list-dialog-media picture,
 .activity-list .activity-list-dialog-media img {
   display: block;
   width: 100%;
-  height: 100%;
-  object-fit: cover;
+  height: auto;
 }
 
-.activity-list .activity-list-dialog-title {
-  margin: 0 0 8px;
-  font-size: 24px;
+.activity-list .activity-list-dialog-calendar {
+  display: inline-block;
+  margin: 0 0 16px;
+  padding: 8px 30px;
+  border: 1px solid var(--brand-purple);
+  border-radius: var(--button-border-radius);
+  background: var(--brand-purple);
+  color: #fff;
+  font-family: var(--body-font-family);
+  font-size: var(--button-font-size);
+  font-weight: var(--button-font-weight);
+  line-height: var(--button-line-height);
+  cursor: pointer;
 }
 
-.activity-list .activity-list-dialog-meta {
-  margin-bottom: 16px;
-  color: var(--al-purple);
-  font-size: 14px;
-  font-weight: 700;
+.activity-list .activity-list-dialog-calendar:hover,
+.activity-list .activity-list-dialog-calendar:focus-visible {
+  border-color: var(--brand-purple-hover);
+  background: var(--brand-purple-hover);
 }
 
 .activity-list .activity-list-dialog-body {
-  font-size: 15px;
-  line-height: 1.55;
+  max-width: 450px;
+  margin-top: 4px;
+  line-height: 20px;
+}
+
+.activity-list .activity-list-dialog-body p {
+  margin: 0 0 16px;
+}
+
+/* ---------- popup (sessions) ---------- */
+
+.activity-list.activity-list-sessions .activity-list-dialog {
+  width: 1000px;
+}
+
+.activity-list.activity-list-sessions .activity-list-dialog-panel {
+  padding: 20px 0;
+}
+
+.activity-list.activity-list-sessions .activity-list-dialog-head {
+  flex-wrap: wrap;
+  margin-top: 8px;
+}
+
+.activity-list.activity-list-sessions .activity-list-dialog-meta {
+  margin: 0 0 24px;
+  font-size: var(--heading-size-s);
+  font-weight: 500;
+  line-height: 24px;
+}
+
+.activity-list .activity-list-dialog-controls {
+  display: flex;
+  gap: 5px;
+  align-items: flex-start;
+  margin-left: auto;
+}
+
+.activity-list .activity-list-dialog-browse {
+  margin-right: 3px;
+}
+
+.activity-list .activity-list-dialog-band {
+  padding: 20px;
+  background: var(--brand-purple);
+  color: #fff;
+}
+
+.activity-list .activity-list-dialog-band .activity-list-dialog-title {
+  margin: 0 0 8px;
+  color: #fff;
+  font-weight: 700;
+}
+
+.activity-list .activity-list-dialog-band .activity-list-dialog-calendar {
+  margin: 16px 0 0;
+  padding: var(--button-padding);
+  border-color: #fff;
+  background: #fff;
+  color: var(--brand-purple);
+}
+
+.activity-list .activity-list-dialog-band .activity-list-dialog-calendar:hover,
+.activity-list .activity-list-dialog-band .activity-list-dialog-calendar:focus-visible {
+  border-color: var(--brand-grey-hover);
+  background: var(--brand-grey-hover);
+}
+
+.activity-list.activity-list-sessions .activity-list-dialog-content {
+  margin-top: 24px;
+  padding-top: 0;
+  gap: 24px;
+}
+
+.activity-list.activity-list-sessions .activity-list-dialog-body {
+  max-width: none;
+  margin: 0;
+  line-height: 24px;
+}
+
+.activity-list .activity-list-dialog-body ul {
+  margin: 0 0 16px;
+  padding-left: 40px;
 }
 
 @media (width >= 900px) {
-  .activity-list .activity-list-inner {
-    padding: 64px 24px 48px;
-  }
-
+  /* list: Bootstrap col-lg-7 / 2 / 2 / 1 with 15px gutters */
   .activity-list .activity-list-head,
   .activity-list .activity-list-row {
     display: grid;
-    grid-template-columns: minmax(0, 1.6fr) minmax(140px, 0.5fr) minmax(120px, 0.45fr) 40px;
-    gap: 16px;
-    align-items: center;
+    grid-template-columns: 58.3333% 16.6667% 16.6667% 8.3333%;
   }
 
   .activity-list .activity-list-head {
-    padding: 0 0 12px;
-    border-bottom: 1px solid var(--al-border);
-    color: var(--al-muted);
-    font-size: 13px;
-    font-weight: 700;
+    margin: 0 -15px;
   }
 
-  .activity-list .activity-list-arrow {
-    display: block;
-    justify-self: end;
+  .activity-list .activity-list-head > *,
+  .activity-list .activity-list-row > * {
+    padding: 0 15px;
+  }
+
+  .activity-list .activity-list-row {
+    padding: 24px 0;
+  }
+
+  .activity-list .activity-list-main,
+  .activity-list .activity-list-datetime,
+  .activity-list .activity-list-location,
+  .activity-list .activity-list-action {
+    order: 0;
+  }
+
+  .activity-list .activity-list-datetime,
+  .activity-list .activity-list-location,
+  .activity-list .activity-list-action {
+    align-self: center;
+  }
+
+  .activity-list .activity-list-location,
+  .activity-list .activity-list-action {
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+
+  .activity-list .activity-list-action {
+    justify-content: flex-end;
+  }
+
+  /* sessions: col-lg-4 */
+  .activity-list .activity-list-cards {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  /* popups */
+  .activity-list .activity-list-dialog-head {
+    padding: 0 38px 0 40px;
+  }
+
+  .activity-list .activity-list-dialog-intro {
+    max-width: 625px;
+  }
+
+  .activity-list .activity-list-dialog-content {
+    grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
+    gap: 30px;
+    padding: 16px 40px 0;
+  }
+
+  .activity-list .activity-list-dialog-content.no-media {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .activity-list.activity-list-sessions .activity-list-dialog-head,
+  .activity-list .activity-list-dialog-band {
+    padding-right: 35px;
+    padding-left: 35px;
+  }
+
+  .activity-list.activity-list-sessions .activity-list-dialog-head {
+    flex-wrap: nowrap;
+  }
+
+  .activity-list.activity-list-sessions .activity-list-dialog-meta {
+    max-width: 530px;
+  }
+
+  .activity-list.activity-list-sessions .activity-list-dialog-content {
+    grid-template-columns: minmax(0, 7fr) minmax(0, 4fr);
+    gap: 110px;
+    padding: 0 35px;
   }
 }

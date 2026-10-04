@@ -257,6 +257,10 @@ async function loadLazy(doc) {
   const main = doc.querySelector('main');
   await loadSections(main);
 
+  // "Request more info" links open the contact form in a dialog
+  // eslint-disable-next-line import/no-cycle
+  import('./contact-request.js').then(({ default: initContactRequests }) => initContactRequests());
+
   const { hash } = window.location;
   const element = hash ? doc.getElementById(hash.substring(1)) : false;
   if (hash && element) element.scrollIntoView();

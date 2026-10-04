@@ -32,9 +32,12 @@
     ]
   },
   "usage": {
-    "pagesUsing": ["/innovation-theater/index"],
-    "reuseCount": 1,
-    "lastUsed": "2026-08-21T00:00:00.000Z"
+    "pagesUsing": [
+      "/innovation-theater/index",
+      "/product_categories/effortless-imaging-rsna-2025"
+    ],
+    "reuseCount": 2,
+    "lastUsed": "2026-10-02T00:00:00.000Z"
   },
   "notes": "NEW block created for the Innovation Theater migration. Not a variant of an existing block — no existing block modelled a session video grid with popup player + ondemand/upcoming filtering + per-card speakers. The Section 2 sticky OnDemand/Upcoming + event filter toolbar is folded into this block's toolbar."
 }

@@ -1,36 +1,50 @@
 /*
- * Event Hero — full-width purple band with a background video on the right
- * and an event title / meta / CTA panel on the left.
- * Values extracted from events.gehealthcare.com/events/rsna-2026 computed styles.
+ * Event Hero — full-width purple band, optional media (video/image) on the
+ * right half and a title / meta / tagline / CTA panel on the left.
+ * Values extracted from events.gehealthcare.com computed styles
+ * (see migration-work/event-hero-extracted.css).
+ *
+ * Layout is inferred from the authored content (no page-specific hacks):
+ *  - has meta (date/booth/location)          → event hero, 50% text column
+ *  - has meta, no CTA and no tagline         → workshop hero, meta above title,
+ *                                             58% column, height follows content
+ *  - no meta                                 → product / product-category hero,
+ *                                             41.67% column
+ *  - two CTAs                                → first CTA white (filled), second outlined
+ *  - .compact (authored variant)             → reduced top padding (RSNA 2025 product categories)
  */
 
-/* Full-bleed: neutralise the .section wrapper constraints + dark band padding */
-.section.event-hero-container:has(.event-hero) {
+/* Full-bleed: neutralise the global .section / .section > div container */
+main > .section.event-hero-container:has(.event-hero) {
   margin: 0;
   padding: 0;
-  background-color: var(--brand-purple); /* #6022a6 */
+  background-color: var(--brand-purple);
 }
 
-.event-hero-wrapper {
-  max-width: 100% !important;
-  width: 100% !important;
+main .section.event-hero-container > .event-hero-wrapper {
+  width: 100%;
+  max-width: none !important;
   margin: 0 !important;
   padding: 0 !important;
 }
 
 .event-hero {
   position: relative;
-  background-color: var(--brand-purple); /* #6022a6 */
+  box-sizing: border-box;
+  padding: 20px 0 30px;
+  background-color: var(--brand-purple); /* rgb(96, 34, 166) */
   color: #fff;
+  font-size: 16px;
+  line-height: 24px;
   overflow: hidden;
 }
 
-/* --- Background media (Vidyard video / image) --- */
+/* --- Media (Vidyard video / image) --- */
 .event-hero .event-hero-media {
   position: relative;
   width: 100%;
   aspect-ratio: 16 / 9;
-  background-color: #000;
+  margin-bottom: 30px;
   line-height: 0;
 }
 
@@ -43,109 +57,374 @@
   object-fit: cover;
 }
 
+.event-hero .event-hero-video {
+  background-color: #000;
+}
+
 /* --- Text panel --- */
 .event-hero .event-hero-inner {
   position: relative;
-  max-width: 1140px;
+  z-index: 1;
+  box-sizing: border-box;
+  max-width: var(--content-max-width); /* 1140px */
   margin: 0 auto;
-  padding: 20px 15px 30px;
+  padding: 0 15px;
 }
 
 .event-hero .event-hero-content {
-  position: relative;
-  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.event-hero .event-hero-content > * {
+  max-width: 100%;
 }
 
 .event-hero .event-hero-title {
   margin: 0 0 8px;
   color: #fff;
   font-family: var(--heading-font-family);
-  font-size: 38px;
+  font-size: var(--heading-font-size-xxl); /* 30px mobile / 38px desktop */
   font-weight: 500;
-  line-height: 41px;
+  line-height: 32px;
 }
 
+/* date | booth | location — inline items separated by "&nbsp;|&nbsp;" */
 .event-hero .event-hero-meta {
   display: flex;
   flex-wrap: wrap;
   align-items: baseline;
-  gap: 4px 10px;
+  gap: 0 0.4em; /* ≈ "&nbsp;" either side of the "|" */
   margin: 0 0 15px;
   color: #fff;
-  font-size: 24px;
+  font-size: 18px;
   font-weight: 400;
-  line-height: 29px;
+  line-height: 21px;
 }
 
 .event-hero .event-hero-meta-sep {
   color: #fff;
-  font-weight: 400;
 }
 
+/* tagline (product / product-category .subtext) */
 .event-hero .event-hero-tagline {
-  margin: 0 0 20px;
+  max-width: 480px;
+  margin: 0 0 16px;
   color: #fff;
-  font-size: var(--body-font-size-s);
-  line-height: 1.45;
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 21px;
+}
+
+/* tagline after the meta line (event .event-desc) */
+.event-hero .event-hero-meta + .event-hero-tagline {
+  max-width: none;
+  padding: 7px 0;
+  font-weight: 700;
+  line-height: 20px;
 }
 
 .event-hero .event-hero-actions {
   display: flex;
   flex-wrap: wrap;
-  gap: 12px;
+  gap: 10px 4px;
+  width: 100%;
 }
 
-/* CTA button — transparent, white outline (matches source "See what's new") */
+/* source keeps an empty .event-desc (14px + 16px margin) above the CTA */
+.event-hero .event-hero-meta + .event-hero-actions {
+  margin-top: 30px;
+}
+
+/* CTA — transparent, white outline (.secondary-button) */
 .event-hero .event-hero-btn {
+  box-sizing: border-box;
   display: inline-block;
-  padding: 6px 38px;
+  width: 100%;
+  min-width: 180px;
+  padding: 6px 38.4px;
+  border: 1px solid #fff;
   border-radius: 4px;
-  font-size: 16px;
+  background: transparent;
+  color: #fff;
+  font-size: 14px;
   font-weight: 700;
-  line-height: 1.75;
+  line-height: 20.8px;
   text-align: center;
+  text-decoration: none;
+  transition: background-color 0.2s, color 0.2s;
+}
+
+.event-hero .event-hero-btn:any-link {
+  color: #fff;
   text-decoration: none;
 }
 
-.event-hero .event-hero-btn-primary {
-  background: transparent;
-  border: 1px solid #fff;
-  color: #fff !important;
-}
-
-.event-hero .event-hero-btn-primary:hover {
+.event-hero .event-hero-btn:hover,
+.event-hero .event-hero-btn:focus-visible {
   background: #fff;
-  color: var(--brand-purple) !important;
+  color: var(--brand-purple);
+  text-decoration: none;
 }
 
-.event-hero .event-hero-btn-secondary {
-  background: transparent;
-  border: 1px solid #fff;
-  color: #fff !important;
+/* Two CTAs: the first one is the white .grey-button */
+.event-hero .event-hero-btn-primary:not(:only-child),
+.event-hero .event-hero-btn-primary:not(:only-child):any-link {
+  background-color: #fff;
+  color: var(--brand-purple);
+  font-size: 16px;
+  line-height: 26px;
 }
 
-.event-hero .event-hero-btn-secondary:hover {
-  background: #fff;
-  color: var(--brand-purple) !important;
+.event-hero .event-hero-btn-primary:not(:only-child):hover,
+.event-hero .event-hero-btn-primary:not(:only-child):focus-visible {
+  border-color: var(--brand-grey-hover);
+  background-color: var(--brand-grey-hover); /* #e7e7e7 */
+  color: var(--brand-purple);
 }
 
-/* --- Desktop: video occupies the right half, text panel on the left --- */
+/* --- Text-only hero (title + tagline, no meta / CTA / media): news index
+   (source .hero-section: col-lg-6, container .pt-3) --- */
+.event-hero:not(.has-media, :has(.event-hero-meta, .event-hero-actions)) .event-hero-inner {
+  padding-top: 16px;
+}
+
+/* .subtext.mb-5 */
+.event-hero:not(.has-media, :has(.event-hero-meta, .event-hero-actions)) .event-hero-tagline {
+  margin-bottom: 48px;
+}
+
+/* --- Workshop: meta-only hero (no CTA, no tagline) --- */
+.event-hero:has(.event-hero-meta):not(:has(.event-hero-actions, .event-hero-tagline)) .event-hero-inner {
+  padding-top: 16px;
+}
+
+.event-hero:has(.event-hero-meta):not(:has(.event-hero-actions, .event-hero-tagline)) .event-hero-meta {
+  order: -1;
+}
+
+.event-hero.has-media:has(.event-hero-meta):not(:has(.event-hero-actions, .event-hero-tagline)) .event-hero-media {
+  margin-bottom: 50px;
+}
+
+/* --- Product category hero (no meta, page lists products-solutions):
+   source .hero-section padding 60px, container .pt-4, media margin 40px,
+   .subtext.mb-5, last CTA .mb-3 (mobile / tablet; desktop height is fixed
+   by min-height) --- */
+main:has(.products-solutions) .event-hero:not(:has(.event-hero-meta)) {
+  padding: 84px 0 76px;
+}
+
+main:has(.products-solutions) .event-hero.has-media:not(:has(.event-hero-meta)) {
+  padding-top: 60px;
+}
+
+main:has(.products-solutions) .event-hero.has-media:not(:has(.event-hero-meta)) .event-hero-media {
+  margin-bottom: 64px;
+}
+
+main:has(.products-solutions) .event-hero:not(:has(.event-hero-meta)) .event-hero-tagline {
+  margin-bottom: 48px;
+}
+
+/* --- Session library hero (Innovation Theater, page holds the filterable
+   theater-sessions block): source .innovation-hero, compact band, full-width
+   tagline --- */
+main:has(.theater-sessions-filters) .event-hero:not(.has-media, :has(.event-hero-meta, .event-hero-actions)) {
+  min-height: 0;
+  padding: 40px 0 30px;
+}
+
+main:has(.theater-sessions-filters) .event-hero:not(.has-media, :has(.event-hero-meta, .event-hero-actions)) .event-hero-inner {
+  padding-top: 0;
+}
+
+main:has(.theater-sessions-filters) .event-hero:not(.has-media, :has(.event-hero-meta, .event-hero-actions)) :is(.event-hero-content, .event-hero-tagline) {
+  max-width: 990px;
+}
+
+main:has(.theater-sessions-filters) .event-hero:not(.has-media, :has(.event-hero-meta, .event-hero-actions)) .event-hero-tagline {
+  margin-bottom: 0;
+}
+
+/* --- Workshop: session copy authored as default content after the hero
+   (stand-in for the source booking widget) continues the purple band in
+   the text column --- */
+main > .section.event-hero-container:has(> .event-hero-wrapper + .default-content-wrapper) .event-hero {
+  padding-bottom: 0;
+}
+
+main > .section.event-hero-container > .event-hero-wrapper ~ .default-content-wrapper {
+  position: relative;
+  z-index: 1;
+  padding-top: 42px;
+  padding-bottom: 30px;
+  color: #fff;
+  font-size: 16px;
+  line-height: 24px;
+}
+
+main > .section.event-hero-container > .event-hero-wrapper ~ .default-content-wrapper :is(h2, h3, p, li) {
+  color: #fff;
+  font-size: 16px;
+  line-height: 24px;
+}
+
+main > .section.event-hero-container > .event-hero-wrapper ~ .default-content-wrapper :is(p, ul, ol) {
+  margin: 0 0 8px;
+}
+
+/* session slots: compact list (stand-in for the source date dropdown) */
+main > .section.event-hero-container > .event-hero-wrapper ~ .default-content-wrapper ul {
+  padding-left: 20px;
+}
+
+main > .section.event-hero-container > .event-hero-wrapper ~ .default-content-wrapper li {
+  font-size: 14px;
+  line-height: 20px;
+}
+
+main > .section.event-hero-container > .event-hero-wrapper ~ .default-content-wrapper a:any-link {
+  color: #fff;
+  text-decoration: underline;
+}
+
+@media (width >= 600px) {
+  .event-hero .event-hero-inner {
+    max-width: 540px;
+  }
+
+  .event-hero .event-hero-meta {
+    font-size: 24px;
+    line-height: 29px;
+  }
+
+  .event-hero .event-hero-btn {
+    width: auto;
+    font-size: 16px;
+    line-height: 26px;
+  }
+
+  .event-hero .event-hero-actions {
+    gap: 16px 4px;
+  }
+}
+
+/* --- Desktop: media on the right half, text column on the left --- */
 @media (width >= 900px) {
+  .event-hero {
+    min-height: 399px;
+    padding: 77px 0;
+  }
+
   .event-hero.has-media .event-hero-media {
     position: absolute;
-    inset: 0 0 0 50%;
+    inset: 0 0 0 auto;
     width: 50%;
+    max-width: 713px;
     height: 100%;
+    margin: 0;
     aspect-ratio: auto;
   }
 
   .event-hero .event-hero-inner {
-    padding: 77px 15px;
-    min-height: 364px;
-    box-sizing: border-box;
+    max-width: 960px;
   }
 
+  .event-hero .event-hero-title {
+    line-height: 41px;
+  }
+
+  /* product / product category: col-lg-5 */
   .event-hero .event-hero-content {
-    max-width: 540px;
+    max-width: calc(41.6667% - 17.5px);
+  }
+
+  /* text-only hero: col-lg-6; band height fixed by min-height */
+  .event-hero:not(.has-media, :has(.event-hero-meta, .event-hero-actions)) .event-hero-content {
+    max-width: calc(50% - 15px);
+  }
+
+  .event-hero:not(.has-media, :has(.event-hero-meta, .event-hero-actions)) .event-hero-tagline {
+    margin-bottom: 16px;
+  }
+
+  /* event (has meta): col-lg-6 */
+  .event-hero:has(.event-hero-meta) .event-hero-content {
+    max-width: calc(50% - 15px);
+  }
+
+  /* workshop: col-lg-7, title + meta limited to 470px; height follows content */
+  .event-hero:has(.event-hero-meta):not(:has(.event-hero-actions, .event-hero-tagline)) {
+    min-height: 0;
+  }
+
+  .event-hero:has(.event-hero-meta):not(:has(.event-hero-actions, .event-hero-tagline)) .event-hero-content {
+    max-width: calc(58.3333% - 12.5px);
+  }
+
+  .event-hero:has(.event-hero-meta):not(:has(.event-hero-actions, .event-hero-tagline)) :is(.event-hero-title, .event-hero-meta) {
+    max-width: 470px;
+  }
+
+  main:has(.products-solutions) .event-hero:not(:has(.event-hero-meta)),
+  main:has(.products-solutions) .event-hero.has-media:not(:has(.event-hero-meta)) {
+    padding: 77px 0;
+  }
+
+  main:has(.products-solutions) .event-hero.has-media:not(:has(.event-hero-meta)) .event-hero-media {
+    margin-bottom: 0;
+  }
+
+  main:has(.products-solutions) .event-hero:not(:has(.event-hero-meta)) .event-hero-tagline {
+    margin-bottom: 16px;
+  }
+
+  main:has(.theater-sessions-filters) .event-hero:not(.has-media, :has(.event-hero-meta, .event-hero-actions)) {
+    padding: 77px 0 20px;
+  }
+
+  /* workshop + session copy: the media covers the whole band (section is
+     the positioning context), copy stays left of it */
+  main > .section.event-hero-container:has(> .event-hero-wrapper + .default-content-wrapper) {
+    position: relative;
+    overflow: hidden;
+  }
+
+  main > .section.event-hero-container:has(> .event-hero-wrapper + .default-content-wrapper) .event-hero {
+    position: static;
+  }
+
+  main > .section.event-hero-container > .event-hero-wrapper ~ .default-content-wrapper {
+    padding-bottom: 77px;
+  }
+
+  main > .section.event-hero-container > .event-hero-wrapper ~ .default-content-wrapper > * {
+    max-width: calc(50% - 30px);
+  }
+}
+
+/* source tightens hero buttons on small desktops (992–1250px) */
+@media (width >= 900px) and (width < 1200px) {
+  .event-hero .event-hero-btn {
+    min-width: 0;
+    padding: 6px 22.4px;
+  }
+}
+
+@media (width >= 1200px) {
+  .event-hero {
+    min-height: min(399px, 28.4vw);
+  }
+
+  .event-hero .event-hero-inner {
+    max-width: var(--content-max-width);
+  }
+
+  /* authored variant "Event Hero (compact)" — RSNA 2025 product categories */
+  .event-hero.compact,
+  main:has(.products-solutions) .event-hero.compact:not(:has(.event-hero-meta)) {
+    padding: 34px 0 30px;
   }
 }

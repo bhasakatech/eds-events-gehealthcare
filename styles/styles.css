@@ -1,3 +1,5 @@
+@import url('brand.css');
+
 /*
  * Copyright 2020 Adobe. All rights reserved.
  * This file is licensed to you under the Apache License, Version 2.0 (the "License");
@@ -10,65 +12,70 @@
  * governing permissions and limitations under the License.
  */
 
-@import url('brand.css');
-
+/*
+ * Brand tokens (fonts, colors, spacing, heading sizes) live in brand.css.
+ * The :root below only adds derived / responsive tokens on top of them.
+ */
 :root {
-  /* colors — GE HealthCare Events brand */
-  --background-color: #fff;
-  --light-color: #f2f1f3;
-  --dark-color: #3d1a5b;
-  --text-color: #000;
-  --link-color: #6022a6;
-  --link-hover-color: #0056b3;
+  /* colors — aliases of brand.css tokens used by blocks */
+  --light-color: var(--section-light);
+  --dark-color: var(--section-dark);
+  --heading-color: var(--brand-purple); /* source default-content h2 color */
 
-  /* fonts */
-  --body-font-family: "Source Sans Pro", sans-serif;
-  --heading-font-family: "Source Sans Pro", sans-serif;
+  /* body sizes (source: body 16px, default content p 18px) */
+  --body-font-size-m: 18px;
+  --body-font-size-s: 16px;
+  --body-font-size-xs: 14px;
 
-  /* body sizes */
-  --body-font-size-m: 22px;
-  --body-font-size-s: 19px;
-  --body-font-size-xs: 17px;
+  /* heading sizes — mobile (source h1 30px @375px, h2 33px at all widths) */
+  --heading-font-size-xxl: 30px;
+  --heading-font-size-xl: var(--heading-size-xl);
+  --heading-font-size-l: 24px;
+  --heading-font-size-m: 20px;
+  --heading-font-size-s: 18px;
+  --heading-font-size-xs: 16px;
 
-  /* heading sizes */
-  --heading-font-size-xxl: 55px;
-  --heading-font-size-xl: 44px;
-  --heading-font-size-l: 34px;
-  --heading-font-size-m: 27px;
-  --heading-font-size-s: 24px;
-  --heading-font-size-xs: 22px;
+  /* buttons (source .primary-button / .secondary-button / .grey-button) */
+  --button-font-size: 16px;
+  --button-font-weight: 700;
+  --button-line-height: 26px;
+  --button-padding: 6px 2.4rem;
+  --button-border-width: 1px;
+  --button-border-radius: 4px;
+  --button-transition: all 0.2s cubic-bezier(0.47, 0, 0.745, 0.715);
 
-  /* nav height */
-  --nav-height: 64px;
+  /* focus */
+  --focus-outline: 2px solid var(--brand-purple);
+  --focus-outline-offset: 2px;
+
+  /* form elements (source .contact-form inputs) */
+  --input-font-size: 15px;
+  --input-color: #000;
+  --input-background: #f3f8fd;
+  --input-border: 1px solid #b2c1d0;
+  --input-border-focus-color: var(--brand-purple);
+  --input-border-radius: 3px;
+  --input-padding: 7px 10px;
+  --input-min-height: 38.5px;
+  --input-placeholder-color: #6c757d;
 }
 
-/* fallback fonts */
+/* fallback font — Source Sans Pro is ~7% narrower than Arial */
 @font-face {
-  font-family: roboto-condensed-fallback;
-  size-adjust: 88.82%;
-  src: local('Arial');
-}
-
-@font-face {
-  font-family: roboto-fallback;
-  size-adjust: 99.529%;
+  font-family: source-sans-pro-fallback;
+  size-adjust: 93%;
   src: local('Arial');
 }
 
 @media (width >= 900px) {
   :root {
-    /* body sizes */
-    --body-font-size-m: 18px;
-    --body-font-size-s: 16px;
-    --body-font-size-xs: 14px;
-
-    /* heading sizes */
-    --heading-font-size-xxl: 45px;
-    --heading-font-size-xl: 36px;
-    --heading-font-size-l: 28px;
-    --heading-font-size-m: 22px;
-    --heading-font-size-s: 20px;
-    --heading-font-size-xs: 18px;
+    /* heading sizes — desktop (from brand.css) */
+    --heading-font-size-xxl: var(--heading-size-xxl);
+    --heading-font-size-xl: var(--heading-size-xl);
+    --heading-font-size-l: var(--heading-size-l);
+    --heading-font-size-m: var(--heading-size-m);
+    --heading-font-size-s: var(--heading-size-s);
+    --heading-font-size-xs: var(--heading-size-xs);
   }
 }
 
@@ -78,7 +85,7 @@ body {
   background-color: var(--background-color);
   color: var(--text-color);
   font-family: var(--body-font-family);
-  font-size: var(--body-font-size-m);
+  font-size: var(--body-font-size-s);
   line-height: 1.5;
 }
 
@@ -87,7 +94,9 @@ body.appear {
 }
 
 header {
-  height: var(--nav-height);
+  /* in-flow reservation; header.js publishes --header-height (expanded)
+     and --nav-height (currently visible pinned bar) */
+  height: var(--header-height, var(--nav-height));
 }
 
 header .header,
@@ -100,26 +109,40 @@ footer .footer[data-block-status="loaded"] {
   visibility: visible;
 }
 
+/* default content typography (source computed values, see
+   migration-work/default-content-extracted.css) */
 h1,
 h2,
 h3,
 h4,
 h5,
 h6 {
-  margin-top: 0.8em;
-  margin-bottom: 0.25em;
+  margin-top: 0;
+  margin-bottom: 8px;
   font-family: var(--heading-font-family);
-  font-weight: 600;
-  line-height: 1.25;
-  scroll-margin: 40px;
+  font-weight: 500;
+  line-height: 1.2;
+  scroll-margin: calc(var(--nav-height) + 16px);
 }
 
-h1 { font-size: var(--heading-font-size-xxl); }
-h2 { font-size: var(--heading-font-size-xl); }
+h1 {
+  font-size: var(--heading-font-size-xxl);
+  line-height: 1.08;
+}
+
+h2 {
+  font-size: var(--heading-font-size-xl);
+  line-height: 1.2;
+}
+
 h3 { font-size: var(--heading-font-size-l); }
 h4 { font-size: var(--heading-font-size-m); }
 h5 { font-size: var(--heading-font-size-s); }
 h6 { font-size: var(--heading-font-size-xs); }
+
+main .default-content-wrapper h2 {
+  color: var(--heading-color);
+}
 
 p,
 dl,
@@ -127,8 +150,16 @@ ol,
 ul,
 pre,
 blockquote {
-  margin-top: 0.8em;
-  margin-bottom: 0.25em;
+  margin-top: 0;
+  margin-bottom: 16px;
+}
+
+p {
+  font-size: var(--body-font-size-m);
+}
+
+main .default-content-wrapper p {
+  line-height: 21px;
 }
 
 code,
@@ -148,18 +179,16 @@ main > div {
   margin: 40px 16px;
 }
 
-input,
-textarea,
-select,
-button {
+:where(input, textarea, select, button) {
   font: inherit;
 }
 
-/* links */
+/* links (source: purple, no underline; a:hover #0056b3 + underline) */
 a:any-link {
   color: var(--link-color);
   text-decoration: none;
   overflow-wrap: break-word;
+  transition: color 0.2s ease;
 }
 
 a:hover {
@@ -167,117 +196,173 @@ a:hover {
   text-decoration: underline;
 }
 
-/* buttons */
+a:active {
+  color: var(--brand-purple-hover);
+}
+
+a:focus-visible {
+  outline: var(--focus-outline);
+  outline-offset: var(--focus-outline-offset);
+  border-radius: 2px;
+}
+
+/* buttons — global EDS button reset */
+main .button-container {
+  display: inline;
+}
+
+main a.button:any-link {
+  background: none;
+  border: none;
+  border-radius: 0;
+  color: var(--link-color);
+  font-size: inherit;
+  font-weight: inherit;
+  padding: 0;
+  margin: 0;
+  text-decoration: underline;
+  white-space: normal;
+}
+
 p.button-wrapper {
   margin: 12px 0;
 }
 
-a.button:any-link,
+/* button base (applies to every authored variant) */
+main a.button:is(.primary, .secondary, .accent):any-link,
 button.button {
   box-sizing: border-box;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
+  display: inline-block;
   max-width: 100%;
   margin: 0;
-  border: 2px solid transparent;
-  border-radius: 2.4em;
-  padding: 0.5em 1.2em;
-  font: inherit;
-  font-weight: 500;
-  line-height: 1.25;
+  border: var(--button-border-width) solid transparent;
+  border-radius: var(--button-border-radius);
+  padding: var(--button-padding);
+  font-family: var(--body-font-family);
+  font-size: var(--button-font-size);
+  font-weight: var(--button-font-weight);
+  line-height: var(--button-line-height);
+  text-align: center;
   text-decoration: none;
   cursor: pointer;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  transition: var(--button-transition);
 }
 
-a.button[aria-disabled="true"],
+main a.button:is(.primary, .secondary, .accent):focus-visible,
+button.button:focus-visible {
+  outline: var(--focus-outline);
+  outline-offset: var(--focus-outline-offset);
+}
+
+main a.button[aria-disabled="true"],
 button.button:disabled {
   cursor: not-allowed;
   pointer-events: none;
+  opacity: 0.5;
 }
 
-a.button.primary,
+/* primary — purple filled (source .primary-button) */
+main a.button.primary:any-link,
 button.button.primary {
   border-color: var(--brand-purple);
   background-color: var(--brand-purple);
   color: #fff;
 }
 
-a.button.primary:hover,
-a.button.primary:focus-visible,
+main a.button.primary:hover,
+main a.button.primary:focus-visible,
+main a.button.primary:active,
 button.button.primary:hover,
-button.button.primary:focus-visible {
-  border-color: var(--brand-purple-dark);
-  background-color: var(--brand-purple-dark);
+button.button.primary:focus-visible,
+button.button.primary:active {
+  border-color: var(--brand-purple-hover);
+  background-color: var(--brand-purple-hover);
+  color: #fff;
+  text-decoration: none;
+}
+
+/* secondary — purple outline (source .shallow-purple-button; hover fills like
+   .modality-innovation-theater .grey-button) */
+main a.button.secondary:any-link,
+button.button.secondary {
+  border-color: var(--brand-purple);
+  background-color: transparent;
+  color: var(--brand-purple);
+}
+
+main a.button.secondary:hover,
+main a.button.secondary:focus-visible,
+button.button.secondary:hover,
+button.button.secondary:focus-visible {
+  border-color: var(--brand-purple);
+  background-color: var(--brand-purple);
+  color: #fff;
+  text-decoration: none;
+}
+
+main a.button.secondary:active,
+button.button.secondary:active {
+  border-color: var(--brand-purple-hover);
+  background-color: var(--brand-purple-hover);
   color: #fff;
 }
 
-a.button.primary[aria-disabled="true"],
-a.button.primary[aria-disabled="true"]:hover,
-a.button.primary[aria-disabled="true"]:focus-visible,
-button.button.primary:disabled,
-button.button.primary:disabled:hover,
-button.button.primary:disabled:focus-visible {
-  background-color: var(--light-color);
-  border-color: var(--light-color);
-  color: var(--dark-color);
-}
-
-a.button.secondary,
-button.button.secondary {
-  border-color: var(--text-color);
-  background-color: transparent;
-  color: var(--text-color);
-}
-
-a.button.secondary:hover,
-a.button.secondary:focus-visible,
-button.button.secondary:hover,
-button.button.secondary:focus-visible {
-  border-color: var(--dark-color);
-  background-color: var(--light-color);
-  color: var(--dark-color);
-}
-
-a.button.secondary[aria-disabled="true"],
-a.button.secondary[aria-disabled="true"]:hover,
-a.button.secondary[aria-disabled="true"]:focus-visible,
-button.button.secondary:disabled,
-button.button.secondary:disabled:hover,
-button.button.secondary:disabled:focus-visible {
-  background-color: var(--light-color);
-  border-color: var(--light-color);
-  color: var(--dark-color);
-}
-
-/* high-impact call-to-action */
-a.button.accent,
+/* accent — white filled, purple text (source .grey-button, used on purple bands) */
+main a.button.accent:any-link,
 button.button.accent {
-  border-color: var(--link-color);
-  background-color: var(--link-color);
-  color: var(--background-color);
+  border-color: var(--brand-purple);
+  background-color: #fff;
+  color: var(--brand-purple);
 }
 
-a.button.accent:hover,
-a.button.accent:focus-visible,
+main a.button.accent:hover,
+main a.button.accent:focus-visible,
+main a.button.accent:active,
 button.button.accent:hover,
-button.button.accent:focus-visible {
-  border-color: var(--link-hover-color);
-  background-color: var(--link-hover-color);
+button.button.accent:focus-visible,
+button.button.accent:active {
+  border-color: var(--brand-grey-hover);
+  background-color: var(--brand-grey-hover);
+  color: var(--brand-purple);
+  text-decoration: none;
 }
 
-a.button.accent[aria-disabled="true"],
-a.button.accent[aria-disabled="true"]:hover,
-a.button.accent[aria-disabled="true"]:focus-visible,
-button.button.accent:disabled,
-button.button.accent:disabled:hover,
-button.button.accent:disabled:focus-visible {
-  background-color: var(--light-color);
-  border-color: var(--light-color);
-  color: var(--dark-color);
+/* white-on-dark — buttons inside dark sections (source hero
+   .secondary-button / .grey-button.hollow-button on purple) */
+main .section.dark:not(.theater-sessions-container) a.button.primary:any-link,
+main .section.dark:not(.theater-sessions-container) a.button.accent:any-link {
+  border-color: #fff;
+  background-color: #fff;
+  color: var(--brand-purple);
+}
+
+main .section.dark:not(.theater-sessions-container) a.button.primary:hover,
+main .section.dark:not(.theater-sessions-container) a.button.primary:focus-visible,
+main .section.dark:not(.theater-sessions-container) a.button.accent:hover,
+main .section.dark:not(.theater-sessions-container) a.button.accent:focus-visible {
+  border-color: var(--brand-grey-hover);
+  background-color: var(--brand-grey-hover);
+  color: var(--brand-purple);
+}
+
+main .section.dark:not(.theater-sessions-container) a.button.secondary:any-link {
+  border-color: #fff;
+  background-color: transparent;
+  color: #fff;
+}
+
+main .section.dark:not(.theater-sessions-container) a.button.secondary:hover,
+main .section.dark:not(.theater-sessions-container) a.button.secondary:focus-visible {
+  border-color: var(--brand-grey-hover);
+  background-color: var(--brand-grey-hover);
+  color: var(--brand-slate);
+}
+
+main .section.dark:not(.theater-sessions-container) a.button:focus-visible {
+  outline-color: #fff;
 }
 
 main img {
@@ -297,9 +382,66 @@ main img {
   width: 100%;
 }
 
+/* form elements (source .contact-form: light-blue fields, slate border).
+   Zero-specificity :where() so block-level input styling always wins. */
+:where(main .default-content-wrapper) :where(input:not([type="checkbox"], [type="radio"], [type="submit"], [type="button"], [type="reset"], [type="file"], [type="range"], [type="color"]), select, textarea) {
+  box-sizing: border-box;
+  width: 100%;
+  min-height: var(--input-min-height);
+  margin-top: 4px;
+  border: var(--input-border);
+  border-radius: var(--input-border-radius);
+  padding: var(--input-padding);
+  background-color: var(--input-background);
+  color: var(--input-color);
+  font-family: var(--body-font-family);
+  font-size: var(--input-font-size);
+  line-height: 1.5;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+:where(main .default-content-wrapper) :where(textarea) {
+  min-height: 100px;
+  resize: vertical;
+}
+
+:where(main) :where(input, textarea)::placeholder {
+  color: var(--input-placeholder-color);
+  opacity: 1;
+}
+
+:where(main .default-content-wrapper) :where(input:not([type="checkbox"], [type="radio"]), select, textarea):focus {
+  border-color: var(--input-border-focus-color);
+  outline: none;
+  box-shadow: 0 0 0 2px rgb(96 34 166 / 25%);
+}
+
+:where(main) :where(input[type="checkbox"], input[type="radio"]) {
+  accent-color: var(--brand-purple);
+}
+
+:where(main .default-content-wrapper) :where(label) {
+  font-size: var(--input-font-size);
+  color: var(--input-color);
+}
+
+/* form block — map its tokens to the source contact-form values
+   (element-level custom properties override form.css :root defaults) */
+main .form {
+  --form-input-background-color: var(--input-background);
+  --form-input-border-color: #b2c1d0;
+  --form-input-padding: var(--input-padding);
+  --form-input-font-size: var(--input-font-size);
+  --form-label-color: var(--input-color);
+  --form-label-font-size: var(--input-font-size);
+  --form-paragraph-color: var(--text-color);
+  --button-primary-color: var(--brand-purple);
+  --button-primary-hover-color: var(--brand-purple-hover);
+}
+
 /* sections */
 
-/* Global section container */
+/* Global section container (source Bootstrap .container: 540/720/960/1140) */
 
 .section > div {
   width: 100%;
@@ -331,7 +473,7 @@ main img {
 
 @media (width >= 1200px) {
   .section > div {
-    max-width: 1140px !important;
+    max-width: var(--content-max-width) !important;
   }
 }
 
@@ -339,44 +481,278 @@ main > .section {
   margin: 40px 0;
 }
 
-main > .section > div {
-  max-width: 1200px;
-  margin: auto;
-  padding: 0 24px;
+main > .section:first-of-type {
+  margin-top: 50px;
 }
 
-main > .section:first-of-type {
-      margin-top: 50px;
+/* section metadata — background bands */
+main .section.light,
+main .section.highlight,
+main .section.light-grey {
+  margin: 0;
+  padding: var(--section-padding-s) 0;
+  background-color: var(--section-light);
+}
+
+main .section.grey {
+  margin: 0;
+  padding: var(--section-padding-s) 0;
+  background-color: var(--section-grey);
+}
+
+/* dark — GE purple band with white text (source .single-products
+   .modality-innovation-theater). video-text keeps this band by default and
+   paints #000 (source .theater-intro) only for its intro look, in its
+   block CSS. */
+main .section.dark {
+  margin: 0;
+  padding: var(--section-padding-s) 0;
+  background-color: var(--brand-purple);
+  color: #fff;
+}
+
+main .section.dark .default-content-wrapper :is(h1, h2, h3, h4, h5, h6, p, li) {
+  color: #fff;
+}
+
+main .section.dark .default-content-wrapper a:any-link {
+  color: #fff;
+  text-decoration: underline;
+}
+
+main .section.dark .default-content-wrapper a:hover {
+  color: var(--brand-grey-hover);
+}
+
+/* theater-sessions renders its own white panel; on the source the
+   innovation-theater band is white (product categories), so keep the
+   surrounding band white and its default content in brand colors. */
+main .section.dark.theater-sessions-container {
+  background-color: var(--background-color);
+  color: var(--text-color);
+}
+
+main .section.dark.theater-sessions-container .default-content-wrapper :is(h1, h2, h3, h4, h5, h6) {
+  color: var(--brand-title-color);
+}
+
+main .section.dark.theater-sessions-container .default-content-wrapper :is(p, li) {
+  color: var(--text-color);
+}
+
+main .section.dark.theater-sessions-container .default-content-wrapper a:any-link {
+  color: var(--link-color);
+  text-decoration: none;
+}
+
+main .section.dark.theater-sessions-container .default-content-wrapper a:hover {
+  color: var(--link-hover-color);
+  text-decoration: underline;
+}
+
+/* Innovation Theater teaser "See all" — a lone link authored after the
+   theater-sessions block (source .modality-innovation-theater a.see-all:
+   centered purple .grey-button, col-12 mt-4). */
+main .section.theater-sessions-container .theater-sessions-wrapper + .default-content-wrapper > p:only-child:has(> a:only-child) {
+  margin: 32px 0 0;
+  text-align: center;
+}
+
+main .section.theater-sessions-container .theater-sessions-wrapper + .default-content-wrapper > p:only-child > a:only-child:any-link {
+  display: inline-block;
+  padding: 6px 38.4px;
+  border: 1px solid var(--brand-purple);
+  border-radius: 4px;
+  background-color: var(--brand-purple);
+  color: #fff;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 26px;
+  text-decoration: none;
+}
+
+main .section.theater-sessions-container .theater-sessions-wrapper + .default-content-wrapper > p:only-child > a:only-child:hover {
+  background-color: transparent;
+  color: var(--brand-purple);
+  text-decoration: none;
+}
+
+/* workshop description band (source .mammo-section: light-blue band,
+   50px padding, Bootstrap col-lg-7 text column). Scoped to the light-grey
+   section that directly follows a workshop event-hero (one with date/location
+   meta) and holds either the columns block or only default content — event
+   and product-category light-grey sections always hold other blocks. */
+main .section.event-hero-container:has(.event-hero-meta) + .section.light-grey:is(.columns-container, :has(> .default-content-wrapper:only-child)) {
+  padding: 50px 0;
+  background-color: var(--section-light-blue);
+}
+
+main .section.event-hero-container:has(.event-hero-meta) + .section.light-grey > .default-content-wrapper:only-child h2 {
+  margin-bottom: 16px;
+  font-weight: 700;
+}
+
+main .section.event-hero-container:has(.event-hero-meta) + .section.light-grey > .default-content-wrapper:only-child p {
+  font-size: var(--body-font-size-s);
+  line-height: 24px;
+}
+
+/* product overview band (source .single-products section.overview:
+   #d5dce5, 16px/24px copy). Scoped to the default-content-only light-grey
+   section that directly follows a product hero (CTA, no event meta). */
+main .section.event-hero-container:has(.event-hero-actions):not(:has(.event-hero-meta)) + .section.light-grey:has(> .default-content-wrapper:only-child) {
+  background-color: var(--section-blue-grey);
+}
+
+main .section.event-hero-container:has(.event-hero-actions):not(:has(.event-hero-meta)) + .section.light-grey > .default-content-wrapper:only-child p {
+  font-size: var(--body-font-size-s);
+  line-height: 24px;
 }
 
 @media (width >= 900px) {
-  main > .section > div {
-    padding: 0 32px;
+  main .section.event-hero-container:has(.event-hero-meta) + .section.light-grey > .default-content-wrapper:only-child > * {
+    max-width: calc((100% + 30px) * 7 / 12 - 30px);
   }
 }
 
-/* section metadata */
-main .section.light,
-main .section.highlight,
-main .section.grey,
-main .section.light-grey {
-  background-color: var(--section-light);
+/* stylelint-disable no-descending-specificity -- the positional form-intro
+   rules below (first section only) never match the elements targeted by the
+   section rules above, so their relative specificity order is irrelevant */
+
+/* form intro (contact page): eyebrow paragraph + h1 + form copy authored as
+   default content (source .contact-template: left column 680px, eyebrow
+   13px/700 tracked, title 23/28px 400, small print 12-13px, disclaimer 15px) */
+main > .section:first-of-type > .default-content-wrapper:has(> p:first-child + h1) {
+  padding-top: 29px;
+  padding-right: 35px !important;
+  padding-left: 35px !important;
+}
+
+main > .section:first-of-type > .default-content-wrapper:has(> p:first-child + h1) > * {
+  max-width: 680px;
+}
+
+main > .section:first-of-type > .default-content-wrapper > p:first-child:has(+ h1) {
+  margin: 0 0 16px;
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 19.5px;
+  letter-spacing: 1px;
+}
+
+main > .section:first-of-type > .default-content-wrapper > p:first-child + h1 {
+  margin: 0 0 16px;
+  font-size: 23px;
+  font-weight: 400;
+  line-height: 25px;
+}
+
+/* consent small print (source .subtitle) */
+main > .section:first-of-type > .default-content-wrapper > p:first-child + h1 ~ p {
+  margin: 10px 0 0;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 16px;
+  letter-spacing: 1px;
+}
+
+main > .section:first-of-type > .default-content-wrapper > p:first-child + h1 ~ p a:any-link {
+  color: #000;
+  font-weight: 700;
+  text-decoration: underline;
+}
+
+/* "Please enter your email." (.contact-title) */
+main > .section:first-of-type > .default-content-wrapper > p:first-child + h1 + p {
+  margin: 40px 0 0;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 24px;
+  letter-spacing: normal;
+}
+
+/* privacy line (.contact-title .sub) */
+main > .section:first-of-type > .default-content-wrapper > p:first-child + h1 + p + p {
+  margin: 0 0 6px;
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 19.5px;
+  letter-spacing: normal;
+}
+
+main > .section:first-of-type > .default-content-wrapper > p:first-child + h1 + p + p a:any-link {
+  color: var(--link-color);
+  font-weight: 400;
+  text-decoration: none;
+}
+
+/* required-fields disclaimer (.disclaimer) */
+main > .section:first-of-type > .default-content-wrapper > p:first-child + h1 ~ p:last-child:not(:nth-child(3), :nth-child(4)) {
+  margin: 24px 0 0;
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 18px;
+  letter-spacing: normal;
+}
+
+main > .section:first-of-type > .default-content-wrapper > p:first-child + h1 ~ p:last-child:not(:nth-child(3), :nth-child(4)) a:any-link {
+  color: var(--link-color);
+  font-weight: 400;
+}
+
+@media (width >= 600px) {
+  main > .section:first-of-type > .default-content-wrapper > p:first-child + h1 {
+    font-size: 28px;
+    line-height: 32px;
+  }
+}
+
+@media (width >= 992px) {
+  main > .section:first-of-type > .default-content-wrapper:has(> p:first-child + h1) {
+    max-width: none !important;
+    padding-right: 70px !important;
+    padding-left: 85px !important;
+  }
+}
+
+/* blocks following the form intro (contact page: form block + disclaimer)
+   share the intro's left column (source .contact-template) */
+main > .section:first-of-type > .default-content-wrapper:has(> p:first-child + h1) ~ div {
+  padding-right: 35px !important;
+  padding-left: 35px !important;
+}
+
+main > .section:first-of-type > .default-content-wrapper:has(> p:first-child + h1) ~ .default-content-wrapper > p:last-child {
+  max-width: 600px;
   margin: 0;
-  padding: 40px 0;
+  font-size: 15px;
+  line-height: 18px;
 }
 
-main .section.dark {
-  background-color: var(--brand-purple-dark);
-  color: #fff;
+@media (width >= 992px) {
+  main > .section:first-of-type > .default-content-wrapper:has(> p:first-child + h1) ~ div {
+    max-width: none !important;
+    padding-right: 70px !important;
+    padding-left: 85px !important;
+  }
+}
+
+/* stylelint-enable no-descending-specificity */
+
+/* hero-less posts (events / news singles): the first section is default
+   content opening with the page h1 (source .post-content.py-5: lavender band,
+   48px padding, purple 33px/500 title, justified) */
+main > .section:first-of-type:has(> .default-content-wrapper:only-child > h1:first-child) {
   margin: 0;
-  padding: 40px 0;
+  padding: var(--section-padding-s) 0;
+  background-color: var(--section-lavender);
 }
 
-main .section.dark h1,
-main .section.dark h2,
-main .section.dark h3,
-main .section.dark h4,
-main .section.dark p {
-  color: #fff;
+main > .section:first-of-type > .default-content-wrapper:only-child > h1:first-child {
+  margin: 0 0 16px;
+  color: var(--brand-purple);
+  font-size: var(--heading-size-xl);
+  font-weight: 500;
+  line-height: 1.2;
+  text-align: justify;
 }
-

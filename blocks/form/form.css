@@ -1,54 +1,71 @@
 :root {
+    /* values extracted from the source contact form (form#login-form.contact-form) */
     --background-color-primary: #fff;
-    --label-color: #666;
-    --border-color: #818a91;
-    --form-error-color: #ff5f3f;
-    --button-primary-color: #5F8DDA;
+    --label-color: #000;
+    --border-color: #b2c1d0;
+    --form-error-color: #dc3545;
+    --button-primary-color: #6022a6;
     --button-secondary-color: #666;
-    --button-primary-hover-color: #035fe6;
+    --button-primary-hover-color: #470071;
     --form-font-size-m: 22px;
-    --form-font-size-s: 18px;
-    --form-font-size-xs: 16px;
-    --form-background-color: var(--background-color-primary);
-    --form-padding: 0 10px;
+    --form-font-size-s: 16px;
+    --form-font-size-xs: 13px;
+    --form-background-color: transparent;
+    --form-padding: 0;
     --form-columns: 12;
-    --form-field-horz-gap: 40px;
-    --form-field-vert-gap: 20px;
-    --form-invalid-border-color: #ff5f3f;
-    --form-input-padding: 0.75rem 0.6rem;
-    --form-input-font-size: 1rem;
+    --form-max-width: 680px;
+    --form-field-horz-gap: 30px;
+    --form-field-vert-gap: 24px;
+    --form-invalid-border-color: #dc3545;
+    --form-input-padding: 7px 10px;
+    --form-input-font-size: 15px;
+    --form-input-line-height: 22.5px;
+    --form-input-height: 38.5px;
+    --form-input-radius: 3px;
+    --form-input-color: #000;
     --form-input-disable-color: #ebebe4;
     --form-input-border-size: 1px;
     --form-input-border-color: var(--border-color);
-    --form-input-background-color: var(--background-color-primary);
+    --form-input-background-color: #f3f8fd;
+    --form-input-focus-color: var(--button-primary-color);
     --form-paragraph-color: var(--label-color);
-    --form-paragraph-margin: 0 0 0.9rem;
-    --form-paragraph-font-style: none;
+    --form-paragraph-margin: 0;
+    --form-paragraph-font-style: normal;
     --form-paragraph-font-size: var(--form-font-size-s);
+    --form-paragraph-line-height: 24px;
     --form-label-color: var(--label-color);
-    --form-label-font-size: var(--form-font-size-s);
+    --form-label-font-size: 15px;
+    --form-label-line-height: 22.5px;
     --form-label-font-weight: 400;
-    --form-title-font-weight: 600;
+    --form-title-font-weight: 400;
     --form-fieldset-border: 0;
     --form-fieldset-marign: 0;
     --form-fieldset-columns: 1;
     --form-fieldset-legend-color: var(--form-label-color);
-    --form-fieldset-legend-font-size: var(--form-label-font-size);
+    --form-fieldset-legend-font-size: var(--form-font-size-s);
+    --form-fieldset-legend-line-height: 24px;
     --form-fieldset-legend-font-weight: var(--form-title-font-weight);
     --form-fieldset-legend-border: none;
     --form-fieldset-legend-padding: 0;
     --form-button-color: var(--background-color-primary);
-    --form-button-font-size: var(--form-font-size-s);
+    --form-button-font-size: 16px;
+    --form-button-font-weight: 700;
+    --form-button-line-height: 26px;
     --form-button-background-color: var(--button-primary-color);
     --form-button-background-hover-color: var(--button-primary-hover-color);
-    --form-button-border: 2px solid transparent;
-    --form-button-padding:15px 50px;
+    --form-button-border: 1px solid var(--form-button-background-color);
+    --form-button-radius: 4px;
+    --form-button-padding: 6px 2.4rem;
     --form-upload-color: var(--form-label-color);
     --form-upload-font-size: var(--form-font-size-xs);
     --form-upload-background-color: var(--background-color-primary);
-    --form-submit-width: 100%;
+    --form-submit-width: auto;
     --form-width: 100%;
-    --form-field-gap: 5px;
+    --form-field-gap: 0;
+    --form-control-gap: 4px;
+    --form-consent-font-size: 12px;
+    --form-consent-line-height: 16px;
+    --form-consent-letter-spacing: 1px;
     
     /* Card styling variables */
     --form-card-border-color: #e0e0e0;
@@ -95,10 +112,22 @@ main .form > div:not(:first-child) {
     display: none;
 }
 
+/* the form replaces the authored link, so it sits inside that link's <p> */
+main .form p:has(> form) {
+    margin: 0;
+}
+
 main .form form {
     display: grid;
     grid-template-columns: repeat(var(--form-columns), minmax(0, 1fr));
     gap: var(--form-field-vert-gap) var(--form-field-horz-gap);
+    max-width: var(--form-max-width);
+    margin: 0;
+    padding: 24px 0;
+    color: var(--form-label-color);
+    font-family: var(--body-font-family);
+    font-size: var(--form-paragraph-font-size);
+    line-height: var(--form-paragraph-line-height);
 }
 
 main .form form fieldset {
@@ -123,53 +152,75 @@ main .form form .field-invalid .field-description {
 
 
 /**
- * Required field indicator
+ * Required field indicator (source: asterisk before the label text, "*Email")
  */
- [data-required="true"] > label::after {
+main .form [data-required="true"] > label::before {
     content: "*";
-    color: var(--form-error-color);
-    padding-inline-start: 5px;
-  }
-  
-  /**
-   * Required field indicator not required for checkboxes and radio buttons
-   */
-  .radio-wrapper > label::after,
-  .checkbox-wrapper > label::after {
-      content: none;
-  }
-  
-  main .form form .checkbox-wrapper.field-invalid {
-      flex-wrap: wrap;
-  }
+}
 
-main .form select {
-    padding-top: 0;
-    padding-bottom: 0;
-  }
+/* question-style group labels carry the asterisk after ("What can we help you with?*") */
+main .form fieldset[data-required="true"] > legend::after {
+    content: "*";
+}
+
+/**
+ * Required field indicator not required for checkboxes and radio buttons
+ */
+main .form .radio-wrapper > label::before,
+main .form .checkbox-wrapper > label::before {
+    content: none;
+}
+
+main .form form .checkbox-wrapper.field-invalid {
+    flex-wrap: wrap;
+}
 
 main .form input,
 main .form textarea,
 main .form select {
+    box-sizing: border-box;
     background-color: var(--form-input-background-color);
     border: var(--form-input-border-size) solid var(--form-input-border-color);
     width: 100%;
-    height: 42px;
-    color: var(--form-label-color);
+    height: auto;
+    min-height: var(--form-input-height);
+    color: var(--form-input-color);
     padding: var(--form-input-padding);
+    font-family: var(--body-font-family);
     font-size: var(--form-input-font-size);
+    line-height: var(--form-input-line-height);
     max-width: unset;
-    margin-top: .5rem;
-    margin-bottom: 1rem;
-    border-radius: 0.25rem;
+    margin: var(--form-control-gap) 0 0;
+    border-radius: var(--form-input-radius);
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
 
-main .form input:hover, main .form select:hover {
-    border-color: rgb(90 92 96);
+main .form select {
+    height: var(--form-input-height);
+}
+
+main .form :is(input, select, textarea):focus {
+    border-color: var(--form-input-focus-color);
+    outline: none;
+    box-shadow: 0 0 0 2px rgb(96 34 166 / 25%);
+}
+
+main .form :is(input, textarea)::placeholder {
+    color: #6c757d;
+    opacity: 1;
 }
 
 main .form input:disabled{
     background-color: var(--form-input-disable-color);
+}
+
+/* validation errors */
+main .form form .field-invalid > :is(input, select, textarea) {
+    border-color: var(--form-invalid-border-color);
+}
+
+main .form form .field-invalid > :is(input, select, textarea):focus {
+    box-shadow: 0 0 0 2px rgb(220 53 69 / 25%);
 }
 
 main .form form .radio-wrapper.field-invalid > input,
@@ -188,32 +239,57 @@ main .form input[type='checkbox'],
 main .form input[type='radio'] {
     width: 16px;
     height: 16px;
+    min-height: 0;
     flex: none;
     margin: 0;
+    padding: 0;
     position: static;
     z-index: 1;
+    accent-color: var(--button-primary-color);
+    box-shadow: none;
+}
+
+main .form input[type='radio'] {
+    width: 18px;
+    height: 20px;
+    margin-inline-end: 10px;
 }
 
 main .form textarea {
+    height: 100px;
     min-height: 100px;
+    padding: 20px 10px 7px;
+    resize: none;
 }
 
 main .form fieldset:not(.checkbox-group-wrapper, .radio-group-wrapper) legend {
     font-weight: var(--form-fieldset-legend-font-weight);
     font-size: var(--form-fieldset-legend-font-size);
+    line-height: var(--form-fieldset-legend-line-height);
     color: var(--form-fieldset-legend-color);
     border-bottom: var(--form-fieldset-legend-border);
     width: 100%;
     padding: var(--form-fieldset-legend-padding);
-    margin-bottom: 10px;
+    margin-bottom: 8px;
 }
 
-main .form label,
-main .form fieldset.checkbox-group-wrapper legend,
-main .form fieldset.radio-group-wrapper legend {
+main .form label {
+    display: block;
     font-weight: var(--form-label-font-weight);
     font-size: var(--form-label-font-size);
+    line-height: var(--form-label-line-height);
     color: var(--form-label-color);
+}
+
+main .form fieldset.checkbox-group-wrapper legend,
+main .form fieldset.radio-group-wrapper legend {
+    float: none;
+    width: 100%;
+    margin-bottom: 8px;
+    font-weight: var(--form-fieldset-legend-font-weight);
+    font-size: var(--form-fieldset-legend-font-size);
+    line-height: var(--form-fieldset-legend-line-height);
+    color: var(--form-fieldset-legend-color);
 }
 
 main .form form fieldset.checkbox-group-wrapper,
@@ -227,10 +303,8 @@ main .form form fieldset.radio-group-wrapper > legend {
     padding-left: 0;
 }
 
-main .form label.required::after {
+main .form label.required::before {
     content: "*";
-    color: var(--form-label-color);
-    padding-inline-start: 5px;
 }
 
 main .form form p,
@@ -244,6 +318,7 @@ main .form form .field-wrapper {
 main .form form p {
     font-size: var(--form-paragraph-font-size);
     font-style: var(--form-paragraph-font-style);
+    line-height: var(--form-paragraph-line-height);
     color: var(--form-paragraph-color);
     margin: var(--form-paragraph-margin);
 }
@@ -256,6 +331,11 @@ main .form form .checkbox-wrapper, main .form form .radio-wrapper {
     gap: 8px;
 }
 
+main .form form .radio-wrapper {
+    flex-wrap: nowrap;
+    gap: 0;
+}
+
 main .form form fieldset > .radio-wrapper,
 main .form form fieldset > .checkbox-wrapper {
     margin-left: var(--form-field-gap);
@@ -264,6 +344,28 @@ main .form form fieldset > .checkbox-wrapper {
 main .form .radio-wrapper  label,
 main .form .checkbox-wrapper label {
     flex-basis: calc(100% - 24px);
+}
+
+main .form .radio-wrapper label {
+    flex: 0 1 auto;
+}
+
+/* radio group: two options per row (source label.w-50 inside a col-lg-6) */
+main .form form fieldset.radio-group-wrapper:not(.horizontal, .cards) {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px 0;
+    padding: 0;
+}
+
+main .form form fieldset.radio-group-wrapper:not(.horizontal, .cards) > :is(legend, .field-description) {
+    grid-column: 1 / -1;
+}
+
+@media (width >= 900px) {
+    main .form form fieldset.radio-group-wrapper:not(.horizontal, .cards) {
+        max-width: 325px;
+    }
 }
 
 main .form fieldset.link .checkbox-wrapper label {
@@ -406,9 +508,12 @@ main .form button {
     background: var(--form-button-background-color);
     border: var(--form-button-border);
     padding: var(--form-button-padding);
+    font-family: var(--body-font-family);
     font-size: var(--form-button-font-size);
-    border-radius: unset;
-    width: 100%;
+    font-weight: var(--form-button-font-weight);
+    line-height: var(--form-button-line-height);
+    border-radius: var(--form-button-radius);
+    width: auto;
 }
 
 main form .file-wrapper > button{
@@ -417,6 +522,7 @@ main form .file-wrapper > button{
 
 main .form button:hover {
     background: var(--form-button-background-hover-color);
+    border-color: var(--form-button-background-hover-color);
 }
 
 main .submit-wrapper{
@@ -514,10 +620,11 @@ main .form .button-wrapper button {
     cursor:pointer
 }
 
-main .form .button-wrapper button:hover {
-    border: 3px solid #fff;
-    color: #fff;
-    background-color: var(--button-secondary-color);
+main .form .button-wrapper button:hover,
+main .form .button-wrapper button:focus-visible {
+    border-color: var(--form-button-background-hover-color);
+    color: var(--form-button-color);
+    background-color: var(--form-button-background-hover-color);
 }
 
 main .form .button-wrapper button[disabled] {
@@ -525,15 +632,9 @@ main .form .button-wrapper button[disabled] {
 }
 
 main .form .button-wrapper button[disabled]:hover {
-    border: 3px solid var(--button-secondary-color);
-    color: var(--button-secondary-color);
-    background-color: transparent;
-}
-
-@media (width >= 600px) {
-    main .form button {
-        width: unset;
-    }
+    border-color: var(--form-button-background-color);
+    color: var(--form-button-color);
+    background-color: var(--form-button-background-color);
 }
 
 main form .panel-wrapper {
@@ -545,7 +646,7 @@ main form .panel-wrapper {
 main .form form .panel-wrapper{
   display: grid;
   grid-template-columns: repeat(var(--form-columns), minmax(0, 1fr));
-  gap: var(--form-field-vert-gap) var(--form-field-horz-gap);
+  gap: 0 var(--form-field-horz-gap);
 }
 
 main .form form .repeat-wrapper{
@@ -563,7 +664,6 @@ main .form form .repeat-wrapper{
 
     main .form form .panel-wrapper {
         flex-flow: row wrap;
-        gap: 10px 15px;
     }
 }
 
@@ -653,6 +753,10 @@ main .form form .checkbox-wrapper.field-invalid > .field-description {
       order: 1;
 }
 
+main .form form .field-invalid:not(.checkbox-wrapper, .radio-group-wrapper) > .field-description {
+    margin-top: 4px;
+}
+
 main .form form:not(.edit-mode) .captcha-wrapper{
     display: none ;
 }
@@ -671,11 +775,11 @@ main .form form .checkbox-group-wrapper.horizontal .field-description {
     margin-top: 0.5rem;
 }
 
+/* form sits directly on the page (source: no card, no shadow) */
 main div.form-wrapper {
-    background: white;
-    padding: 40px;
-    border-radius: 12px;
-    box-shadow: 0 4px 24px rgb(0 0 0 / 8%);
+    background: transparent;
+    padding-top: 0;
+    padding-bottom: 0;
 }
 
 /* Responsive adjustments for mobile */
@@ -689,3 +793,154 @@ main div.form-wrapper {
 main .form form select[multiple] {
     height: calc(42px + 50px);
 }
+/* stylelint-disable no-descending-specificity -- the contact-form rules below
+   target different elements (plain-text/consent/question fields) than the
+   generic card/link/repeat rules above, so their relative order is irrelevant */
+
+/* vertical rhythm: stacked fields are spaced with sibling margins (not row-gap)
+   so text blocks can tuck against each other (source contact-form spacing) */
+main .form form,
+main .form form .panel-wrapper {
+    row-gap: 0;
+}
+
+main .form form .field-wrapper + .field-wrapper {
+    margin-top: var(--form-field-vert-gap);
+}
+
+main .form form .field-wrapper + .plain-text-wrapper {
+    margin-top: 30px;
+}
+
+main .form form .plain-text-wrapper + .plain-text-wrapper {
+    margin-top: 0;
+}
+
+main .form form .plain-text-wrapper + .field-wrapper:not(.plain-text-wrapper) {
+    margin-top: 16px;
+}
+
+/* contact form request mode (scripts/contact-request.js): inquiry type and area are hidden,
+   so the lead panel and the message are the first visible fields */
+main .form form.request-mode > .field-inquiry,
+main .form form.request-mode .field-inquiry > .field-message {
+    margin-top: 0;
+}
+
+main .form form .field-wrapper + .panel-wrapper:has(> legend) {
+    margin-top: 42px;
+}
+
+main .form form .panel-wrapper + .checkbox-wrapper {
+    margin-top: 32px;
+}
+
+/* text blocks (plain-text fields) */
+main .form form .plain-text-wrapper p {
+    margin: 0;
+}
+
+/* secondary text block following a lead line (source .contact-title .sub) */
+main .form form .plain-text-wrapper + .plain-text-wrapper p {
+    font-size: var(--form-font-size-xs);
+    line-height: 19.5px;
+}
+
+main .form form .plain-text-wrapper a:any-link {
+    color: var(--link-color);
+    font-weight: 400;
+    text-decoration: none;
+}
+
+main .form form .plain-text-wrapper a:hover {
+    color: var(--link-hover-color);
+    text-decoration: underline;
+}
+
+/* standalone consent checkbox (source .checkbox-wrapper: 25px box + 500px small print) */
+main .form :is(form, form .panel-wrapper) > .checkbox-wrapper {
+    display: grid;
+    grid-template-columns: 25px minmax(0, 500px);
+    gap: 0 10px;
+    align-items: start;
+}
+
+main .form :is(form, form .panel-wrapper) > .checkbox-wrapper > input[type='checkbox'] {
+    width: 25px;
+    height: 25px;
+    grid-row: 1 / span 2;
+}
+
+main .form :is(form, form .panel-wrapper) > .checkbox-wrapper > :is(label, .field-description) {
+    grid-column: 2;
+    font-size: var(--form-consent-font-size);
+    font-weight: 500;
+    line-height: var(--form-consent-line-height);
+    letter-spacing: var(--form-consent-letter-spacing);
+}
+
+main .form :is(form, form .panel-wrapper) > .checkbox-wrapper > label {
+    padding-top: 4px;
+}
+
+main .form :is(form, form .panel-wrapper) > .checkbox-wrapper > .field-description {
+    margin-top: 16px;
+}
+
+main .form form .checkbox-wrapper .field-description a:any-link {
+    color: inherit;
+    font-weight: 700;
+    text-decoration: underline;
+}
+
+/* nested panel (e.g. contact "details"): legend + fields, two per row on desktop */
+main .form form .panel-wrapper .panel-wrapper {
+    row-gap: 8px;
+}
+
+main .form form .panel-wrapper .panel-wrapper > .field-wrapper + .field-wrapper {
+    margin-top: 0;
+}
+
+@media (width >= 900px) {
+    main .form form .panel-wrapper .panel-wrapper > .field-wrapper:not(.col-1, .col-2, .col-3, .col-4, .col-5, .col-7, .col-8, .col-9, .col-10, .col-11, .col-12) {
+        grid-column: span 6;
+    }
+
+    main .form form .panel-wrapper .panel-wrapper > .field-wrapper:last-of-type:nth-of-type(odd) {
+        grid-column: span 12;
+    }
+}
+
+/* contact form: the area-of-interest and regional-site selects are introduced by
+   a question line (source .w-100.mt-3: 16px/24px, asterisk after) rather than a
+   field label; the regional chooser sits in a half-width column (.col-lg-6) */
+main .form form .field-regional-site {
+    margin-top: 8px;
+}
+
+@media (width >= 900px) {
+    main .form form .field-regional-site {
+        max-width: 325px;
+    }
+}
+
+main .form .field-regional-site > label,
+main .form .field-area > label {
+    font-size: var(--form-fieldset-legend-font-size);
+    line-height: var(--form-fieldset-legend-line-height);
+}
+
+main .form .field-regional-site > label {
+    margin-bottom: 8px;
+}
+
+main .form .field-area[data-required="true"] > label::before {
+    content: none;
+}
+
+main .form .field-area[data-required="true"] > label::after {
+    content: "*";
+}
+
+/* stylelint-enable no-descending-specificity */

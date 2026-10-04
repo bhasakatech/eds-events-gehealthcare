@@ -1,72 +1,84 @@
 /*
  * Section Nav – in-page sticky sub-navigation bar
- * Values extracted from events.gehealthcare.com (div.header-bluebar.sticky-nav)
+ * Values extracted from events.gehealthcare.com (div.header-bluebar.sticky-nav):
+ *   bar: #fff, padding 14px, border-bottom 1px #dbdbdb, sticky, z-index 98
+ *   links: 15px / 16px, #363636, margin-right 20px (10px <= 600px), no hover change
+ *   CTA: purple, 15px / 22.5px bold, padding 6px 20px, radius 4px, margin-right 16px
+ * Source sticks at top: 0 because its header scrolls away; the EDS header stays
+ * pinned, so the bar sticks directly beneath it.
  */
 
-/* Full-width white sticky bar on the section wrapper.
-   Overrides the authored .section.grey band so the bar reads as the source. */
 main .section.section-nav-container {
-  margin: 0;
-  padding: 0;
-  background-color: #fff;
-  border-bottom: 1px solid #dbdbdb;
   position: sticky;
-  top: var(--nav-height, 64px);
+  top: var(--nav-height, 112px);
   z-index: 98;
+  margin: 0;
+  padding: 14px;
+  border-bottom: 1px solid #dbdbdb;
+  background-color: #fff;
 }
 
 .section-nav {
   --sn-link-color: #363636;
   --sn-cta-bg: var(--brand-purple, #6022a6);
-  --sn-cta-bg-hover: var(--brand-purple-dark, #3d1a5b);
 
   font-family: var(--body-font-family, "Source Sans Pro", sans-serif);
+  font-size: 15px;
+  line-height: 16px;
 }
 
+/* Mobile: links in one horizontally scrollable row, CTA right-aligned below. */
 .section-nav .section-nav-bar {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  gap: 12px;
-  padding: 14px 0;
+  gap: 10px;
 }
 
 .section-nav .section-nav-list {
   display: flex;
-  flex-flow: column wrap;
-  gap: 12px 20px;
-  margin: 0;
+  flex-wrap: nowrap;
+  margin: -4px 0;
   padding: 0;
+  overflow-x: auto;
   list-style: none;
+  scrollbar-width: none;
 }
 
-.section-nav .section-nav-list a {
+.section-nav .section-nav-list::-webkit-scrollbar {
+  display: none;
+}
+
+.section-nav .section-nav-list li {
+  flex: none;
+}
+
+.section-nav .section-nav-list a:any-link {
+  display: block;
+  margin-right: 10px;
+  padding: 4px 0;
   color: var(--sn-link-color);
   font-size: 15px;
   font-weight: 400;
   line-height: 16px;
   text-decoration: none;
+  white-space: nowrap;
 }
 
 .section-nav .section-nav-list a:hover {
-  color: var(--brand-purple, #6022a6);
-  text-decoration: underline;
-  text-underline-offset: 4px;
-}
-
-.section-nav .section-nav-list a.is-active {
-  color: var(--brand-purple, #6022a6);
-  font-weight: 600;
+  color: var(--sn-link-color);
+  text-decoration: none;
 }
 
 .section-nav .section-nav-tools {
   display: flex;
-  justify-content: flex-start;
+  align-items: center;
+  justify-content: flex-end;
 }
 
-.section-nav .section-nav-cta {
+.section-nav .section-nav-cta,
+.section-nav .section-nav-cta:any-link {
   display: inline-block;
-  margin: 0;
+  margin: 0 16px 0 0;
   padding: 6px 20px;
   border: 1px solid transparent;
   border-radius: 4px;
@@ -76,31 +88,43 @@ main .section.section-nav-container {
   font-size: 15px;
   font-weight: 700;
   line-height: 22.5px;
+  text-align: center;
   text-decoration: none;
+  white-space: nowrap;
   cursor: pointer;
 }
 
-.section-nav .section-nav-cta:hover,
-.section-nav .section-nav-cta:focus-visible {
-  background-color: var(--sn-cta-bg-hover);
+.section-nav .section-nav-cta:hover {
   color: #fff;
+  text-decoration: none;
 }
 
-@media (width >= 900px) {
+@media (width >= 600px) {
   .section-nav .section-nav-bar {
     flex-direction: row;
-    align-items: center;
+    align-items: flex-start;
     justify-content: space-between;
-    gap: 20px;
-    padding: 14px 0;
+    gap: 0;
   }
 
   .section-nav .section-nav-list {
-    flex-direction: row;
-    align-items: center;
+    flex-wrap: wrap;
+    row-gap: 8px;
+    margin: 0;
+    padding: 8px 0;
+    overflow: visible;
+  }
+
+  .section-nav .section-nav-list li {
+    flex: initial;
+  }
+
+  .section-nav .section-nav-list a:any-link {
+    margin-right: 20px;
+    padding: 0;
   }
 
   .section-nav .section-nav-tools {
-    justify-content: flex-end;
+    flex: none;
   }
 }

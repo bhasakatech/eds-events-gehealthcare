@@ -32,10 +32,10 @@ export default function decorate(block) {
   const heading = headingCell?.querySelector('h1, h2, h3');
   const titleTag = heading?.tagName?.toLowerCase() || 'h1';
   const title = textOf(heading) || textOf(headingCell);
-  const taglineParts = [...(headingCell?.querySelectorAll('p') || [])]
-    .map((p) => textOf(p))
-    .filter(Boolean);
-  const tagline = taglineParts.join(' ');
+  // Tagline paragraphs (richtext): text joined with spaces, authored line
+  // breaks (<br>) kept.
+  const taglineParas = [...(headingCell?.querySelectorAll('p') || [])]
+    .filter((p) => textOf(p));
 
   const metaParts = [...(metaCell?.querySelectorAll('p') || [])]
     .map((p) => textOf(p))
@@ -109,10 +109,17 @@ export default function decorate(block) {
     content.append(meta);
   }
 
-  if (tagline) {
+  if (taglineParas.length) {
     const p = document.createElement('p');
     p.className = 'event-hero-tagline';
-    p.textContent = tagline;
+    taglineParas.forEach((para, index) => {
+      if (index) p.append(' ');
+      para.childNodes.forEach((node) => {
+        if (node.nodeName === 'BR') p.append(document.createElement('br'));
+        else p.append(node.textContent.replace(/\s+/g, ' '));
+      });
+    });
+    p.innerHTML = p.innerHTML.trim().replace(/\s*<br>\s*/g, '<br>');
     content.append(p);
   }
 

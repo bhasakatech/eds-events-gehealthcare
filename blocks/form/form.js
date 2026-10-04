@@ -553,6 +553,14 @@ async function setupForm(formDef, { pathname, block, editMode = false } = {}) {
     }
   }
 
+  // Drop-downs styled "navigate-on-change" open the chosen option's URL in a new tab
+  // (e.g. the contact form's regional contact-site picker).
+  form.querySelectorAll('.navigate-on-change select').forEach((select) => {
+    select.addEventListener('change', () => {
+      if (/^https?:\/\//.test(select.value)) window.open(select.value, '_blank', 'noopener');
+    });
+  });
+
   form.dataset.redirectUrl = def.redirectUrl || '';
   form.dataset.thankYouMsg = def.thankYouMsg || '';
   form.dataset.action = def.action || pathname?.split('.json')[0];

@@ -10,7 +10,7 @@
                         "template": {
                             "name": "Event List",
                             "model": "event-list",
-                            "key-value":true
+                            "key-value": true
                         }
                     }
                 }

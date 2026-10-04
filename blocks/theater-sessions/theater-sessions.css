@@ -1,127 +1,189 @@
 /*
  * theater-sessions — Innovation Theater session video library
  * Source: events.gehealthcare.com/innovation-theater/ (section.theater-videos
- * + sticky filter bar). Responsive card grid + OnDemand/Upcoming toggle +
- * event filter + popup video player.
+ * + sticky .search-container filter bar) and the embedded teaser
+ * (section.modality-innovation-theater on event / product-category pages).
+ * Values below come from getComputedStyle on the source.
+ *
+ * Modes (content-driven, set by the authored heading row):
+ *   - untitled block  -> library: filter toolbar + grid
+ *   - titled block    -> teaser: heading + grid (no toolbar)
  */
 
 .theater-sessions {
   --ts-purple: var(--brand-purple, #6022a6);
   --ts-border: #d1d3d4;
+  --ts-image-bg: #d6dce5;
+  --ts-title: var(--brand-title-color, #222);
 
-  background-color: #fff;
-  color: #000;
+  color: var(--text-color, #000);
 }
 
 .theater-sessions .theater-sessions-inner {
-  max-width: 1140px;
-  margin: 0 auto;
-  padding: 32px 15px 40px;
+  margin: 0;
+  padding: 0;
 }
 
+/* Teaser heading (source .modality-innovation-theater .h2) */
 .theater-sessions .theater-sessions-header {
-  margin: 0 0 16px;
+  margin: 0 0 48px;
 }
 
-.theater-sessions .theater-sessions-header h2,
-.theater-sessions .theater-sessions-header h3 {
+.theater-sessions .theater-sessions-header :is(h2, h3) {
   margin: 0 0 8px;
-  color: var(--ts-purple);
+  color: var(--ts-title);
   font-family: var(--heading-font-family);
-  font-weight: 400;
+  font-size: 28px;
+  font-weight: 500;
   line-height: 1.2;
 }
 
-/*
- * Toolbar: event filter + OnDemand/Upcoming toggle, on the GE HealthCare purple
- * band (matches the source search-sticky-wrapper: white-bordered controls on
- * purple, with a light-purple "Clear filters" pill). Full-bleed purple band.
- */
-.theater-sessions .theater-sessions-toolbar {
-  position: sticky;
-  top: 0;
-  z-index: 5;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 16px;
-  align-items: center;
-  justify-content: space-between;
-  margin: 0 calc(50% - 50vw) 24px;
-  padding: 16px calc(50vw - 50%);
-  background-color: var(--ts-purple, #6022a6);
+/* Light-grey band (event pages on the large-events template, e.g. scct-2025,
+   snmmi-2024: source .events-template-large-events .modality-innovation-theater
+   .h2 is GE purple, weight 400, on #f2f1f3) */
+.section.light-grey .theater-sessions .theater-sessions-header :is(h2, h3) {
+  color: var(--ts-purple);
+  font-weight: 400;
 }
 
-/* Left group (dropdown) and right group (toggle + clear) */
+.theater-sessions .theater-sessions-header p {
+  margin: 0 0 16px;
+  color: var(--ts-title);
+  font-size: 18px;
+  line-height: 21px;
+}
+
+/*
+ * Toolbar (library mode) — source .search-container: full-bleed purple band,
+ * white-bordered controls, light-purple "Clear filter(s)" pill.
+ */
+.theater-sessions .theater-sessions-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 16px;
+  align-items: center;
+  justify-content: space-between;
+  margin: 0 calc(50% - 50vw) 56px;
+  padding: 0 calc(50vw - 50%) 30px;
+  background-color: var(--ts-purple);
+}
+
+/* Toolbar moved above the intro (JS hoistToolbar): full-width purple band,
+   a direct child of <main> (source .search-sticky-wrapper between the hero
+   and section.theater-intro); the bar content keeps the section container
+   width (.section > div: 540 / 720 / 960 / content-max-width). */
+main > .theater-sessions.theater-sessions-band {
+  margin: 0;
+  background-color: var(--ts-purple);
+}
+
+/* intro -> first card: source .events-wrapper-column pt-5 (48px) + tile
+   mt-2 (8px) = 56px; the section margin gives 40px */
+.theater-sessions .theater-sessions-inner.is-hoisted {
+  padding-top: 16px;
+}
+
+.theater-sessions.theater-sessions-band .theater-sessions-toolbar {
+  box-sizing: border-box;
+  width: 100%;
+  margin: 0 auto;
+  padding: 0 15px 30px;
+  background-color: transparent;
+}
+
 .theater-sessions .theater-sessions-filters,
 .theater-sessions .theater-sessions-controls {
   display: flex;
   flex-wrap: wrap;
-  gap: 16px;
+  gap: 8px 16px;
   align-items: center;
 }
 
 .theater-sessions .theater-sessions-filters {
   flex: 0 1 auto;
+  padding-top: 21px;
 }
 
-/* OnDemand / Upcoming toggle — white-bordered segmented control */
-.theater-sessions .theater-sessions-toggle {
-  display: inline-flex;
-  border: 1px solid #fff;
-  border-radius: 5px;
-  overflow: hidden;
+.theater-sessions .theater-sessions-controls {
+  flex: 1 1 100%;
 }
 
-.theater-sessions .theater-sessions-toggle-btn {
-  padding: 6px 22px;
-  border: 0;
-  background: transparent;
-  color: #fff;
-  font: inherit;
-  font-size: 16px;
-  line-height: 1.5;
-  cursor: pointer;
-}
-
-.theater-sessions .theater-sessions-toggle-btn[aria-selected="true"] {
-  background-color: #fff;
-  color: var(--ts-purple, #6022a6);
-  font-weight: 700;
-}
-
-/* Event filter — white-bordered dropdown on purple, custom caret */
+/* Event filter — source .event-filter-button */
 .theater-sessions .theater-sessions-event-filter {
   width: 260px;
   max-width: 100%;
   height: 38px;
-  padding: 6px 35px 6px 12px;
+  padding: 6px 35px 6px 10px;
   border: 1px solid #fff;
   border-radius: 5px;
   background-color: transparent;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='10' viewBox='0 0 14 10'%3E%3Cpath fill='none' stroke='%23fff' stroke-width='2' d='M1 2l6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: 93% 14px;
   color: #fff;
   font: inherit;
   font-size: 16px;
+  line-height: 24px;
+  text-align: center;
+  text-align-last: center;
   cursor: pointer;
   appearance: none;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%23fff' d='M6 8 0 0h12z'/%3E%3C/svg%3E");
-  background-repeat: no-repeat;
-  background-position: right 12px center;
 }
 
-/* The select's option list is a native OS popup — render text dark for legibility. */
+/* Native option list is an OS popup — keep its text legible. */
 .theater-sessions .theater-sessions-event-filter option {
   color: #000;
+  text-align: left;
 }
 
-/* "Clear filters" pill — light-purple, matches source #af91d2 */
+/* OnDemand / Upcoming — source .theater-radios .radio-wrapper.white-radio */
+.theater-sessions .theater-sessions-toggle {
+  display: flex;
+  width: 100%;
+}
+
+.theater-sessions .theater-sessions-toggle-btn {
+  flex: 1 1 50%;
+  margin: 0;
+  padding: 6px 30px;
+  border: 1px solid #fff;
+  background: transparent;
+  color: #fff;
+  font: inherit;
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 22.5px;
+  text-align: center;
+  cursor: pointer;
+}
+
+.theater-sessions .theater-sessions-toggle-btn:first-child {
+  margin-right: -1px;
+  border-radius: 5px 0 0 5px;
+}
+
+.theater-sessions .theater-sessions-toggle-btn:last-child {
+  border-radius: 0 5px 5px 0;
+}
+
+.theater-sessions .theater-sessions-toggle-btn[aria-selected="true"] {
+  background-color: #fff;
+  color: var(--ts-purple);
+}
+
+/* Clear filter(s) — source .page-template-theater-template .clear-btn */
 .theater-sessions .theater-sessions-clear {
-  padding: 6px 14px;
+  min-width: 100px;
+  margin-left: auto;
+  padding: 6px 0.8rem;
   border: 1px solid transparent;
   border-radius: 5px;
   background-color: #af91d2;
   color: #fff;
   font: inherit;
   font-size: 16px;
+  font-weight: 700;
+  line-height: 24px;
   cursor: pointer;
 }
 
@@ -130,19 +192,26 @@
   background-color: #9a78c4;
 }
 
-/* Grid */
+/* Grid — source .col-lg-4.col-md-6 columns with 30px gutters */
 .theater-sessions .theater-sessions-grid {
   display: grid;
-  grid-template-columns: 1fr;
+  grid-template-columns: minmax(0, 1fr);
   gap: 24px 30px;
   margin: 0;
   padding: 0;
   list-style: none;
 }
 
+.theater-sessions .theater-sessions-header ~ .theater-sessions-grid {
+  row-gap: 16px;
+}
+
+/* Card — source .home-eventtile.webinar-tile */
 .theater-sessions .theater-sessions-card {
   display: flex;
   flex-direction: column;
+  min-width: 0;
+  overflow: hidden;
 }
 
 .theater-sessions .theater-sessions-card[hidden] {
@@ -153,127 +222,336 @@
   position: relative;
   display: block;
   width: 100%;
+  margin: 0;
   padding: 0;
+  overflow: hidden;
   border: 1px solid var(--ts-border);
-  background: #000;
+  border-radius: 0;
+  background: transparent;
+  font: inherit;
   line-height: 0;
   cursor: pointer;
-}
-
-.theater-sessions button.theater-sessions-media {
   appearance: none;
 }
 
-.theater-sessions .theater-sessions-media picture,
+.theater-sessions div.theater-sessions-media {
+  cursor: default;
+}
+
+.theater-sessions .theater-sessions-media picture {
+  display: block;
+}
+
 .theater-sessions .theater-sessions-media img {
   display: block;
   width: 100%;
-  aspect-ratio: 16 / 9;
+  height: 200px;
+  background-color: var(--ts-image-bg);
   object-fit: cover;
+  transition: transform 0.4s;
 }
 
+.theater-sessions .theater-sessions-card:hover .theater-sessions-media img {
+  transform: scale(1.2);
+}
+
+/* Play icon — source .event-icon.smaller-icon */
 .theater-sessions .theater-sessions-play {
   position: absolute;
   right: 0;
   bottom: 0;
+  z-index: 2;
   display: flex;
   align-items: center;
   justify-content: center;
   width: 40px;
   height: 40px;
+  background-color: var(--ts-purple);
   pointer-events: none;
 }
 
 .theater-sessions .theater-sessions-play svg {
-  width: 40px;
-  height: 40px;
+  display: block;
+  width: 12px;
+  height: auto;
 }
 
 .theater-sessions .theater-sessions-card-title {
+  display: -webkit-box;
   margin: 15px 0 8px;
-  color: #222;
+  overflow: hidden;
+  color: var(--ts-title);
   font-size: 23px;
   font-weight: 700;
   line-height: 26px;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
 }
 
 .theater-sessions .theater-sessions-card-desc {
+  display: -webkit-box;
   margin: 4px 0 0;
+  overflow: hidden;
+  color: #000;
   font-size: 15px;
   line-height: 18px;
-  color: #000;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
 }
 
 .theater-sessions .theater-sessions-card-speakers {
-  margin-top: 8px;
-  font-size: 15px;
-  line-height: 18px;
+  margin: 0;
   color: #000;
+  font-size: 15px;
+  line-height: 1.5;
 }
 
-/* Popup dialog */
+.theater-sessions .theater-sessions-card-desc :is(p, div),
+.theater-sessions .theater-sessions-card-speakers :is(p, div) {
+  margin: 0;
+  font-size: inherit;
+  line-height: inherit;
+}
+
+/* Teaser cards (source .modality-theater): title mt-3, description mt-0,
+   #222 copy, speakers live in the popup only. */
+.theater-sessions .theater-sessions-header ~ .theater-sessions-grid .theater-sessions-card-title {
+  margin-top: 16px;
+}
+
+.theater-sessions .theater-sessions-header ~ .theater-sessions-grid .theater-sessions-card-desc {
+  margin-top: 0;
+  color: var(--ts-title);
+}
+
+.theater-sessions .theater-sessions-header ~ .theater-sessions-grid .theater-sessions-card-speakers {
+  display: none;
+}
+
+/* Popup — source .white-popup.theater-popup on a navy overlay */
 .theater-sessions .theater-sessions-dialog {
-  width: min(90vw, 960px);
-  max-width: 960px;
+  width: 1170px;
+  max-width: 95%;
+  max-height: 90vh;
+  margin: auto;
   padding: 0;
   border: 0;
-  background: transparent;
+  border-radius: 5px;
+  background: #fff;
+  color: #000;
+  overflow: hidden auto;
 }
 
 .theater-sessions .theater-sessions-dialog::backdrop {
-  background: rgb(0 0 0 / 70%);
+  background: rgb(1 8 48 / 49%);
 }
 
 .theater-sessions .theater-sessions-dialog-panel {
-  position: relative;
-  background: #111;
-  color: #fff;
-  padding: 44px 16px 16px;
+  padding: 20px 5px 16px;
 }
 
-.theater-sessions .theater-sessions-close {
-  position: absolute;
-  top: 6px;
-  right: 10px;
-  width: 32px;
-  height: 32px;
-  border: 0;
-  background: transparent;
-  color: #fff;
-  font-size: 28px;
-  line-height: 1;
-  cursor: pointer;
+.theater-sessions .theater-sessions-dialog-head {
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+  justify-content: space-between;
 }
 
 .theater-sessions .theater-sessions-dialog-title {
-  margin: 0 0 12px;
-  font-size: 18px;
-  font-weight: 400;
+  max-width: 625px;
+  margin: 0 0 24px;
+  color: #000;
+  font-family: var(--heading-font-family);
+  font-size: 28px;
+  font-weight: 500;
+  line-height: 1.2;
+}
+
+.theater-sessions .theater-sessions-close {
+  flex: 0 0 auto;
+  width: 25px;
+  height: 25px;
+  margin-top: 2px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  line-height: 0;
+  cursor: pointer;
+}
+
+.theater-sessions .theater-sessions-close svg {
+  width: 25px;
+  height: 25px;
+}
+
+.theater-sessions .theater-sessions-dialog-body {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 16px 30px;
 }
 
 .theater-sessions .theater-sessions-dialog-media {
   position: relative;
+  width: 100%;
   aspect-ratio: 16 / 9;
+  max-height: 50vw;
+  outline: 1px solid var(--ts-border);
 }
 
 .theater-sessions .theater-sessions-dialog-media iframe {
+  display: block;
   width: 100%;
   height: 100%;
   border: 0;
+}
+
+.theater-sessions .theater-sessions-dialog-info {
+  font-size: 16px;
+  line-height: 24px;
+}
+
+.theater-sessions .theater-sessions-dialog-desc {
+  margin: 4px 0 0;
+  line-height: 20px;
+}
+
+.theater-sessions .theater-sessions-dialog-speakers {
+  margin-top: 24px;
+}
+
+.theater-sessions .theater-sessions-dialog-info p {
+  margin: 0;
+  font-size: inherit;
+  line-height: inherit;
+}
+
+/* Source .theater-popup .grey-button */
+.theater-sessions .theater-sessions-dialog-learn:any-link {
+  display: inline-block;
+  margin-top: 24px;
+  padding: 5px 24px;
+  border: 1px solid var(--ts-purple);
+  border-radius: 4px;
+  background-color: var(--ts-purple);
+  color: #fff;
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 26px;
+  text-decoration: none;
+}
+
+.theater-sessions .theater-sessions-dialog-learn:hover {
+  background-color: transparent;
+  color: var(--ts-purple);
 }
 
 @media (width >= 600px) {
   .theater-sessions .theater-sessions-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
+
+  .theater-sessions .theater-sessions-toggle {
+    width: auto;
+  }
+
+  .theater-sessions .theater-sessions-controls {
+    flex: 1 1 auto;
+  }
+
+  .theater-sessions .theater-sessions-toggle-btn {
+    flex: 0 0 auto;
+  }
+}
+
+@media (width >= 576px) {
+  .theater-sessions.theater-sessions-band .theater-sessions-toolbar {
+    max-width: 540px;
+  }
+}
+
+@media (width >= 768px) {
+  .theater-sessions.theater-sessions-band .theater-sessions-toolbar {
+    max-width: 720px;
+  }
+}
+
+@media (width >= 992px) {
+  .theater-sessions.theater-sessions-band .theater-sessions-toolbar {
+    max-width: 960px;
+  }
+}
+
+@media (width >= 1200px) {
+  .theater-sessions.theater-sessions-band .theater-sessions-toolbar {
+    max-width: var(--content-max-width);
+  }
 }
 
 @media (width >= 900px) {
+  .theater-sessions .theater-sessions-header :is(h2, h3) {
+    font-size: var(--heading-size-xl, 33px);
+  }
+
   .theater-sessions .theater-sessions-grid {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 
-  .theater-sessions .theater-sessions-header h2 {
-    font-size: 33px;
+  /* Sticky purple bar below the sticky site header (source: top 64px under
+     a 64px header; EDS header is --nav-height tall). */
+  .theater-sessions .theater-sessions-toolbar {
+    position: sticky;
+    top: var(--nav-height, 112px);
+    z-index: 98;
+    flex-wrap: nowrap;
+    min-height: 80px;
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+
+  /* hoisted band: the band itself is the sticky element (its parent is
+     <main>), the bar inside it is static */
+  main > .theater-sessions.theater-sessions-band {
+    position: sticky;
+    top: var(--nav-height, 112px);
+    z-index: 98;
+  }
+
+  .theater-sessions.theater-sessions-band .theater-sessions-toolbar {
+    position: static;
+    padding: 0 15px;
+  }
+
+  .theater-sessions .theater-sessions-filters {
+    padding-top: 0;
+  }
+
+  .theater-sessions .theater-sessions-controls {
+    flex: 0 1 auto;
+    flex-wrap: nowrap;
+    gap: 70px;
+  }
+
+  .theater-sessions .theater-sessions-toggle-btn {
+    margin-top: 7px;
+    margin-bottom: 8px;
+  }
+
+  .theater-sessions .theater-sessions-clear {
+    margin-left: 0;
+  }
+
+  .theater-sessions .theater-sessions-dialog-panel {
+    padding: 20px 40px 16px;
+  }
+
+  .theater-sessions .theater-sessions-dialog-body {
+    grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
+  }
+
+  .theater-sessions .theater-sessions-dialog-media {
+    aspect-ratio: auto;
+    height: 409px;
+    max-height: none;
+    margin-bottom: 16px;
   }
 }

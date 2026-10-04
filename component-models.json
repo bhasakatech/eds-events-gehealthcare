@@ -274,6 +274,18 @@
           {
             "name": "Highlight",
             "value": "highlight"
+          },
+          {
+            "name": "Light Grey",
+            "value": "light-grey"
+          },
+          {
+            "name": "Grey",
+            "value": "grey"
+          },
+          {
+            "name": "Dark",
+            "value": "dark"
           }
         ]
       }
@@ -509,13 +521,14 @@
       {
         "component": "reference",
         "valueType": "string",
-        "name": "icon",
+        "name": "tile_icon",
         "label": "Icon",
-        "multi": false
+        "multi": false,
+        "description": "Tile icon (bottom-right of the card)."
       },
       {
         "component": "select",
-        "name": "background",
+        "name": "tile_background",
         "label": "Background",
         "options": [
           {
@@ -529,9 +542,35 @@
         ]
       },
       {
-        "component": "text",
-        "name": "link",
+        "component": "aem-content",
+        "name": "tile_link",
         "label": "Card Link"
+      }
+    ]
+  },
+  {
+    "id": "carousel-item",
+    "fields": [
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "media_image",
+        "label": "Image",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "media_imageAlt",
+        "value": "",
+        "label": "Image Alt Text"
+      },
+      {
+        "component": "richtext",
+        "name": "content_text",
+        "value": "",
+        "label": "Caption",
+        "valueType": "string"
       }
     ]
   },
@@ -612,8 +651,51 @@
     ]
   },
   {
+    "id": "embed",
+    "fields": [
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "embed_placeholder",
+        "label": "Placeholder Image",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "embed_placeholderAlt",
+        "value": "",
+        "label": "Placeholder Image Alt Text"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "embed_uri",
+        "label": "URL to embed"
+      }
+    ]
+  },
+  {
     "id": "event-hero",
     "fields": [
+      {
+        "component": "select",
+        "name": "classes",
+        "label": "Style Variant",
+        "description": "Block option applied as a CSS class on the block.",
+        "valueType": "string",
+        "value": "",
+        "options": [
+          {
+            "name": "Default",
+            "value": ""
+          },
+          {
+            "name": "Compact",
+            "value": "compact"
+          }
+        ]
+      },
       {
         "component": "text",
         "name": "heading_title",
@@ -640,7 +722,7 @@
         ]
       },
       {
-        "component": "textarea",
+        "component": "richtext",
         "name": "heading_tagline",
         "label": "Tagline",
         "valueType": "string",
@@ -5999,6 +6081,23 @@
     "id": "products-solutions",
     "fields": [
       {
+        "component": "multiselect",
+        "name": "classes",
+        "label": "Layout Options",
+        "description": "Slider: tiles in a horizontal slider with previous/next arrows instead of a grid. Title bar: dark title bar inside each image tile.",
+        "valueType": "string",
+        "options": [
+          {
+            "name": "Slider",
+            "value": "slider"
+          },
+          {
+            "name": "Title bar on tiles",
+            "value": "title-bar"
+          }
+        ]
+      },
+      {
         "component": "text",
         "name": "heading_title",
         "label": "Section Title",
@@ -6141,55 +6240,12 @@
         "name": "tabAssets"
       },
       {
-        "component": "container",
+        "component": "richtext",
         "name": "assets",
         "label": "Product Assets",
-        "description": "Products/assets shown in the popup carousel (image, copy, optional PDF).",
-        "multi": true,
-        "fields": [
-          {
-            "component": "reference",
-            "name": "assetImage",
-            "label": "Asset Image",
-            "valueType": "string",
-            "multi": false
-          },
-          {
-            "component": "text",
-            "name": "assetImageAlt",
-            "label": "Asset Image Alt Text",
-            "valueType": "string",
-            "value": ""
-          },
-          {
-            "component": "text",
-            "name": "assetName",
-            "label": "Asset Title",
-            "valueType": "string",
-            "value": ""
-          },
-          {
-            "component": "richtext",
-            "name": "assetDescription",
-            "label": "Asset Description",
-            "valueType": "string",
-            "value": ""
-          },
-          {
-            "component": "aem-content",
-            "name": "assetFile",
-            "label": "Asset File / Link",
-            "description": "Optional PDF or external URL opened from the main asset image.",
-            "valueType": "string"
-          },
-          {
-            "component": "textarea",
-            "name": "assetDisclaimer",
-            "label": "Asset Disclaimer",
-            "valueType": "string",
-            "value": ""
-          }
-        ]
+        "description": "Products/assets shown in the popup carousel. One bullet per asset: image, bold title, description, optional PDF/video link, optional disclaimer paragraph.",
+        "valueType": "string",
+        "value": ""
       }
     ]
   },
@@ -6209,6 +6265,24 @@
         "name": "author",
         "label": "Author",
         "value": ""
+      }
+    ]
+  },
+  {
+    "id": "search",
+    "fields": [
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "index",
+        "label": "Query Index URL",
+        "description": "Defaults to /query-index.json when empty"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "placeholder",
+        "label": "Placeholder Text"
       }
     ]
   },

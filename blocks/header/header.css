@@ -1,322 +1,345 @@
-/* =========================
-   Header Wrapper
-   ========================= */
+/*
+ * Header — values extracted from events.gehealthcare.com <header>
+ *   disclaimer (.butter-bar.orange): #e4e4e4, 14px/15px, letter-spacing 1px,
+ *     padding 6px 10px, text right-aligned in the 1140px container
+ *   main row (.header-inner): padding 20px 15px, logo 157x36 + margin-right 48px,
+ *     links 11pt/22px #000 margin-right 20px (>= 992px on source)
+ *   CTA: #6022a6, #fff, 16px 700, padding 8px 14px, width 123px, radius 4px
+ *   hamburger: 3 bars 24x3px #000, radius 5px, margin 3px 0
+ *   compact (scrolled .header-bluebar): fixed 64px, padding 5px,
+ *     border-top/bottom 1px gainsboro, shadow 0 10px 30px rgb(63 63 63 / 21%)
+ *   aside (.aside-menu): fixed right, max-width 500px, #000, padding 50px 40px,
+ *     slides in from the right in 0.5s ease-in-out, no backdrop
+ */
 
-.header-wrapper {
-  position: sticky;
-  top: 0;
-  z-index: 9999;
-  background: #fff;
-  border-top: 1px solid var(--ge-primary-color);
+/* in-flow reservation stays constant; the visible bar is fixed */
+header {
+  height: var(--header-height, var(--nav-height, 112px));
 }
 
-.header {
-  width: 100%;
-  height: auto !important;
-}
-
-.nav-wrapper {
-  width: 100%;
-}
-
-#nav {
-  width: 100%;
-}
-
-/* =========================
-   Top Announcement Bar
-   ========================= */
-
-.nav-brand {
-  background: #e4e4e4;
-  border-bottom: 1px solid #e5e5e5;
-}
-
-.nav-brand .default-content-wrapper {
-  width: 100%;
-  margin: 0 auto;
-  padding: 6px 10px;
-  overflow: hidden;
+header .nav-wrapper {
+  position: fixed;
+  inset: 0 0 auto;
+  z-index: 99;
+  background-color: #fff;
+  font-family: var(--body-font-family);
   color: #000;
-  text-align: center;
-  align-items: center;
+}
+
+header nav {
+  position: relative;
+}
+
+header nav ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+header nav p {
+  margin: 0;
+  font-size: inherit;
+  line-height: inherit;
+}
+
+/* ---------- row 0: disclaimer strip ---------- */
+header .nav-disclaimer {
+  padding: 6px 10px;
+  background-color: #e4e4e4;
   font-size: 14px;
   line-height: 15px;
   letter-spacing: 1px;
 }
 
-.nav-brand.top-announcement {
-  transition:
-    height 0.3s ease,
-    opacity 0.3s ease;
-  
-}
-
-.nav-brand p {
-  margin: 0;
+header .nav-disclaimer .default-content-wrapper {
+  max-width: none;
+  margin: 0 auto;
+  padding: 0 15px;
   text-align: right;
-  font-size: 14px;
-  color: #555;
 }
 
-.header-wrapper.sticky-header .nav-brand.top-announcement {
+/* ---------- row 1: main bar ----------
+   below 992px (project: 900px) the source shows its empty purple
+   .header-bluebar (16px, -10px margin) under the bar: 10px padding + 16px
+   purple strip (blends into the hero band, visible on hero-less pages) */
+header .nav-bar {
+  padding: 20px 0 10px;
+  border-bottom: 16px solid var(--brand-purple);
+  transition: box-shadow 0.3s;
+}
+
+header .nav-bar-inner {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  min-height: 55px;
+  margin: 0 auto;
+  padding: 0 15px;
+  box-sizing: border-box;
+}
+
+header .nav-brand {
+  display: flex;
+  flex: 0 1 auto;
+  align-items: center;
+  min-width: 0;
+  margin-right: 16px;
+}
+
+header .nav-brand a,
+header .nav-brand p {
+  display: flex;
+  align-items: center;
+}
+
+header .nav-brand img {
+  display: block;
+  width: auto;
+  max-width: 100%;
+  height: 36px;
+}
+
+/* inline links: desktop only (source: d-none d-lg-flex) */
+header .nav-sections {
   display: none;
 }
 
-.section.columns-container.nav-sections {
-  background: #fff;
+header .nav-links {
+  display: flex;
+  align-items: center;
+  padding: 8px 0;
 }
 
-/* =========================
-   Drawer
-   ========================= */
+header .nav-links a {
+  display: block;
+  margin-right: 20px;
+  color: #000;
+  font-size: 11pt;
+  line-height: 22px;
+  text-decoration: none;
+}
 
-.header .columns-wrapper {
+header .nav-tools {
+  display: flex;
+  flex: 0 0 auto;
+  align-items: center;
+  margin-left: auto;
+}
+
+header a.nav-cta {
+  display: inline-block;
+  box-sizing: border-box;
+  min-width: 123px;
+  padding: 8px 14px;
+  border: 1px solid #fff;
+  border-radius: 4px;
+  background-color: var(--brand-purple, #6022a6);
+  color: #fff;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 24px;
+  text-align: center;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: all 0.3s ease-out;
+}
+
+/* source (< 600px): CTA sits 10px lower than the logo/hamburger */
+header .nav-tools a.nav-cta {
+  margin-top: 10px;
+}
+
+/* source hover: grey-button background; text kept purple for contrast */
+header a.nav-cta:hover,
+header a.nav-cta:focus-visible {
+  border-color: var(--brand-grey-hover, #e7e7e7);
+  background-color: var(--brand-grey-hover, #e7e7e7);
+  color: var(--brand-purple, #6022a6);
+  text-decoration: none;
+}
+
+header .nav-hamburger {
+  display: block;
+  margin: 0 0 0 24px;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+}
+
+header .nav-hamburger span {
+  display: block;
+  width: 24px;
+  height: 3px;
+  margin: 3px 0 3px auto;
+  border-radius: 5px;
+  background-color: #000;
+}
+
+/* ---------- compact (scrolled) state ---------- */
+header nav.is-compact .nav-disclaimer {
   display: none;
+}
+
+header nav.is-compact .nav-bar {
+  padding: 5px 0;
+  border-top: 1px solid #dcdcdc;
+  border-bottom: 1px solid #dcdcdc;
+  box-shadow: 0 10px 30px rgb(63 63 63 / 21%);
+}
+
+header nav.is-compact .nav-bar-inner {
+  min-height: 52px;
+}
+
+header nav.is-compact .nav-tools a.nav-cta {
+  margin-top: 0;
+}
+
+header nav.is-compact .nav-sections {
+  display: none;
+}
+
+/* ---------- aside drawer ---------- */
+header .nav-drawer {
   position: fixed;
   top: 0;
   right: 0;
+  bottom: 0;
   z-index: 9999;
-  max-width: 500px !important;
-  height: 100vh;
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 500px;
+  padding: 50px 40px;
   overflow-y: auto;
-  background: #000;
+  background-color: #000;
   color: #fff;
-  padding:50px 40px !important;
+  transform: translateX(100%);
+  visibility: hidden;
+  transition:
+    transform 0.5s ease-in-out,
+    visibility 0s linear 0.5s;
 }
 
-.hamburger-menu div {
-      width: 24px;
-    height: 3px;
-    background-color: #000;
-    border-radius: 5px;
-    margin: 3px 0;
-    margin-right: 0;
-    margin-left: auto;
+header nav.is-open .nav-drawer {
+  transform: none;
+  visibility: visible;
+  transition: transform 0.5s ease-in-out;
 }
 
-
-.header .columns-wrapper .columns > div{ 
-  align-items: flex-start;
-  flex-direction: column;
-
+/* source: "⨉" glyph 38px/57px, right-aligned; drawn in CSS so it does not
+   depend on font glyph coverage */
+header .nav-drawer-close {
+  position: relative;
+  display: block;
+  width: 30px;
+  height: 57px;
+  margin: -40px 0 15px auto;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: #fff;
+  cursor: pointer;
 }
 
-.header .columns-wrapper img {
-  position: fixed;
-  top: 10px;
-  right: 29px;
-  width: 40px !important;
+header .nav-drawer-close:not(.has-icon)::before,
+header .nav-drawer-close:not(.has-icon)::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 28px;
+  height: 2px;
+  border-radius: 1px;
+  background-color: currentcolor;
+  transform: translate(-50%, -50%) rotate(45deg);
+}
+
+header .nav-drawer-close:not(.has-icon)::after {
+  transform: translate(-50%, -50%) rotate(-45deg);
+}
+
+header .nav-drawer-close img {
+  display: block;
+  width: 40px;
   height: auto;
 }
 
-.header .columns-wrapper .button-wrapper {
-  margin: 0;
-  border-bottom: 1px solid rgb(255 255 255 / 15%);
+header .nav-drawer-links li {
+  margin: 0 0 10px;
+  padding: 0 0 10px;
+  border-bottom: 1px solid rgb(255 255 255 / 18%);
 }
 
-.header .columns-wrapper .button-wrapper a {
+header .nav-drawer-links a {
   display: block;
-  padding: 22px 0;
   color: #fff;
-  text-decoration: none;
-  font-size: 28px;
-  font-weight: 600;
-  letter-spacing: 0.08em;
-}
-
-.header .columns-wrapper .button.primary {
-  padding: 22px 0;
-  border: none;
-  background: none;
-  box-shadow: none;
-  color: #fff;
-}
-
-.header .columns-wrapper .columns h5{
-        display: block;
-    color: #fff;
-    text-decoration: none !important;
-    transition: all 0.3s ease-out;
-    font-weight: 700;
-    letter-spacing: 2px;
-    border-bottom: 1px solid rgb(255 255 255 / 18%);
-    margin-bottom: 10px;
-    padding-bottom: 10px;
-    cursor: pointer;
-
-}
-
-.header .columns-wrapper .columns h5:hover{
-    color: #fff;
-    opacity: 0.8;
-}
-
-.header .columns-wrapper .columns h5 a{
-      color: #fff;
-    text-decoration: none !important;
-    transition: all 0.3s ease-out;
-    font-size:16px;
-
-}
-
-/* =========================
-   Main Navigation
-   ========================= */
-
-.nav-sections > .default-content-wrapper {
-  display: flex;
-  align-items: center;
-  height:85px;
-}
-
-/* Logo */
-
-.nav-sections > .default-content-wrapper > p:first-child img {
-    height:36px;
-  max-width:100%;
-  width:100%;
-}
-
-/* Navigation links */
-
-.nav-sections > .default-content-wrapper > p:first-child{
-  margin-right: 3rem;
-}
-
-.nav-sections > .default-content-wrapper > p:nth-child(2),
-.nav-sections > .default-content-wrapper > p:nth-child(3) {
-  margin: 0;
-}
-
-.nav-sections > .default-content-wrapper > p:nth-child(2) a,
-.nav-sections > .default-content-wrapper > p:nth-child(3) a {
-    display: block;
-    margin-right: 20px;
-    color: #000 !important;
-    text-decoration: none !important;
-    font-size: 11pt;
-    font-family: sans-serif;
-}
-
-
-
-/* Contact button */
-
-.nav-sections > .default-content-wrapper > p:nth-child(4) {
-  margin-left: auto;
-  margin-top:4px;
-}
-
-.nav-sections > .default-content-wrapper > p:nth-child(4) a {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: 8px 14px;
-  border-radius: 4px;
-  background: #60269e;
-  color: #fff;
-  text-decoration: none;
-  font-weight: 500;
-  transition: background 0.2s;
-  width: 94px;
   font-size: 16px;
-  line-height: 1.625rem;
-  margin-left: 25px;
-  font-family: sans-serif;
+  font-weight: 700;
+  line-height: 24px;
+  letter-spacing: 2px;
+  text-decoration: none;
+  transition: all 0.3s ease-out;
 }
 
-/* Hover states (kept last: highest specificity within this group) */
-
-.nav-sections > .default-content-wrapper > p:nth-child(2) a:hover,
-.nav-sections > .default-content-wrapper > p:nth-child(3) a:hover {
-  color: #5d2aa6;
+header .nav-drawer-links a:hover {
+  color: #fff;
+  opacity: 0.8;
+  text-decoration: none;
 }
 
-.nav-sections > .default-content-wrapper > p:nth-child(4) a:hover {
-  background: #4f1f83;
+/* ---------- interaction states ---------- */
+header .nav-links a:hover {
+  color: #000;
+  text-decoration: none;
 }
 
-/* Hamburger */
-
-.nav-hamburger {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-left: 16px;
-  cursor: pointer;
+header .nav-hamburger:focus-visible,
+header .nav-drawer-close:focus-visible {
+  outline: 2px solid var(--brand-purple, #6022a6);
+  outline-offset: 4px;
 }
 
-.hamburger-menu {
-  cursor: pointer;
-}
-
-
-
-
-/* =========================
-   Tablet
-   ========================= */
-
-@media (width <= 991px) {
-  .nav-brand .default-content-wrapper,
-  .nav-sections > .default-content-wrapper {
-    padding-left: 20px;
-    padding-right: 20px;
+/* ---------- breakpoints (bootstrap container widths of the source) ---------- */
+@media (width >= 600px) {
+  header .nav-disclaimer .default-content-wrapper,
+  header .nav-bar-inner {
+    max-width: 720px;
   }
 
-
-  .nav-sections > .default-content-wrapper > p:first-child img {
-    width: 160px;
+  header .nav-bar-inner {
+    min-height: 45px;
   }
 
-  .nav-sections > .default-content-wrapper > p:nth-child(2),
-  .nav-sections > .default-content-wrapper > p:nth-child(3) {
-    display: none;
-  }
-
-  .nav-sections > .default-content-wrapper > p:nth-child(4) a {
-    padding: 10px 20px;
-    font-size: 15px;
+  header .nav-tools a.nav-cta {
+    margin-top: 0;
   }
 }
 
-/* =========================
-   Mobile
-   ========================= */
-
-@media (width <= 767px) {
-  .nav-brand p {
-    text-align: center;
-    font-size: 12px;
+@media (width >= 900px) {
+  header .nav-disclaimer .default-content-wrapper,
+  header .nav-bar-inner {
+    max-width: 960px;
   }
 
-  .nav-sections > .default-content-wrapper {
-    padding: 14px 16px;
+  header .nav-bar {
+    padding-bottom: 20px;
+    border-bottom: 0;
   }
 
-
-
-  .nav-sections > .default-content-wrapper > p:first-child img {
-    width: 135px;
+  header .nav-brand {
+    margin-right: 48px;
   }
 
-  .nav-sections > .default-content-wrapper > p:first-child{
-    margin-right: 1rem;
+  header .nav-sections {
+    display: flex;
+    flex: 1 1 auto;
   }
+}
 
-  .nav-sections > .default-content-wrapper > p:nth-child(2),
-  .nav-sections > .default-content-wrapper > p:nth-child(3),
-  .nav-sections > .default-content-wrapper > p:nth-child(4) {
-    display: none;
-  }
-
-  .nav-hamburger {
-    margin-left: auto;
-  }
-
-  .header .columns-wrapper {
-    width: 100%;
-    padding: 100px 24px 24px;
+@media (width >= 1200px) {
+  header .nav-disclaimer .default-content-wrapper,
+  header .nav-bar-inner {
+    max-width: 1140px;
   }
 }

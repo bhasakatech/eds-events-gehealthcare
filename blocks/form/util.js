@@ -340,7 +340,8 @@ export function createRadioOrCheckboxUsingEnum(fd, wrapper) {
       enum: [value],
       required: fd.required,
     });
-    const { variant, 'afs:layout': layout } = fd.properties;
+    // Sheet-based (document) forms have no `properties` on radio/checkbox groups.
+    const { variant, 'afs:layout': layout } = fd.properties || {};
     if (variant === 'cards') {
       wrapper.classList.add(variant);
     } else {

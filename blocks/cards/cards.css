@@ -1,202 +1,196 @@
+/* ================================================================
+   cards — standard EDS cards (image + body), boilerplate behavior
+   ================================================================ */
+
 .cards > ul {
-  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(257px, 1fr));
+  gap: 24px;
   margin: 0;
   padding: 0;
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 30px;
-  padding-top:16px;
+  list-style: none;
 }
 
-.cards-container > .default-content-wrapper h2 {
-  font-size: 33px;
-  color: #6022A6;
-  font-family: sans-serif;
+.cards > ul > li:not(.event-card) {
+  border: 1px solid #dadada;
+  background-color: var(--background-color);
 }
 
+.cards .cards-card-body {
+  margin: 16px;
+}
 
-/* ---------- Card ---------- */
+.cards .cards-card-image {
+  line-height: 0;
+}
 
-.event-card {
+.cards .cards-card-image img {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+}
+
+/* ================================================================
+   Featured event tiles (source #featured-events .home-eventtile,
+   see migration-work/cards-extracted.css)
+   Grid follows the source Bootstrap .col-md-6/.col-lg-4 columns, so
+   it switches at the same 768/992px breakpoints as the global
+   .section > div container in styles/styles.css.
+   ================================================================ */
+
+/* source section.featured-events.pt-5.pb-5 (48px); vertical margins
+   collapse with the neighbouring sections like the global 40px ones */
+main > .section.cards-container:has(> .cards-wrapper > .cards > ul.event-cards) {
+  margin-top: var(--section-padding-s);
+  margin-bottom: var(--section-padding-s);
+}
+
+/* 16px above (row mt-2 + tile mt-2); 18px below each tile (empty
+   .description mt 10px + tile mb-2 8px), so stacked tiles are 26px apart.
+   Padding, not margin, so the top spacing does not collapse with the intro
+   paragraph margin. */
+.cards > ul.event-cards {
+  grid-template-columns: minmax(0, 1fr);
+  gap: 26px 30px;
+  padding: 16px 0 18px;
+}
+
+.cards .event-card {
   display: flex;
   flex-direction: column;
+  min-width: 0;
 }
 
-.event-category {
+/* ---------- category (.category.black-text.mb-2) ---------- */
+
+.cards .event-category {
   margin-bottom: 8px;
-  font-size: 16px;
+  color: var(--brand-title-color);
+  font-size: var(--body-font-size-s);
   font-weight: 700;
-  line-height: 1.5;
-  color: #222;
+  line-height: 24px;
   text-transform: uppercase;
 }
 
-.event-category p {
+.cards .event-category > * {
   margin: 0;
+  font: inherit;
 }
 
-/* ---------- Colored Box ---------- */
+/* ---------- tile (.image > .event-title-wrapper) ---------- */
 
-.event-content {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  flex: 1;
-  min-height: 200px;
-  padding: 10px;
-  text-decoration: none;
+.cards .event-content {
+  display: block;
+  position: relative;
+  border: 1px solid #d1d3d4;
+  overflow: hidden;
   color: inherit;
-  transition: transform .25s ease;
-}
-
-.event-content:hover {
-  transform: translateY(-3px);
   text-decoration: none;
 }
 
-/* ---------- Backgrounds ---------- */
-
-.event-card.bg-violet .event-content {
-  background: #6022A6;
-  color: #fff;
+.cards a.event-content:hover {
+  text-decoration: none;
 }
 
-.event-card.bg-light-gray .event-content {
-  background: #F4F4F4;
-  color: #333;
-}
-
-/* ---------- Title ---------- */
-
-.event-title {
+.cards .event-title {
   display: flex;
   align-items: center;
   justify-content: center;
-  flex: 1;
-  text-align: center;
+  box-sizing: border-box;
+  height: 200px;
+  padding: 10px;
+  background-color: var(--brand-purple);
+  color: #fff;
 }
 
-.event-title p {
-  margin: 0;
-  font-weight: bold;
-  font-size: 24px;
-  margin-bottom: 15px;
+.cards .event-title > * {
+  margin: 0 0 15px;
+  color: inherit;
+  font-size: var(--heading-size-m);
+  font-weight: 700;
   line-height: 29px;
 }
 
-/* ---------- Footer ---------- */
+/* ---------- footer: info (bottom-left) + icon badge (bottom-right) ---------- */
 
-.event-footer {
+.cards .event-footer {
   display: flex;
-  justify-content: space-between;
+  position: absolute;
+  inset: auto 0 0;
   align-items: flex-end;
-  gap: 24px;
+  justify-content: space-between;
+  height: 50%;
 }
 
-.event-info {
-  flex: 1;
+.cards .event-info {
+  display: flex;
+  align-items: flex-end;
+  box-sizing: border-box;
+  align-self: stretch;
+  flex: 1 1 auto;
+  max-width: calc(100% - 50px);
+  padding: 0 0 10px 10px;
+  color: #fff;
+  font-size: var(--body-font-size-xs);
+  line-height: 21px;
 }
 
-.event-info p {
+.cards .event-info > * {
   margin: 0;
-  font-size: 14px;
-  line-height: 1.5;
+  font: inherit;
+  color: inherit;
 }
 
-.cards-container > .default-content-wrapper p {
-    font-size: 18px;
-    line-height: 21px;
-    color: #000;
-    margin-top: 0;
-    margin-bottom: 1rem;
+.cards .event-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+  width: 40px;
+  height: 40px;
+  background-color: var(--brand-purple);
 }
 
-.event-icon {
-  flex-shrink: 0;
-}
-
-.event-icon picture,
-.event-icon img {
+.cards .event-icon picture,
+.cards .event-icon img {
   display: block;
 }
 
-.event-icon img {
+.cards .event-icon img {
   width: 20px;
-  height: auto;
+  height: 20px;
 }
 
-/* ---------- Tablet ---------- */
+/* ---------- background options (tile_background) ---------- */
 
-@media (width <= 991px) {
-  .cards > ul {
+/* Violet — source .event-title-wrapper (var(--ge-primary-color)) */
+.cards .event-card.bg-violet .event-title {
+  background-color: var(--brand-purple);
+}
+
+/* Light Gray — no instance on the source home page; uses the site's
+   light-grey band with dark text, icon badge stays purple */
+.cards .event-card.bg-light-gray .event-title {
+  background-color: var(--section-light);
+  color: var(--brand-title-color);
+}
+
+.cards .event-card.bg-light-gray .event-info {
+  color: var(--text-color);
+}
+
+/* ---------- tablet: 2 columns (source .col-md-6) ---------- */
+
+@media (width >= 768px) {
+  .cards > ul.event-cards {
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 28px;
-  }
-
-  .event-category {
-    font-size: 17px;
-    margin-bottom: 16px;
-  }
-
-  .event-content {
-    min-height: 240px;
-    padding: 24px;
-  }
-
-  .event-title p {
-    font-size: 28px;
-  }
-
-  .event-info p {
-    font-size: 15px;
-  }
-
-  .event-icon img {
-    width: 32px;
   }
 }
 
-/* ---------- Mobile ---------- */
+/* ---------- desktop: 3 columns (source .col-lg-4) ---------- */
 
-@media (width <= 767px) {
-  .cards > ul {
-    grid-template-columns: 1fr;
-    gap: 26px;
-  }
-
-  .event-category {
-    margin-bottom: 12px;
-    font-size: 16px;
-  }
-
-  .event-content {
-    min-height: 180px;
-    padding: 20px;
-  }
-
-  .event-title {
-    justify-content: flex-start;
-    align-items: center;
-    text-align: left;
-    margin-bottom: 40px;
-  }
-
-  .event-title p {
-    font-size: 24px;
-  }
-
-  .event-footer {
-    gap: 16px;
-    align-items: flex-end;
-  }
-
-  .event-info p {
-    font-size: 14px;
-    line-height: 1.45;
-  }
-
-  .event-icon img {
-    width: 28px;
+@media (width >= 992px) {
+  .cards > ul.event-cards {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 }
-

@@ -50,6 +50,10 @@ module.exports = {
 
         // Add this only if 19 is the intended limit for range
         range: 19,
+
+        // 4 rendered rows (heading | meta | actions | image); the 5th group is
+        // the `classes` variant select, which becomes a block class, not a cell
+        'event-hero': 5,
       },
     ],
 

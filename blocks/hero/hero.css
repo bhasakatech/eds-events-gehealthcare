@@ -1,11 +1,181 @@
+/*
+ * Hero – full-bleed purple band (source: events.gehealthcare.com
+ * section.hero-section.header-section, see migration-work/hero-extracted.css).
+ *
+ *  - text only (.no-media): title + intro in a 50% column of the 1140px container
+ *  - with media: media stacked above the text on mobile; on desktop the media
+ *    fills the right half of the band (source .hero-section .aem-video)
+ */
+
+/* Full-bleed: neutralise the global .section / .section > div container */
+main > .section.hero-container {
+  margin: 0;
+}
+
+main .section.hero-container > .hero-wrapper {
+  width: 100%;
+  max-width: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
 .hero.hero-layout {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  padding: 20px 0 30px;
+  background-color: var(--brand-purple); /* rgb(96, 34, 166) */
+  color: #fff;
+  font-size: 16px;
+  line-height: 24px;
+  overflow: hidden;
+}
+
+/* --- Text panel (source .container.pt-3 > .col-12.col-lg-6) --- */
+.hero.hero-layout .hero-content {
+  position: relative;
+  z-index: 1;
   display: grid;
-  grid-template-columns: 1fr;
-  min-height: 300px;
+  grid-template-columns: minmax(0, 1fr);
+  align-content: start;
+  box-sizing: border-box;
+  width: 100%;
+  max-width: var(--content-max-width); /* 1140px */
+  margin: 0 auto;
+  padding: 16px 15px 0;
+}
+
+.hero.hero-layout .hero-content :is(h1, h2, h3, h4, h5, h6, p, li) {
+  color: #fff;
+}
+
+.hero.hero-layout .hero-content h1 {
+  margin: 0 0 8px;
+  font-family: var(--heading-font-family);
+  font-size: var(--heading-font-size-xxl); /* 30px mobile / 38px desktop */
+  font-weight: 500;
+  line-height: 32px;
+}
+
+/* intro copy (source .subtext.mb-5) */
+.hero.hero-layout .hero-content p {
+  max-width: 480px;
+  margin: 0 0 48px;
+  font-size: 18px;
+  line-height: 21px;
+}
+
+.hero.hero-layout .hero-content p.button-container {
+  max-width: none;
+  margin-bottom: 10px;
+}
+
+/* links / CTAs on purple (same treatment as global .section.dark buttons) */
+main .hero.hero-layout a:any-link {
+  color: #fff;
+}
+
+main .hero.hero-layout a.button:focus-visible {
+  outline-color: #fff;
+}
+
+main .hero.hero-layout a.button:is(.primary, .accent):any-link {
+  border-color: #fff;
+  background-color: #fff;
+  color: var(--brand-purple);
+}
+
+main .hero.hero-layout a.button:is(.primary, .accent):is(:hover, :focus-visible) {
+  border-color: var(--brand-grey-hover);
+  background-color: var(--brand-grey-hover);
+  color: var(--brand-purple);
+}
+
+main .hero.hero-layout a.button.secondary:any-link {
+  border-color: #fff;
+  background-color: transparent;
+  color: #fff;
+}
+
+main .hero.hero-layout a.button.secondary:is(:hover, :focus-visible) {
+  border-color: var(--brand-grey-hover);
+  background-color: var(--brand-grey-hover);
+  color: var(--brand-slate);
+}
+
+/* --- Media (source .hero-section .aem-video) --- */
+.hero.hero-layout .hero-media {
+  position: relative;
+  order: -1;
+  width: 100%;
+  margin-bottom: 30px;
+}
+
+.hero.hero-layout .hero-media picture {
+  display: block;
+  height: 100%;
+}
+
+.hero.hero-layout .hero-media img,
+.hero.hero-layout .hero-media video {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.hero.hero-layout .hero-media video {
+  background-color: #000;
+}
+
+.hero.hero-layout .hero-caption {
+  position: absolute;
+  inset: auto 0 0;
+  margin: 0;
+  padding: 8px 16px;
+  background: rgb(0 0 0 / 50%);
+  color: #fff;
 }
 
 @media (width >= 900px) {
   .hero.hero-layout {
-    grid-template-columns: 1fr 1fr;
+    display: block;
+    min-height: 399px;
+    padding: 77px 0;
+  }
+
+  /* source .col-lg-6: 570px column with 15px gutters inside the container */
+  .hero.hero-layout .hero-content {
+    grid-template-columns: minmax(0, calc(50% - 15px));
+  }
+
+  .hero.hero-layout .hero-content h1 {
+    line-height: 41px;
+  }
+
+  /* source band has a fixed 399px height; the trailing .mb-5 margin overflows
+     it, so drop it and let min-height size the band */
+  .hero.hero-layout .hero-content > :last-child {
+    margin-bottom: 0;
+  }
+
+  .hero.hero-layout .hero-media {
+    position: absolute;
+    inset: 0 0 0 auto;
+    width: 50%;
+    max-width: 713px;
+    margin: 0;
+  }
+
+  .hero.hero-layout .hero-media img {
+    object-fit: contain;
+    object-position: right center;
+  }
+}
+
+@media (width >= 1200px) {
+  .hero.hero-layout {
+    min-height: min(399px, 28.4vw);
   }
 }

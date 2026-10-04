@@ -1,73 +1,48 @@
 /* =========================================================
    video-text
    eds-events-gehealthcare
-   Media-beside-text band (source: div.theater-intro)
-   Black band: full-width heading, then video + text row.
-   Values extracted from source computed styles.
+   Heading, then a media + text row. Values from source computed styles
+   (migration-work/video-text-extracted.css).
+
+   Looks are driven by the content context, not page paths:
+   - default: product "Innovation Theater" band
+     (source .single-products .modality-innovation-theater): the band is
+     the global purple .section.dark; 33px heading, 18px subtext in a
+     7/12 column, video (if any) full width below.
+   - intro: Innovation Theater page intro (source section.theater-intro):
+     a video-text section directly followed by the theater-sessions
+     listing, or a block authored with the "dark" option. Black band,
+     22px bold title, video 8/12 | text 4/12.
+   - video-left / video-right: legacy split panel (older home content).
    ========================================================= */
 
 .video-text {
-  --video-text-bg: #000;
-  --video-text-color: #fff;
-  --video-text-max-width: 1140px;
-  --video-text-title-size: 33px;
+  /* Bootstrap gutter used by the source grid (.row margin -15px / .col 15px) */
+  --video-text-gutter: 30px;
+  --video-text-title-size: var(--heading-size-xl); /* 33px */
+  --video-text-title-weight: 500;
   --video-text-title-line-height: 39.6px;
+  --video-text-title-margin: 0 0 8px;
   --video-text-description-size: 18px;
-  --video-text-description-line-height: 23px;
+  --video-text-description-line-height: 21px;
 
-  box-sizing: border-box;
-  max-width: var(--video-text-max-width);
-  margin: 0 auto;
-  padding: 40px 15px 50px;
-  color: var(--video-text-color);
-}
-
-/* Full-width black band behind the block (source: .theater-intro bg #000).
-   Variable is scoped to .video-text, so use the literal value on the section. */
-main .section.dark.video-text-container {
-  background-color: #000;
-}
-
-main .section.dark.video-text-container > .video-text-wrapper {
-  max-width: 100% !important;
-  padding: 0 !important;
-  margin: 0 !important;
+  color: inherit;
 }
 
 /* Heading spans the full content width above the row. */
-.video-text .video-text-heading {
-  margin: 0 0 24px;
-}
-
 .video-text .video-text-heading h2 {
-  margin: 0;
-  color: var(--video-text-color);
+  margin: var(--video-text-title-margin);
+  color: inherit;
   font-family: var(--heading-font-family);
   font-size: var(--video-text-title-size);
-  font-weight: 500;
+  font-weight: var(--video-text-title-weight);
   line-height: var(--video-text-title-line-height);
 }
 
-/* Body row (mobile-first: stacked). */
+/* Body row (mobile-first: stacked, media first). */
 .video-text .video-text-body {
   display: flex;
-  flex-direction: column;
-  gap: 24px;
-}
-
-/* Media / video */
-.video-text .video-text-media {
-  position: relative;
-  width: 100%;
-  aspect-ratio: 16 / 9;
-  overflow: hidden;
-}
-
-.video-text .video-text-media iframe {
-  display: block;
-  width: 100%;
-  height: 100%;
-  border: 0;
+  flex-direction: column-reverse;
 }
 
 /* Content column */
@@ -77,9 +52,13 @@ main .section.dark.video-text-container > .video-text-wrapper {
   align-items: flex-start;
 }
 
+.video-text .video-text-description {
+  align-self: stretch;
+}
+
 .video-text .video-text-description p {
   margin: 0 0 16px;
-  color: var(--video-text-color);
+  color: inherit;
   font-family: var(--body-font-family);
   font-size: var(--video-text-description-size);
   font-weight: 400;
@@ -88,6 +67,68 @@ main .section.dark.video-text-container > .video-text-wrapper {
 
 .video-text .video-text-description strong {
   font-weight: 700;
+}
+
+.video-text .video-text-description a:any-link {
+  color: inherit;
+  text-decoration: underline;
+}
+
+/* Media: video player, click-to-play poster, or static poster image.
+   Below the text in the default look (source .row.mt-4 > .col-12.mt-2). */
+.video-text .video-text-media {
+  position: relative;
+  width: 100%;
+  margin-top: 32px;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  background-color: #000;
+}
+
+.video-text .video-text-media :is(iframe, video, picture, img) {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  object-fit: cover;
+}
+
+.video-text .video-text-poster {
+  all: unset;
+  position: absolute;
+  inset: 0;
+  cursor: pointer;
+}
+
+.video-text .video-text-poster:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: -4px;
+}
+
+.video-text .video-text-play {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background-color: rgb(0 0 0 / 60%);
+  transform: translate(-50%, -50%);
+}
+
+.video-text .video-text-play::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 54%;
+  border-style: solid;
+  border-width: 12px 0 12px 20px;
+  border-color: transparent transparent transparent #fff;
+  transform: translate(-50%, -50%);
+}
+
+.video-text .video-text-poster:hover .video-text-play {
+  background-color: var(--brand-purple);
 }
 
 /* CTA — white "grey-button" style from source. */
@@ -103,38 +144,162 @@ main .section.dark.video-text-container > .video-text-wrapper {
   font-weight: 700;
   line-height: 26px;
   text-align: center;
+  text-decoration: none;
   cursor: pointer;
 }
 
 .video-text .video-text-cta:hover,
 .video-text .video-text-cta:focus-visible {
-  background-color: #e6e6e6;
-  border-color: #e6e6e6;
+  border-color: var(--brand-grey-hover);
+  background-color: var(--brand-grey-hover);
 }
 
 /* =========================================================
-   DESKTOP — two columns (video 58.33% | text 41.67%)
+   INTRO — Innovation Theater page (source section.theater-intro)
+   ========================================================= */
+
+main .section.dark.video-text-container:has(.video-text.intro) {
+  padding: 50px 0;
+  background-color: var(--section-dark);
+  color: #fff;
+}
+
+.video-text.intro {
+  --video-text-title-size: 22px;
+  --video-text-title-weight: 700;
+  --video-text-title-line-height: 25px;
+  --video-text-title-margin: 0 0 16px;
+  --video-text-description-size: 16px;
+  --video-text-description-line-height: 20px;
+}
+
+.video-text.intro .video-text-body {
+  flex-direction: column;
+}
+
+.video-text.intro .video-text-media {
+  margin: 0;
+}
+
+.video-text.intro .video-text-description {
+  margin: 0 0 20px;
+  padding-top: 8px;
+}
+
+.video-text.intro .video-text-description p:last-child {
+  margin-bottom: 0;
+}
+
+/* =========================================================
+   LEGACY SPLIT — video-left / video-right (older home content)
+   Purple text panel beside the video, edge to edge.
+   ========================================================= */
+
+main .section.video-text-container:has(.video-text:is(.video-left, .video-right)) > .video-text-wrapper {
+  max-width: 100% !important;
+  padding: 0 !important;
+}
+
+.video-text:is(.video-left, .video-right) {
+  --video-text-title-size: 38px;
+  --video-text-title-weight: 400;
+  --video-text-title-line-height: 41px;
+  --video-text-title-margin: 0 0 24px;
+}
+
+.video-text:is(.video-left, .video-right) .video-text-body {
+  flex-direction: column;
+}
+
+.video-text:is(.video-left, .video-right) .video-text-media {
+  margin: 0;
+}
+
+.video-text:is(.video-left, .video-right) .video-text-content {
+  box-sizing: border-box;
+  justify-content: center;
+  padding: 32px 24px;
+  background-color: var(--brand-purple);
+  color: #fff;
+}
+
+.video-text:is(.video-left, .video-right) .video-text-description p:last-child {
+  margin-bottom: 0;
+}
+
+/* =========================================================
+   DESKTOP
    ========================================================= */
 
 @media (width >= 900px) {
-  .video-text {
-    padding: 120px 15px 50px;
+  /* default: heading + subtext in the source col-lg-7 (7/12) column */
+  .video-text .video-text-heading,
+  .video-text .video-text-content {
+    max-width: calc((100% + var(--video-text-gutter)) * 7 / 12 - var(--video-text-gutter));
   }
 
-  .video-text .video-text-body {
+  /* legacy split: 50 / 50, video-right puts the text first */
+  .video-text:is(.video-left, .video-right) .video-text-body {
     flex-direction: row;
-    gap: 30px;
+    align-items: stretch;
+  }
+
+  .video-text.video-right .video-text-body {
+    flex-direction: row-reverse;
+  }
+
+  .video-text:is(.video-left, .video-right) .video-text-media,
+  .video-text:is(.video-left, .video-right) .video-text-content {
+    flex: 1 1 50%;
+    max-width: none;
+  }
+
+  .video-text:is(.video-left, .video-right) .video-text-heading {
+    max-width: none;
+  }
+
+  .video-text:is(.video-left, .video-right) .video-text-content {
+    padding: 48px 32px;
+  }
+
+  /* intro: video 8/12 | text 4/12; text stays in the right column when
+     there is no video (source keeps the empty .col-lg-8). */
+  .video-text.intro {
+    --video-text-media-width: calc((100% + var(--video-text-gutter)) * 8 / 12 - var(--video-text-gutter));
+    --video-text-content-width: calc((100% + var(--video-text-gutter)) * 4 / 12 - var(--video-text-gutter));
+  }
+
+  .video-text.intro .video-text-heading {
+    max-width: none;
+  }
+
+  .video-text.intro .video-text-body {
+    flex-direction: row;
+    gap: var(--video-text-gutter);
     align-items: flex-start;
   }
 
-  .video-text .video-text-media {
-    flex: 0 0 58.3333%;
-    max-width: 58.3333%;
+  .video-text.intro .video-text-media {
+    flex: 0 0 var(--video-text-media-width);
+    margin: 0;
   }
 
-  .video-text .video-text-content {
-    flex: 0 0 41.6667%;
-    max-width: 41.6667%;
-    padding-top: 8px;
+  .video-text.intro .video-text-content {
+    flex: 0 0 var(--video-text-content-width);
+    max-width: var(--video-text-content-width);
+  }
+
+  .video-text.intro.no-media .video-text-content {
+    margin-left: calc(var(--video-text-media-width) + var(--video-text-gutter));
+  }
+}
+
+@media (width >= 1200px) {
+  .video-text:is(.video-left, .video-right) .video-text-content {
+    padding: 80px;
+  }
+
+  .video-text:is(.video-left, .video-right) .video-text-content > * {
+    max-width: 555px;
   }
 }

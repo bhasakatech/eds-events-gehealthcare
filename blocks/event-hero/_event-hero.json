@@ -23,6 +23,18 @@
       "id": "event-hero",
       "fields": [
         {
+          "component": "select",
+          "name": "classes",
+          "label": "Style Variant",
+          "description": "Block option applied as a CSS class on the block.",
+          "valueType": "string",
+          "value": "",
+          "options": [
+            { "name": "Default", "value": "" },
+            { "name": "Compact", "value": "compact" }
+          ]
+        },
+        {
           "component": "text",
           "name": "heading_title",
           "label": "Event Title",
@@ -42,7 +54,7 @@
           ]
         },
         {
-          "component": "textarea",
+          "component": "richtext",
           "name": "heading_tagline",
           "label": "Tagline",
           "valueType": "string",

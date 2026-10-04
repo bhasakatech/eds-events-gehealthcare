@@ -1,19 +1,23 @@
 /*
- * feature-cards — resource card grid
- * Source: events.gehealthcare.com section.resources-section
- * Title above a bordered clickable image with a purple corner badge.
+ * feature-cards — resource card grid / news list
+ * Source: events.gehealthcare.com
+ *  - image cards (.feature-cards-card-media): section.resources-section
+ *    .home-eventtile — title above a bordered clickable image with a purple
+ *    corner badge. In a plain (no background) section they take the product
+ *    detail look (section.product-partial-section .product-tile).
+ *  - text cards (.feature-cards-card-text): section#news .news-wrapper —
+ *    full-width rows: date, title, round arrow, grey divider.
  */
 
 .feature-cards {
   --fc-purple: var(--brand-purple, #6022a6);
+  --fc-title: var(--brand-title-color, #222);
   --fc-border: #d1d3d4;
+  --fc-image-bg: #d6dce5;
+  --fc-divider: #b5b5b5;
+  --fc-row-hover: #f0f0f0;
 
-  background-color: #fff;
-  color: #000;
-}
-
-.feature-cards .feature-cards-inner {
-  padding: 40px 0 8px;
+  color: var(--text-color, #000);
 }
 
 .feature-cards .feature-cards-header h2,
@@ -28,27 +32,35 @@
 .feature-cards .feature-cards-grid {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 8px 30px;
+  gap: 0 30px;
   margin: 0;
   padding: 0;
   list-style: none;
 }
 
-.feature-cards .feature-cards-grid > li {
+/* ---------- image cards ---------- */
+
+.feature-cards .feature-cards-card-media {
+  min-width: 0;
   margin: 8px 0 16px;
 }
 
-.feature-cards .feature-cards-card-title {
+.feature-cards .feature-cards-card-media .feature-cards-card-title {
+  display: -webkit-box;
   margin: 0 0 8px;
+  overflow: hidden;
   color: #000;
   font-size: 17px;
   font-weight: 400;
   line-height: 1.5;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
 }
 
 .feature-cards .feature-cards-media {
   position: relative;
   display: block;
+  overflow: hidden;
   border: 1px solid var(--fc-border);
   line-height: 0;
 }
@@ -57,14 +69,25 @@
 .feature-cards .feature-cards-media img {
   display: block;
   width: 100%;
-  aspect-ratio: 348 / 200;
+  height: 200px;
+}
+
+.feature-cards .feature-cards-media img {
+  background-color: var(--fc-image-bg);
   object-fit: cover;
+  object-position: left bottom;
+  transition: transform 0.4s;
+}
+
+.feature-cards .feature-cards-card-media:hover .feature-cards-media img {
+  transform: scale(1.2);
 }
 
 .feature-cards .feature-cards-badge {
   position: absolute;
   right: 0;
   bottom: 0;
+  z-index: 2;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -74,9 +97,184 @@
 }
 
 .feature-cards .feature-cards-badge svg {
+  display: block;
+  width: 20px;
+  height: 20px;
+}
+
+.feature-cards .feature-cards-badge-file svg {
   width: 35px;
   height: 35px;
+}
+
+.feature-cards .feature-cards-card-media .feature-cards-card-description {
+  display: -webkit-box;
+  margin: 10px 0 0;
+  overflow: hidden;
+  color: #000;
+  font-size: 15px;
+  line-height: 18px;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+}
+
+.feature-cards .feature-cards-card-media .feature-cards-card-description p {
+  margin: 0;
+  font-size: inherit;
+  line-height: inherit;
+}
+
+/* source always renders the (possibly empty) .description with margin-top 10px */
+.feature-cards .feature-cards-card-media .feature-cards-media:last-child {
+  margin-bottom: 10px;
+}
+
+/* ---------- text cards (news rows) ---------- */
+
+.feature-cards .feature-cards-card-text {
+  grid-column: 1 / -1;
+  margin: 0 -15px;
+}
+
+.feature-cards .feature-cards-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 24px 15px;
+  border-bottom: 1px solid var(--fc-divider);
+  color: var(--fc-title);
+  text-decoration: none;
+  transition: background-color 0.3s;
+}
+
+.feature-cards a.feature-cards-row:hover {
+  background-color: var(--fc-row-hover);
+  text-decoration: none;
+}
+
+.feature-cards .feature-cards-row-body {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  padding-right: 48px;
+}
+
+.feature-cards .feature-cards-card-text .feature-cards-card-title {
+  display: -webkit-box;
+  margin: 0;
+  overflow: hidden;
+  color: var(--fc-title);
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 25px;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  transition: color 0.3s;
+}
+
+.feature-cards a.feature-cards-row:hover .feature-cards-card-title {
+  color: var(--fc-purple);
+}
+
+.feature-cards .feature-cards-card-text .feature-cards-card-description {
+  order: -1;
+  color: var(--fc-title);
+  font-size: 16px;
+  line-height: 24px;
+}
+
+.feature-cards .feature-cards-card-text .feature-cards-card-description p {
+  margin: 0;
+  font-size: inherit;
+  line-height: inherit;
+}
+
+.feature-cards .feature-cards-row-arrow {
+  flex: 0 0 30px;
+  width: 30px;
+  height: 30px;
+}
+
+.feature-cards .feature-cards-row-arrow svg {
   display: block;
+  width: 100%;
+  height: 100%;
+}
+
+/* ---------- section context ---------- */
+
+/* resources band (source .resources-section: padding-top 80px, pb-5 below) */
+main .section.feature-cards-container.light-grey:has(.feature-cards-card-media) {
+  padding-top: 80px;
+}
+
+/* plain sections (source .pt-5.pb-5 product-partial-section / #news) */
+main > .section.feature-cards-container:not(.light, .light-grey, .highlight, .grey, .dark) {
+  margin: 0;
+  padding: var(--section-padding-s, 48px) 0;
+}
+
+/* flow-root keeps the h2's 8px margin inside (source col-12.mb-4 is a flex item) */
+main > .section.feature-cards-container:not(.light, .light-grey, .highlight, .grey, .dark) .feature-cards-header {
+  display: flow-root;
+  margin-bottom: 24px;
+}
+
+/* product detail tiles (source .product-tile .title) */
+main > .section.feature-cards-container:not(.light, .light-grey, .highlight, .grey, .dark) .feature-cards-card-media .feature-cards-card-title {
+  margin-bottom: 15px;
+  color: var(--fc-title);
+  font-size: 19px;
+  font-weight: 700;
+  line-height: 21px;
+}
+
+main > .section.feature-cards-container:not(.light, .light-grey, .highlight, .grey, .dark) .feature-cards-card-media .feature-cards-card-description {
+  -webkit-line-clamp: initial;
+}
+
+/* lone link authored after the block: news "See all" (source #news
+   .grey-button, centered, row mt-5) / product "Request info" (source
+   .product-partial-section .primary-button.smaller-button, black) */
+main .section.feature-cards-container .feature-cards-wrapper + .default-content-wrapper > p:only-child:has(> a:only-child) {
+  margin: 0;
+}
+
+main .section.feature-cards-container .feature-cards-wrapper + .default-content-wrapper > p:only-child > a:only-child:any-link {
+  display: inline-block;
+  border: 1px solid var(--brand-purple, #6022a6);
+  border-radius: 4px;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 26px;
+  text-align: center;
+  text-decoration: none;
+  transition: var(--button-transition, all 0.2s cubic-bezier(0.47, 0, 0.745, 0.715));
+}
+
+main .section.feature-cards-container:has(.feature-cards-card-text) .feature-cards-wrapper + .default-content-wrapper > p:only-child:has(> a:only-child) {
+  margin-top: 48px;
+  text-align: center;
+}
+
+main .section.feature-cards-container:has(.feature-cards-card-text) .feature-cards-wrapper + .default-content-wrapper > p:only-child > a:only-child:any-link {
+  padding: 6px 38.4px;
+  border-color: #fff;
+  background-color: var(--brand-purple, #6022a6);
+  color: #fff;
+}
+
+main .section.feature-cards-container:has(.feature-cards-card-text) .feature-cards-wrapper + .default-content-wrapper > p:only-child > a:only-child:hover {
+  border-color: var(--brand-grey-hover, #e7e7e7);
+  background-color: var(--brand-grey-hover, #e7e7e7);
+  text-decoration: none;
+}
+
+main .section.feature-cards-container:has(.feature-cards-card-media) .feature-cards-wrapper + .default-content-wrapper > p:only-child > a:only-child:any-link {
+  padding: 8px 30px;
+  border-color: var(--brand-purple, #6022a6);
+  background-color: #000;
+  color: #fff;
 }
 
 @media (width >= 600px) {
@@ -86,15 +284,20 @@
 }
 
 @media (width >= 900px) {
-  .feature-cards .feature-cards-inner {
-    padding: 40px 0 8px;
-  }
-
   .feature-cards .feature-cards-grid {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 
   .feature-cards .feature-cards-header h2 {
-    font-size: 33px;
+    font-size: var(--heading-size-xl, 33px);
+  }
+
+  .feature-cards .feature-cards-media img {
+    object-position: center;
+  }
+
+  .feature-cards .feature-cards-card-text .feature-cards-card-title {
+    font-size: 22px;
+    line-height: 26px;
   }
 }

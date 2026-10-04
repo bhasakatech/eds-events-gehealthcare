@@ -127,6 +127,8 @@ export default class RuleEngine {
   constructor(formRules, fieldIdMap, formTag) {
     this.formTag = formTag;
     this.data = constructPayload(formTag);
+    // Default radio-group selections, keyed by group name (see setData).
+    formTag.querySelectorAll('input[type="radio"]:checked').forEach((radio) => this.setData(radio));
     this.formula = new Formula(registerFunctions(customFunctions));
     const newRules = formRules.map(([fieldId, fieldRules]) => [
       fieldId,
@@ -203,6 +205,10 @@ export default class RuleEngine {
     } else {
       this.data[fieldName] = coerceValue(field.value);
     }
+    // Radio-group options are named `${groupId}_${groupName}` (blocks/form/util.js), while
+    // rules reference the group by name, so also store the selection under the group name.
+    const group = field.type === 'radio' ? field.closest('fieldset') : null;
+    if (group?.name && field.checked) this.data[group.name] = coerceValue(field.value);
   }
 
   applyRules(rules) {
@@ -248,12 +254,19 @@ export default class RuleEngine {
           } else {
             rules = this.getRules(radios.id);
           }
+          // Radio-group rules depend on the group (fieldset) id, not the option inputs' ids.
+          const group = field.closest('fieldset');
+          if (group?.id) rules = [...rules, ...this.getRules(group.id)];
         } else {
           rules = this.getRules(fieldId);
         }
         this.applyRules(rules);
       }
     });
+
+    // Evaluate every rule once so the initial state matches the default values
+    // (e.g. panels hidden until their condition is met).
+    this.applyRules(Object.keys(this.formRules));
 
     // this.formTag.addEventListener('item:add', (e) => {
     //   const fieldsetName = e.detail.item.name;

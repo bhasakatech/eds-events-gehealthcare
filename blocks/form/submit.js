@@ -129,7 +129,15 @@ export async function handleSubmit(e, form, captcha) {
       // hide error message in case it was shown before
       form.querySelectorAll('.form-message.show').forEach((el) => el.classList.remove('show'));
 
-      if (form.dataset.source === 'sheet') {
+      if (typeof form.submitHandler === 'function') {
+        // site integrations (e.g. scripts/salestratus.js) can take over the submission
+        try {
+          await form.submitHandler(form);
+          submitSuccess({}, form);
+        } catch (error) {
+          submitFailure(error, form);
+        }
+      } else if (form.dataset.source === 'sheet') {
         await submitDocBasedForm(form, captcha);
       }
     }

@@ -1,0 +1,106 @@
+.embed {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.embed .embed-frame {
+  position: relative;
+  width: 100%;
+}
+
+.embed .embed-frame iframe {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+/* video providers: responsive 16:9 */
+.embed .embed-frame-video {
+  aspect-ratio: 16 / 9;
+}
+
+.embed .embed-frame-video iframe {
+  position: absolute;
+  inset: 0;
+}
+
+/*
+ * generic pages/apps (e.g. Jiffle meeting scheduler) — source: full-bleed flex row,
+ * iframe 500x760 centered, shrinks to viewport width on small screens.
+ */
+main > .section.embed-container:has(.embed-page) {
+  margin-bottom: 0;
+}
+
+/* source: empty paragraph (margin-bottom 16px) between header and embed */
+main > .section.embed-container:first-of-type:has(.embed-page) {
+  margin-top: 16px;
+}
+
+.embed.embed-page {
+  width: auto;
+  min-height: 760px; /* reserve space before the lazy iframe loads */
+  margin-inline: -15px; /* cancel .section > div gutter: source frame is edge-to-edge */
+}
+
+.embed .embed-frame-page {
+  max-width: 500px;
+  height: 760px;
+}
+
+.embed.embed-twitter .twitter-tweet-rendered {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.embed .embed-placeholder {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  cursor: pointer;
+}
+
+.embed .embed-placeholder > * {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  inset: 0;
+}
+
+.embed .embed-placeholder picture img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.embed .embed-placeholder-play button {
+  box-sizing: border-box;
+  position: relative;
+  display: block;
+  width: 66px;
+  height: 66px;
+  padding: 0;
+  border: 4px solid currentcolor;
+  border-radius: 50%;
+  background: none;
+  cursor: pointer;
+}
+
+.embed .embed-placeholder-play button::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 55%;
+  width: 0;
+  height: 0;
+  border-top: 14px solid transparent;
+  border-bottom: 14px solid transparent;
+  border-left: 20px solid currentcolor;
+  transform: translate(-50%, -50%);
+}

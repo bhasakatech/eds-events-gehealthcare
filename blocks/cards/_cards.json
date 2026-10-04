@@ -24,8 +24,7 @@
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
               "name": "Card",
-              "model": "card",
-              "key-value": true
+              "model": "card"
             }
           }
         }
@@ -54,13 +53,14 @@
         {
           "component": "reference",
           "valueType": "string",
-          "name": "icon",
+          "name": "tile_icon",
           "label": "Icon",
-          "multi": false
+          "multi": false,
+          "description": "Tile icon (bottom-right of the card)."
         },
         {
           "component": "select",
-          "name": "background",
+          "name": "tile_background",
           "label": "Background",
           "options": [
             {
@@ -74,8 +74,8 @@
           ]
         },
         {
-          "component": "text",
-          "name": "link",
+          "component": "aem-content",
+          "name": "tile_link",
           "label": "Card Link"
         }
       ]

@@ -33,6 +33,18 @@
             {
               "name": "Highlight",
               "value": "highlight"
+            },
+            {
+              "name": "Light Grey",
+              "value": "light-grey"
+            },
+            {
+              "name": "Grey",
+              "value": "grey"
+            },
+            {
+              "name": "Dark",
+              "value": "dark"
             }
           ]
         }
@@ -67,7 +79,11 @@
         "activity-list",
         "feature-cards",
         "experience-fragment",
-        "asset-picker"
+        "asset-picker",
+        "carousel",
+        "embed",
+        "search",
+        "theater-sessions"
       ]
     }
   ]
