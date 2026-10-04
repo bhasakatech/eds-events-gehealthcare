@@ -11,7 +11,7 @@
       {
         "component": "text",
         "valueType": "string",
-        "name": "description",
+        "name": "jcr:description",
         "label": "Description"
       },
       {
