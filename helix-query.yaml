@@ -21,9 +21,11 @@ indices:
       - '/**.json'
     target: /events/query-index.json
     properties:
+      # event name as the source calendar shows it ("ESC 2026"): the page h1, not the
+      # og:title (which carries the " - GE HealthCare Events Center" suffix)
       title:
-        select: head > meta[property="og:title"]
-        value: attribute(el, "content")
+        select: main h1
+        value: textContent(el)
 
       topic:
         select: head > meta[name="topic"]

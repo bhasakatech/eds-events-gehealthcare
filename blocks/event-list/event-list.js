@@ -270,6 +270,11 @@ export default async function decorate(block) {
   }
   // drop the index's own folder page (e.g. /events) and untitled rows
   events = (events || []).filter((event) => event.title && !/^\/events\/?$/.test(event.path || ''));
+  // the source calendar only lists scheduled events: once event pages carry dates, leave out
+  // undated pages (archived events, test pages) instead of showing "-" rows
+  if (events.some((event) => parseDate(event.startDate))) {
+    events = events.filter((event) => parseDate(event.startDate));
+  }
 
   const tableBody = block.querySelector('.event-list-table-body');
   const toolbar = block.querySelector('.event-list-toolbar');
