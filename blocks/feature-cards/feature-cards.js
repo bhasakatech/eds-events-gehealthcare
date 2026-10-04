@@ -18,6 +18,9 @@ const PDF_ICON = '<svg viewBox="0 0 200 200" aria-hidden="true" focusable="false
 // source event-icon.png: curved "share" arrow (links)
 const ARROW_ICON = '<svg viewBox="3 3.5 18 18" aria-hidden="true" focusable="false"><path fill="#fff" d="M21 12l-7-7v4C7 10 4 15 3 20c2.5-3.5 6-5.1 11-5.1V19l7-7z"/></svg>';
 
+// source arrow-right-1.png: white play triangle (unlinked "overview video" tiles)
+const PLAY_ICON = '<svg viewBox="0 0 21 27" aria-hidden="true" focusable="false"><path fill="#fff" d="M0 0l21 13.5L0 27z"/></svg>';
+
 // source arrow-right.png: purple circle with a white chevron (text/news rows)
 const ROW_ARROW_ICON = '<svg viewBox="0 0 448 448" aria-hidden="true" focusable="false"><circle cx="224" cy="224" r="220" fill="#6022a6"/><path d="M190 125l99 99-99 99" fill="none" stroke="#fff" stroke-width="14"/></svg>';
 
@@ -60,6 +63,46 @@ function isFile(href) {
   return /\.(pdf|jpe?g|png|gif|webp|docx?|pptx?|xlsx?|zip)(\?|#|$)/i.test(href || '');
 }
 
+// product detail pages: the block sits in a plain (unstyled) section, like the
+// source .product-partial-section
+const SECTION_STYLES = ['light', 'light-grey', 'highlight', 'grey', 'dark'];
+function inPlainSection(block) {
+  const section = block.closest('.section');
+  return !!section && !SECTION_STYLES.some((s) => section.classList.contains(s));
+}
+
+function isVideo(href) {
+  return /scene7\.com\/is\/content\/|play\.vidyard\.com\/|\.mp4(\?|#|$)/i.test(href || '');
+}
+
+/**
+ * Badge per the source tiles: "overview video" tiles (unlinked, or linked to the
+ * video on product pages) show play; on product pages every other linked tile
+ * shows the download badge; elsewhere files get the download badge and other
+ * links the share arrow.
+ */
+function badgeFor(href, productTiles) {
+  if (!href || (productTiles && isVideo(href))) return { icon: PLAY_ICON, variant: 'play' };
+  if (productTiles || isFile(href)) return { icon: PDF_ICON, variant: 'file' };
+  return { icon: ARROW_ICON, variant: '' };
+}
+
+/**
+ * Product pages author the heading's "Request info" button (no model field) as
+ * a lone paragraph right after the block; the source shows it under the
+ * heading, so move it into the header.
+ */
+function adoptHeaderCta(block, header) {
+  const next = block.closest('.feature-cards-wrapper')?.nextElementSibling;
+  if (!header || !next?.matches('.default-content-wrapper') || next.children.length !== 1) return;
+  const p = next.firstElementChild;
+  const link = p.matches('p') && p.children.length === 1 && p.querySelector(':scope > a[href*="/contact-us?"]');
+  if (!link) return;
+  p.classList.add('feature-cards-cta');
+  header.append(p);
+  next.remove();
+}
+
 export default function decorate(block) {
   const rows = [...block.children];
   const itemRows = rows.filter((row) => isItemRow(row));
@@ -69,9 +112,11 @@ export default function decorate(block) {
 
   const root = document.createElement('div');
   root.className = 'feature-cards-inner';
+  const productTiles = inPlainSection(block);
 
+  let header;
   if (headingCell) {
-    const header = document.createElement('div');
+    header = document.createElement('div');
     header.className = 'feature-cards-header';
     header.append(...headingCell.childNodes);
     root.append(header);
@@ -139,9 +184,9 @@ export default function decorate(block) {
 
     // corner badge
     const badge = document.createElement('span');
-    const file = isFile(item.href);
-    badge.className = `feature-cards-badge${file ? ' feature-cards-badge-file' : ''}`;
-    badge.innerHTML = file ? PDF_ICON : ARROW_ICON;
+    const { icon, variant } = badgeFor(item.href, productTiles);
+    badge.className = `feature-cards-badge${variant ? ` feature-cards-badge-${variant}` : ''}`;
+    badge.innerHTML = icon;
     media.append(badge);
 
     li.append(title, media);
@@ -156,6 +201,7 @@ export default function decorate(block) {
 
   root.append(grid);
   block.replaceChildren(root);
+  adoptHeaderCta(block, header);
 
   block.querySelectorAll('picture > img').forEach((img) => {
     const optimized = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);

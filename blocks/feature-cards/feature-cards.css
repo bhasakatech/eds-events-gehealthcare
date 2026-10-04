@@ -107,6 +107,42 @@
   height: 35px;
 }
 
+/* unlinked "overview video" tiles (source arrow-right-1.png, 12x15 in the 40px badge) */
+.feature-cards .feature-cards-badge-play svg {
+  width: 12px;
+  height: 15px;
+}
+
+/* product "Request info" moved under the heading (source .col-12.mb-4 > .h2 +
+   .primary-button.smaller-button: black, 8px 30px, 32px above the first tile) */
+.feature-cards .feature-cards-header .feature-cards-cta {
+  margin: 0;
+}
+
+.feature-cards .feature-cards-header .feature-cards-cta a:any-link {
+  display: inline-block;
+  margin: 0;
+  padding: 8px 30px;
+  border: 1px solid var(--brand-purple, #6022a6);
+  border-radius: 4px;
+  background-color: #000;
+  color: #fff;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 26px;
+  text-align: center;
+  text-decoration: none;
+  transition: var(--button-transition, all 0.2s cubic-bezier(0.47, 0, 0.745, 0.715));
+}
+
+.feature-cards .feature-cards-header .feature-cards-cta a:hover,
+.feature-cards .feature-cards-header .feature-cards-cta a:focus-visible {
+  border-color: var(--brand-purple, #6022a6);
+  background-color: var(--brand-purple, #6022a6);
+  color: #fff;
+  text-decoration: none;
+}
+
 .feature-cards .feature-cards-card-media .feature-cards-card-description {
   display: -webkit-box;
   margin: 10px 0 0;
