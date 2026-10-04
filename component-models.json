@@ -1294,6 +1294,18 @@
     ]
   },
   {
+    "id": "form-link",
+    "fields": [
+      {
+        "component": "aem-content",
+        "valueType": "string",
+        "name": "reference",
+        "label": "Form definition",
+        "description": "Path of the form definition JSON (for example /contact-form.json)"
+      }
+    ]
+  },
+  {
     "id": "form",
     "fields": [
       {

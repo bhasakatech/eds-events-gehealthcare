@@ -147,6 +147,12 @@ function buildDrawer(sources, label) {
   links.forEach((a) => {
     const li = document.createElement('li');
     li.append(a);
+    // in-page links (source "Resources" -> #resources) only show where the target exists,
+    // like the source's .menu-res item on event pages
+    const hash = a.getAttribute('href') || '';
+    if (hash.length > 1 && hash.startsWith('#') && !document.getElementById(decodeURIComponent(hash.slice(1)))) {
+      li.hidden = true;
+    }
     list.append(li);
   });
   drawer.append(list);
