@@ -72,3 +72,17 @@ dialog.contact-dialog .contact-dialog-close:focus-visible {
     padding: 30px 70px;
   }
 }
+
+/* "Request a meeting" (Jiffle) dialog: source div.jiffle-popup with the booking form in a
+   760px iframe below a 37px close row */
+dialog.contact-dialog.contact-dialog-frame {
+  height: min(766px, calc(100dvh - 30px));
+  padding-top: 37px;
+}
+
+dialog.contact-dialog.contact-dialog-frame iframe {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}

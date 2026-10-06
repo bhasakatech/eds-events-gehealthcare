@@ -104,3 +104,13 @@ main > .section.embed-container:first-of-type:has(.embed-page) {
   border-left: 20px solid currentcolor;
   transform: translate(-50%, -50%);
 }
+
+/* Zoovu advisor: reserve its height before the js-loader renders (source #zoovu-assistant 852px) */
+.embed.embed-zoovu {
+  min-height: 852px;
+}
+
+/* full width (the block centers its children) */
+.embed.embed-zoovu .embed-zoovu-container {
+  width: 100%;
+}

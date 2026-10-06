@@ -40,6 +40,13 @@ const embedTwitter = (url) => {
   return `<blockquote class="twitter-tweet"><a href="${href}"></a></blockquote>`;
 };
 
+// Zoovu advisor (source "Help me decide" page): the advisor's js-loader renders into
+// div#zoovu-assistant, as on the source
+const embedZoovu = (url) => {
+  loadScript(url.href);
+  return '<div id="zoovu-assistant" class="embed-zoovu-container"></div>';
+};
+
 const embedDefault = (url) => `<div class="embed-frame embed-frame-page">
     <iframe src="${url.href}" allow="encrypted-media; clipboard-write" allowfullscreen
       title="Content from ${url.hostname}" loading="lazy"></iframe>
@@ -49,6 +56,7 @@ const EMBEDS_CONFIG = [
   { match: ['youtube', 'youtu.be'], type: 'youtube', embed: embedYoutube },
   { match: ['vimeo'], type: 'vimeo', embed: embedVimeo },
   { match: ['twitter', 'x.com'], type: 'twitter', embed: embedTwitter },
+  { match: ['zoovu.com'], type: 'zoovu', embed: embedZoovu },
 ];
 
 const getConfig = (url) => EMBEDS_CONFIG

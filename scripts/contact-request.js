@@ -82,6 +82,41 @@ export function applyRequestMode(form, params) {
   }
 }
 
+/**
+ * The source contact form is email-first: the inquiry, message and email come with a
+ * "Continue" button; the name / company / phone details and the marketing consent
+ * (.extrainfo, .phone-wrapper) only open after it, and the button becomes "Submit".
+ * (The source looks the email up in SaleStratus at that step; the details always open here.)
+ */
+function useEmailFirst(form) {
+  const details = form.querySelector('fieldset[name="details"]');
+  const button = form.querySelector('button[type="submit"]');
+  if (!details || !button || form.dataset.step) return;
+  const step2 = [details, form.elements.service?.closest('.field-wrapper')].filter(Boolean);
+  const emailIntro = form.querySelector('.field-email-intro');
+  const required = [...details.querySelectorAll('[required]')];
+  const submitLabel = button.textContent;
+
+  const setStep = (step) => {
+    form.dataset.step = step;
+    const open = step === '2';
+    step2.forEach((el) => { el.dataset.visible = String(open); });
+    if (emailIntro) emailIntro.dataset.visible = String(!open);
+    required.forEach((el) => { el.required = open; });
+    button.textContent = open ? submitLabel : 'Continue';
+  };
+  setStep('1');
+
+  // capture: runs before the form block's submit handler
+  form.addEventListener('submit', (e) => {
+    if (form.dataset.step !== '1' || !form.checkValidity()) return;
+    e.preventDefault();
+    e.stopImmediatePropagation();
+    setStep('2');
+    details.querySelector('input, select')?.focus();
+  }, true);
+}
+
 async function fetchContactFragment(path) {
   const fragment = await loadFragment(path);
   if (fragment || !window.location.pathname.startsWith('/content/')) return fragment;
@@ -129,6 +164,7 @@ async function openRequestDialog(url) {
 
     const form = await waitForForm(body);
     applyRequestMode(form, url.searchParams);
+    useEmailFirst(form);
     // the source closes its contact popup 5 seconds after the thank-you message
     useSaleStratus(form, url.searchParams, () => setTimeout(() => dialog.close(), 5000));
     dialog.showModal();
@@ -137,12 +173,45 @@ async function openRequestDialog(url) {
   }
 }
 
+// "Request a meeting" (Jiffle): the source opens the booking form in its popup
+// (div.jiffle-popup: 850px white box, iframe 760px high) instead of navigating.
+const JIFFLE = /(^|\.)jifflenow\.com$/;
+
+async function openMeetingDialog(url) {
+  await loadCSS(`${window.hlx.codeBasePath}/styles/contact-dialog.css`);
+  const dialog = document.createElement('dialog');
+  dialog.className = 'contact-dialog contact-dialog-frame';
+  dialog.setAttribute('aria-label', 'Request a meeting');
+  const close = document.createElement('button');
+  close.type = 'button';
+  close.className = 'contact-dialog-close';
+  close.setAttribute('aria-label', 'Close');
+  close.addEventListener('click', () => dialog.close());
+  const frameUrl = new URL(url.href);
+  if (!frameUrl.searchParams.has('embedded')) frameUrl.searchParams.set('embedded', 'true');
+  const iframe = document.createElement('iframe');
+  iframe.src = frameUrl.href;
+  iframe.title = 'Request a meeting';
+  dialog.append(close, iframe);
+  dialog.addEventListener('click', (e) => {
+    if (e.target === dialog) dialog.close();
+  });
+  dialog.addEventListener('close', () => dialog.remove());
+  document.body.append(dialog);
+  dialog.showModal();
+}
+
 export default function initContactRequests() {
   document.addEventListener('click', (e) => {
     const link = e.target.closest('a[href]');
     if (!link || e.defaultPrevented || e.button !== 0) return;
     if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
     const url = new URL(link.href, window.location.href);
+    if (JIFFLE.test(url.hostname) && url.pathname.includes('/external-request/')) {
+      e.preventDefault();
+      openMeetingDialog(url);
+      return;
+    }
     if (url.origin !== window.location.origin || !CONTACT_PAGE.test(url.pathname)) return;
     if (!url.searchParams.has('request') || CONTACT_PAGE.test(window.location.pathname)) return;
     e.preventDefault();
@@ -156,6 +225,7 @@ export default function initContactRequests() {
   if (main && CONTACT_PAGE.test(window.location.pathname)) {
     waitForForm(main).then((form) => {
       applyRequestMode(form, params);
+      useEmailFirst(form);
       useSaleStratus(form, params);
     });
   }

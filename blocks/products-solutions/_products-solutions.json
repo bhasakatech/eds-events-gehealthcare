@@ -42,7 +42,7 @@
           "component": "multiselect",
           "name": "classes",
           "label": "Layout Options",
-          "description": "Slider: tiles in a horizontal slider with previous/next arrows instead of a grid. Title bar: dark title bar inside each image tile.",
+          "description": "Slider: tiles in a horizontal slider with previous/next arrows instead of a grid. Title bar: dark title bar inside each image tile. Fixed-width tiles: 340px image tiles that wrap (3 / 2 / 1 per row) with 48px between rows.",
           "valueType": "string",
           "options": [
             {
@@ -52,6 +52,10 @@
             {
               "name": "Title bar on tiles",
               "value": "title-bar"
+            },
+            {
+              "name": "Fixed-width tiles",
+              "value": "fixed"
             }
           ]
         },

@@ -12,6 +12,7 @@
  *                                             41.67% column
  *  - two CTAs                                → first CTA white (filled), second outlined
  *  - .compact (authored variant)             → reduced top padding (RSNA 2025 product categories)
+ *  - .spaced (authored variant)              → 20px around the tagline (small-event pages)
  */
 
 /* Full-bleed: neutralise the global .section / .section > div container */
@@ -59,6 +60,61 @@ main .section.event-hero-container > .event-hero-wrapper {
 
 .event-hero .event-hero-video {
   background-color: #000;
+}
+
+/* source video.aem-video is inline: its line box adds 6px below the stacked video */
+.event-hero .event-hero-media:has(video) {
+  margin-bottom: 36px;
+}
+
+/* --- Back control: source workshop a.back-button (14px, flipped white
+   arrow, padding 3px 20px, pulled 50px above the text column, 50px above
+   the date) / product category a.back-link (below) --- */
+.event-hero .event-hero-back {
+  display: inline-flex;
+  align-self: flex-start;
+  align-items: center;
+  gap: 7px;
+  order: -2;
+  margin: -50px 0 50px;
+  padding: 4px 20px;
+  border: 0;
+  background: none;
+  color: #fff;
+  font: inherit;
+  font-size: 14px;
+  line-height: 21px;
+  cursor: pointer;
+}
+
+.event-hero .event-hero-back::before {
+  content: "";
+  border-width: 5px 8px 5px 0;
+  border-style: solid;
+  border-color: transparent currentcolor transparent transparent;
+}
+
+/* product category "< Back to Event" (a.back-link in a .w-100.mb-1 row above the CTAs) */
+.event-hero .event-hero-back.event-hero-back-inline {
+  gap: 8px;
+  order: 0;
+  min-height: 33px;
+  margin: 0 0 4px;
+  padding: 0;
+  font-size: 16px;
+  line-height: 20px;
+}
+
+.event-hero .event-hero-back.event-hero-back-inline::before {
+  content: "<";
+  border: 0;
+  font-size: 13px;
+  transform: scaleY(1.5);
+}
+
+.event-hero .event-hero-back:hover,
+.event-hero .event-hero-back:focus-visible {
+  text-decoration: underline;
 }
 
 /* --- Text panel --- */
@@ -125,11 +181,13 @@ main .section.event-hero-container > .event-hero-wrapper {
   line-height: 20px;
 }
 
+/* source CTAs: margin-bottom 10px up to 600px (product category .mb-3: 16px) */
 .event-hero .event-hero-actions {
   display: flex;
   flex-wrap: wrap;
   gap: 10px 4px;
   width: 100%;
+  margin-bottom: 10px;
 }
 
 /* source keeps an empty .event-desc (14px + 16px margin) above the CTA */
@@ -168,31 +226,37 @@ main .section.event-hero-container > .event-hero-wrapper {
   text-decoration: none;
 }
 
-/* Two CTAs: the first one is the white .grey-button */
-.event-hero .event-hero-btn-primary:not(:only-child),
-.event-hero .event-hero-btn-primary:not(:only-child):any-link {
+/* Two CTAs: the first one is the white .grey-button; so is a single request CTA */
+.event-hero .event-hero-btn-primary:is(:not(:only-child), .event-hero-btn-request),
+.event-hero .event-hero-btn-primary:is(:not(:only-child), .event-hero-btn-request):any-link {
   background-color: #fff;
   color: var(--brand-purple);
   font-size: 16px;
   line-height: 26px;
 }
 
-.event-hero .event-hero-btn-primary:not(:only-child):hover,
-.event-hero .event-hero-btn-primary:not(:only-child):focus-visible {
+.event-hero .event-hero-btn-primary:is(:not(:only-child), .event-hero-btn-request):hover,
+.event-hero .event-hero-btn-primary:is(:not(:only-child), .event-hero-btn-request):focus-visible {
   border-color: var(--brand-grey-hover);
   background-color: var(--brand-grey-hover); /* #e7e7e7 */
   color: var(--brand-purple);
 }
 
-/* --- Text-only hero (title + tagline, no meta / CTA / media): news index
-   (source .hero-section: col-lg-6, container .pt-3) --- */
-.event-hero:not(.has-media, :has(.event-hero-meta, .event-hero-actions)) .event-hero-inner {
+/* --- Text-only hero (title + tagline, no meta / CTA; with or without media):
+   news index (source .hero-section: col-lg-6, container .pt-3) --- */
+.event-hero:not(:has(.event-hero-meta, .event-hero-actions)) .event-hero-inner {
   padding-top: 16px;
 }
 
 /* .subtext.mb-5 */
-.event-hero:not(.has-media, :has(.event-hero-meta, .event-hero-actions)) .event-hero-tagline {
+.event-hero:not(:has(.event-hero-meta, .event-hero-actions)) .event-hero-tagline {
   margin-bottom: 48px;
+}
+
+/* authored variant "Event Hero (spaced)" - source events-template-small-events:
+   .event-desc margin 20px 0 (collapsing with the meta's 15px) */
+.event-hero.spaced .event-hero-meta + .event-hero-tagline {
+  margin: 5px 0 20px;
 }
 
 /* --- Workshop: meta-only hero (no CTA, no tagline) --- */
@@ -208,12 +272,16 @@ main .section.event-hero-container > .event-hero-wrapper {
   margin-bottom: 50px;
 }
 
+/* workshop: title + meta limited to 470px (.text-width) */
+.event-hero:has(.event-hero-meta):not(:has(.event-hero-actions, .event-hero-tagline)) :is(.event-hero-title, .event-hero-meta) {
+  max-width: 470px;
+}
+
 /* --- Product category hero (no meta, page lists products-solutions):
    source .hero-section padding 60px, container .pt-4, media margin 40px,
-   .subtext.mb-5, last CTA .mb-3 (mobile / tablet; desktop height is fixed
-   by min-height) --- */
+   .subtext.mb-5; desktop height is fixed by min-height --- */
 main:has(.products-solutions) .event-hero:not(:has(.event-hero-meta)) {
-  padding: 84px 0 76px;
+  padding: 84px 0 60px;
 }
 
 main:has(.products-solutions) .event-hero.has-media:not(:has(.event-hero-meta)) {
@@ -295,6 +363,12 @@ main > .section.event-hero-container > .event-hero-wrapper ~ .default-content-wr
     max-width: 540px;
   }
 
+  /* source .h1: 38px / 41px above 600px */
+  .event-hero .event-hero-title {
+    font-size: 38px;
+    line-height: 41px;
+  }
+
   .event-hero .event-hero-meta {
     font-size: 24px;
     line-height: 29px;
@@ -307,15 +381,34 @@ main > .section.event-hero-container > .event-hero-wrapper ~ .default-content-wr
   }
 
   .event-hero .event-hero-actions {
-    gap: 16px 4px;
+    gap: 16px 7px; /* .mr-1 + the inline-block whitespace */
+    margin-bottom: 0;
+  }
+
+  main:has(.products-solutions) .event-hero:not(:has(.event-hero-meta)) .event-hero-actions {
+    margin-bottom: 16px;
+  }
+}
+
+/* source .container: 720px from 768px (Bootstrap md) */
+@media (width >= 768px) {
+  .event-hero .event-hero-inner {
+    max-width: 720px;
   }
 }
 
 /* --- Desktop: media on the right half, text column on the left --- */
 @media (width >= 900px) {
+  /* source band is a fixed 399px high (content may run into its bottom padding):
+     min-height plus a small bottom padding keeps 399px for all but overlong copy */
   .event-hero {
     min-height: 399px;
-    padding: 77px 0;
+    padding: 77px 0 16px;
+  }
+
+  /* source band is a fixed 399px: the CTA margin overflows into its padding */
+  main:has(.products-solutions) .event-hero:not(:has(.event-hero-meta)) .event-hero-actions {
+    margin-bottom: 0;
   }
 
   .event-hero.has-media .event-hero-media {
@@ -342,11 +435,11 @@ main > .section.event-hero-container > .event-hero-wrapper ~ .default-content-wr
   }
 
   /* text-only hero: col-lg-6; band height fixed by min-height */
-  .event-hero:not(.has-media, :has(.event-hero-meta, .event-hero-actions)) .event-hero-content {
+  .event-hero:not(:has(.event-hero-meta, .event-hero-actions)) .event-hero-content {
     max-width: calc(50% - 15px);
   }
 
-  .event-hero:not(.has-media, :has(.event-hero-meta, .event-hero-actions)) .event-hero-tagline {
+  .event-hero:not(:has(.event-hero-meta, .event-hero-actions)) .event-hero-tagline {
     margin-bottom: 16px;
   }
 
@@ -358,27 +451,22 @@ main > .section.event-hero-container > .event-hero-wrapper ~ .default-content-wr
   /* workshop: col-lg-7, title + meta limited to 470px; height follows content */
   .event-hero:has(.event-hero-meta):not(:has(.event-hero-actions, .event-hero-tagline)) {
     min-height: 0;
+    padding-bottom: 77px;
   }
 
   .event-hero:has(.event-hero-meta):not(:has(.event-hero-actions, .event-hero-tagline)) .event-hero-content {
     max-width: calc(58.3333% - 12.5px);
   }
 
-  .event-hero:has(.event-hero-meta):not(:has(.event-hero-actions, .event-hero-tagline)) :is(.event-hero-title, .event-hero-meta) {
-    max-width: 470px;
-  }
 
+  /* source: fixed 399px band, .hero-section padding 60px + .container.pt-4 */
   main:has(.products-solutions) .event-hero:not(:has(.event-hero-meta)),
   main:has(.products-solutions) .event-hero.has-media:not(:has(.event-hero-meta)) {
-    padding: 77px 0;
+    padding: 84px 0 16px;
   }
 
   main:has(.products-solutions) .event-hero.has-media:not(:has(.event-hero-meta)) .event-hero-media {
     margin-bottom: 0;
-  }
-
-  main:has(.products-solutions) .event-hero:not(:has(.event-hero-meta)) .event-hero-tagline {
-    margin-bottom: 16px;
   }
 
   main:has(.theater-sessions-filters) .event-hero:not(.has-media, :has(.event-hero-meta, .event-hero-actions)) {

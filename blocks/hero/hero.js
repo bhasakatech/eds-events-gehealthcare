@@ -5,6 +5,8 @@
  *   [0] media   (reference: <picture>, or a link to a video/image asset)
  *   [1] text    (richtext: heading, copy, CTAs)
  *   [2] caption (text: optional overlay caption on the media)
+ *   [3] video   (text: Scene7 /is/content/ or MP4 URL; plays muted in a loop with
+ *                the media image as its poster - source .hero-section video.aem-video)
  *
  * Rows are identified by content as well as position so the block degrades
  * gracefully when authors leave fields empty or older content omits rows.
@@ -14,13 +16,38 @@ import { createOptimizedPicture } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
 const IMAGE_RE = /\.(png|jpe?g|gif|webp|avif|svg)(\?|#|$)/i;
-const VIDEO_RE = /\.(mp4|webm|ogg|mov)(\?|#|$)/i;
+const VIDEO_RE = /scene7\.com\/is\/content\/|\.(mp4|webm|ogg|mov)(\?|#|$)/i;
 
 function textOf(el) {
   return el?.textContent?.trim() || '';
 }
 
-function buildMedia(cell) {
+function videoUrlOf(cell) {
+  const href = cell?.querySelector('a[href]')?.getAttribute('href') || textOf(cell);
+  return VIDEO_RE.test(href) && !/\s/.test(href) ? href : '';
+}
+
+function buildVideo(src, poster, label) {
+  const media = document.createElement('div');
+  media.className = 'hero-media';
+  const video = document.createElement('video');
+  video.src = src;
+  if (poster) video.poster = poster;
+  video.muted = true;
+  video.autoplay = true;
+  video.loop = true;
+  video.playsInline = true;
+  video.preload = 'metadata';
+  video.setAttribute('aria-label', label || 'Background video');
+  media.append(video);
+  return media;
+}
+
+function buildMedia(cell, videoUrl) {
+  if (videoUrl) {
+    const img = cell?.querySelector('img');
+    return buildVideo(videoUrl, img?.getAttribute('src') || '', img?.getAttribute('alt'));
+  }
   if (!cell) return null;
   const picture = cell.querySelector('picture');
   const link = cell.querySelector('a[href]');
@@ -59,7 +86,11 @@ function buildMedia(cell) {
 export default function decorate(block) {
   block.classList.add('hero-layout');
   const rows = [...block.children];
-  const cells = rows.map((row) => row.firstElementChild).filter(Boolean);
+  const allCells = rows.map((row) => row.firstElementChild).filter(Boolean);
+  // video URL field (row 4), also recognised by content
+  const videoCell = allCells.find((c) => videoUrlOf(c) && !c.querySelector('picture, img'));
+  const videoUrl = videoUrlOf(videoCell);
+  const cells = allCells.filter((c) => c !== videoCell);
 
   // Positional (model order) with content-based fallback.
   let [mediaCell, textCell, captionCell] = cells;
@@ -71,7 +102,7 @@ export default function decorate(block) {
     captionCell = cells.find((c) => c !== textCell && c !== mediaCell && textOf(c));
   }
 
-  const media = buildMedia(mediaCell);
+  const media = buildMedia(mediaCell, videoUrl);
 
   const content = document.createElement('div');
   content.className = 'hero-content';

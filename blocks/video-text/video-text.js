@@ -117,7 +117,8 @@ function resolveVideo(ref) {
   if (vimeoId) {
     return { type: 'iframe', src: `https://player.vimeo.com/video/${vimeoId}?autoplay=1&muted=1&loop=1` };
   }
-  if (/\.(mp4|webm|ogg)(\?|#|$)/i.test(ref)) return { type: 'video', src: ref };
+  // MP4 files and Scene7 video URLs (source theater-intro video.aem-video: /is/content/)
+  if (/\.(mp4|webm|ogg)(\?|#|$)|scene7\.com\/is\/content\//i.test(ref)) return { type: 'video', src: ref };
   return { type: 'iframe', src: ref };
 }
 

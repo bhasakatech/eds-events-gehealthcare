@@ -30,8 +30,18 @@
           "valueType": "string",
           "value": "",
           "options": [
-            { "name": "Default", "value": "" },
-            { "name": "Compact", "value": "compact" }
+            {
+              "name": "Default",
+              "value": ""
+            },
+            {
+              "name": "Compact",
+              "value": "compact"
+            },
+            {
+              "name": "Spaced tagline",
+              "value": "spaced"
+            }
           ]
         },
         {
@@ -49,8 +59,14 @@
           "valueType": "string",
           "value": "h1",
           "options": [
-            { "name": "H1", "value": "h1" },
-            { "name": "H2", "value": "h2" }
+            {
+              "name": "H1",
+              "value": "h1"
+            },
+            {
+              "name": "H2",
+              "value": "h2"
+            }
           ]
         },
         {
@@ -118,6 +134,21 @@
           "value": "See what's new"
         },
         {
+          "component": "text",
+          "name": "actions_back",
+          "label": "Back Link Label",
+          "valueType": "string",
+          "value": "",
+          "description": "Shows a link that returns to the previous page (e.g. \"Back\", \"Back to Event\"). Leave empty to hide."
+        },
+        {
+          "component": "aem-content",
+          "name": "actions_backLink",
+          "label": "Back Link Target",
+          "valueType": "string",
+          "description": "Optional page the back link opens (e.g. the event page). Leave empty to return to the previous page."
+        },
+        {
           "component": "tab",
           "label": "Background",
           "name": "tabMedia"
@@ -135,6 +166,14 @@
           "label": "Background Image Alt",
           "valueType": "string",
           "value": ""
+        },
+        {
+          "component": "text",
+          "name": "image_video",
+          "label": "Background Video URL",
+          "valueType": "string",
+          "value": "",
+          "description": "Scene7 (\u2026/is/content/\u2026) or MP4 URL. Plays muted in a loop; the background image is its poster."
         }
       ]
     }

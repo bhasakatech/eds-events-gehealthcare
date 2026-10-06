@@ -162,6 +162,13 @@
             "value": "onsite"
           }
         ]
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "eventDescription",
+        "label": "Calendar Description",
+        "description": "Optional line shown under the event name in the homepage event list."
       }
     ]
   },
@@ -697,6 +704,10 @@
           {
             "name": "Compact",
             "value": "compact"
+          },
+          {
+            "name": "Spaced tagline",
+            "value": "spaced"
           }
         ]
       },
@@ -790,6 +801,21 @@
         "value": "See what's new"
       },
       {
+        "component": "text",
+        "name": "actions_back",
+        "label": "Back Link Label",
+        "valueType": "string",
+        "value": "",
+        "description": "Shows a link that returns to the previous page (e.g. \"Back\", \"Back to Event\"). Leave empty to hide."
+      },
+      {
+        "component": "aem-content",
+        "name": "actions_backLink",
+        "label": "Back Link Target",
+        "valueType": "string",
+        "description": "Optional page the back link opens (e.g. the event page). Leave empty to return to the previous page."
+      },
+      {
         "component": "tab",
         "label": "Background",
         "name": "tabMedia"
@@ -807,6 +833,14 @@
         "label": "Background Image Alt",
         "valueType": "string",
         "value": ""
+      },
+      {
+        "component": "text",
+        "name": "image_video",
+        "label": "Background Video URL",
+        "valueType": "string",
+        "value": "",
+        "description": "Scene7 (…/is/content/…) or MP4 URL. Plays muted in a loop; the background image is its poster."
       }
     ]
   },
@@ -6045,6 +6079,14 @@
         "name": "caption",
         "label": "Overlay Caption (on media)",
         "value": ""
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "video",
+        "label": "Background Video URL",
+        "description": "Scene7 (…/is/content/…) or MP4 URL. Plays muted in a loop; the image above is its poster.",
+        "value": ""
       }
     ]
   },
@@ -6100,7 +6142,7 @@
         "component": "multiselect",
         "name": "classes",
         "label": "Layout Options",
-        "description": "Slider: tiles in a horizontal slider with previous/next arrows instead of a grid. Title bar: dark title bar inside each image tile.",
+        "description": "Slider: tiles in a horizontal slider with previous/next arrows instead of a grid. Title bar: dark title bar inside each image tile. Fixed-width tiles: 340px image tiles that wrap (3 / 2 / 1 per row) with 48px between rows.",
         "valueType": "string",
         "options": [
           {
@@ -6110,6 +6152,10 @@
           {
             "name": "Title bar on tiles",
             "value": "title-bar"
+          },
+          {
+            "name": "Fixed-width tiles",
+            "value": "fixed"
           }
         ]
       },

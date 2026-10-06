@@ -163,6 +163,13 @@
               "value": "onsite"
             }
           ]
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "eventDescription",
+          "label": "Calendar Description",
+          "description": "Optional line shown under the event name in the homepage event list."
         }
       ]
     }

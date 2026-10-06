@@ -46,3 +46,8 @@ indices:
       endDate:
         select: head > meta[name="enddate"]
         value: attribute(el, "content")
+
+      # optional line under the event name in the homepage calendar (source .description)
+      description:
+        select: head > meta[name="eventdescription"]
+        value: attribute(el, "content")
